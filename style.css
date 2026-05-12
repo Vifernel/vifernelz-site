@@ -504,3 +504,15 @@ padding:90px 7%;
 }
 
 }
+/* ANIMATIONS */
+
+.hidden{
+opacity:0;
+transform:translateY(70px);
+transition:all 1s ease;
+}
+
+.show{
+opacity:1;
+transform:translateY(0);
+}
