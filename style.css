@@ -881,3 +881,154 @@ height:400px;
 }
 
 }
+/* =========================
+APPLE / TESLA ANIMATIONS
+========================= */
+
+html{
+scroll-behavior:smooth;
+}
+
+/* Smooth section reveal */
+
+.reveal{
+opacity:0;
+transform:translateY(40px);
+transition:
+opacity .9s ease,
+transform .9s ease;
+will-change:transform, opacity;
+}
+
+.reveal.active{
+opacity:1;
+transform:translateY(0);
+}
+
+/* Floating premium */
+
+@keyframes floatingSoft{
+0%{
+transform:translateY(0px);
+}
+50%{
+transform:translateY(-10px);
+}
+100%{
+transform:translateY(0px);
+}
+}
+
+.hero-image-container{
+animation:floatingSoft 6s ease-in-out infinite;
+}
+
+/* Button luxury hover */
+
+.btn-primary,
+.btn-secondary,
+.contact-btn,
+.send-btn{
+transition:
+transform .35s ease,
+box-shadow .35s ease,
+background .35s ease;
+}
+
+.btn-primary:hover,
+.contact-btn:hover,
+.send-btn:hover{
+transform:translateY(-4px);
+box-shadow:
+0 20px 40px rgba(138,180,255,.18);
+}
+
+.btn-secondary:hover{
+transform:translateY(-4px);
+background:rgba(138,180,255,.08);
+}
+
+/* Cards premium hover */
+
+.expertise-card,
+.service-card,
+.project-card,
+.premium-project-card,
+.hero-stat-card,
+.contact-card,
+.info-card{
+transition:
+transform .45s ease,
+box-shadow .45s ease,
+border-color .45s ease;
+}
+
+.expertise-card:hover,
+.service-card:hover,
+.project-card:hover,
+.premium-project-card:hover,
+.hero-stat-card:hover,
+.contact-card:hover,
+.info-card:hover{
+
+transform:translateY(-10px);
+
+box-shadow:
+0 25px 60px rgba(0,0,0,.35);
+
+border-color:
+rgba(138,180,255,.25);
+}
+
+/* Navbar premium scroll */
+
+.header{
+transition:
+background .4s ease,
+box-shadow .4s ease,
+padding .3s ease;
+}
+
+.header.scrolled{
+background:
+rgba(11,15,20,.92);
+
+backdrop-filter:blur(18px);
+
+box-shadow:
+0 10px 40px rgba(0,0,0,.28);
+}
+
+/* Smooth image zoom */
+
+.about-image img,
+.hero-image,
+.project-image{
+transition:
+transform .7s ease;
+}
+
+.about-image:hover img,
+.hero-image:hover,
+.project-image:hover{
+transform:scale(1.03);
+}
+
+/* Fade luxury */
+
+.section-title,
+.about-content p,
+.timeline-item{
+animation:fadeLuxury 1s ease;
+}
+
+@keyframes fadeLuxury{
+from{
+opacity:0;
+transform:translateY(20px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
