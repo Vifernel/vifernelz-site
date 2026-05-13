@@ -1,64 +1,105 @@
-const menuToggle = document.querySelector(".menu-toggle");
-const navMenu = document.querySelector(".nav-menu");
-const links = document.querySelectorAll(".nav-menu a");
+// MENU
+const menuToggle =
+document.querySelector(".menu-toggle");
 
-// OPEN / CLOSE MENU
+const navMenu =
+document.querySelector(".nav-menu");
+
+const links =
+document.querySelectorAll(".nav-menu a");
+
 menuToggle.addEventListener("click", () => {
+
 navMenu.classList.toggle("active");
 
-// icon toggle
 if(navMenu.classList.contains("active")){
-menuToggle.innerHTML = '<i class="fas fa-times"></i>';
+menuToggle.innerHTML =
+'<i class="fas fa-times"></i>';
 }else{
-menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+menuToggle.innerHTML =
+'<i class="fas fa-bars"></i>';
 }
+
 });
 
-// CLOSE MENU WHEN CLICK LINK
 links.forEach(link => {
+
 link.addEventListener("click", () => {
+
 navMenu.classList.remove("active");
-menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-});
+
+menuToggle.innerHTML =
+'<i class="fas fa-bars"></i>';
+
 });
 
-// CLOSE MENU OUTSIDE CLICK
-window.addEventListener("click", (e) => {
-if(!e.target.closest(".nav-menu") && !e.target.closest(".menu-toggle")){
-navMenu.classList.remove("active");
-menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+});
+
+// HEADER SCROLL EFFECT
+
+const header =
+document.querySelector(".header");
+
+window.addEventListener("scroll", () => {
+
+if(window.scrollY > 50){
+header.classList.add("scrolled");
+}else{
+header.classList.remove("scrolled");
 }
+
 });
 
-// SMOOTH SCROLL (bonus UX premium)
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-anchor.addEventListener("click", function(e){
-e.preventDefault();
+// REVEAL ON SCROLL
 
-const target = document.querySelector(this.getAttribute("href"));
+const revealElements =
+document.querySelectorAll(`
+section,
+.expertise-card,
+.service-card,
+.premium-project-card,
+.timeline-item,
+.contact-card
+`);
 
-if(target){
-window.scrollTo({
-top: target.offsetTop - 80,
-behavior: "smooth"
-});
-}
-});
-});
+const observer =
+new IntersectionObserver((entries)=>{
 
-// SIMPLE FADE-IN ON SCROLL (premium feel)
-const observer = new IntersectionObserver((entries) => {
-entries.forEach(entry => {
+entries.forEach(entry=>{
+
 if(entry.isIntersecting){
-entry.target.style.opacity = 1;
-entry.target.style.transform = "translateY(0)";
-}
-});
-}, {threshold:0.1});
 
-document.querySelectorAll(".expertise-card, .service-card, .project-card").forEach(el => {
-el.style.opacity = 0;
-el.style.transform = "translateY(20px)";
-el.style.transition = "0.6s ease";
+entry.target.classList.add("reveal");
+entry.target.classList.add("active");
+
+}
+
+});
+
+},{
+threshold:0.12
+});
+
+revealElements.forEach(el=>{
+el.classList.add("reveal");
 observer.observe(el);
+});
+
+// OUTSIDE CLICK CLOSE
+
+window.addEventListener("click",(e)=>{
+
+if(
+!e.target.closest(".nav-menu")
+&&
+!e.target.closest(".menu-toggle")
+){
+
+navMenu.classList.remove("active");
+
+menuToggle.innerHTML =
+'<i class="fas fa-bars"></i>';
+
+}
+
 });
