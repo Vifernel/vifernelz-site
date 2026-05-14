@@ -1393,3 +1393,50 @@ transition: all 0.8s ease;
 opacity: 1;
 transform: translateY(0);
 }
+.elite-hero .hero-title{
+max-width:900px;
+}
+
+.elite-hero .hero-description{
+font-size:1.08rem;
+max-width:760px;
+line-height:1.9;
+}
+
+.follow-title{
+margin-top:30px;
+margin-bottom:14px;
+font-size:13px;
+letter-spacing:2px;
+text-transform:uppercase;
+color:#8ab4ff;
+font-weight:700;
+}
+
+.hero-contact-icons{
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+margin-top:10px;
+}
+
+.hero-contact-icons a{
+width:50px;
+height:50px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:16px;
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.08);
+color:#8ab4ff;
+font-size:18px;
+transition:.35s ease;
+}
+
+.hero-contact-icons a:hover{
+transform:translateY(-5px);
+background:rgba(138,180,255,.18);
+box-shadow:0 20px 40px rgba(0,0,0,.25);
+color:#fff;
+}
