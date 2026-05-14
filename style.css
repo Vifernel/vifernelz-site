@@ -1627,3 +1627,82 @@ body > *{
 position:relative;
 z-index:1;
 }
+/* =========================
+CONTACT MOBILE FIX FINAL
+========================= */
+
+.contact-section{
+width:100% !important;
+max-width:100% !important;
+padding:80px 20px !important;
+overflow:hidden !important;
+}
+
+.contact-grid{
+display:grid !important;
+grid-template-columns:1fr 1fr !important;
+gap:30px !important;
+width:100% !important;
+max-width:1200px !important;
+margin:0 auto !important;
+align-items:start;
+}
+
+.contact-info,
+.contact-form-box{
+width:100% !important;
+max-width:100% !important;
+min-width:0 !important;
+overflow:hidden !important;
+}
+
+.availability-box,
+.contact-card{
+width:100% !important;
+max-width:100% !important;
+overflow:hidden !important;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+
+.contact-grid{
+grid-template-columns:1fr !important;
+}
+
+.contact-section{
+padding-left:20px !important;
+padding-right:20px !important;
+}
+
+.contact-section h2{
+font-size:42px !important;
+line-height:1.15 !important;
+word-break:break-word;
+}
+
+.project-subtitle,
+.contact-section p{
+font-size:18px !important;
+line-height:1.8 !important;
+word-break:break-word;
+}
+
+.availability-box{
+padding:24px !important;
+}
+
+.contact-card{
+padding:22px !important;
+}
+
+.hero-contact-icons{
+justify-content:center;
+}
+
+.whatsapp-float{
+bottom:100px !important;
+right:20px !important;
+}
+
+}
