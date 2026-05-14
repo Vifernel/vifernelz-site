@@ -1440,3 +1440,190 @@ background:rgba(138,180,255,.18);
 box-shadow:0 20px 40px rgba(0,0,0,.25);
 color:#fff;
 }
+/* ==========================
+ELITE ANIMATED BACKGROUND
+APPLE + GLOBAL TECH
+========================== */
+
+.animated-bg{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-1;
+overflow:hidden;
+background:
+linear-gradient(
+180deg,
+#05080d 0%,
+#0b0f14 50%,
+#070b10 100%
+);
+}
+
+/* premium glow orbs */
+
+.gradient-orb{
+position:absolute;
+border-radius:50%;
+filter:blur(80px);
+opacity:.18;
+animation:floatSlow 18s ease-in-out infinite;
+}
+
+.orb-1{
+width:420px;
+height:420px;
+background:#4c8dff;
+top:-120px;
+left:-120px;
+}
+
+.orb-2{
+width:340px;
+height:340px;
+background:#6aa5ff;
+bottom:-100px;
+right:-80px;
+animation-delay:4s;
+}
+
+.orb-3{
+width:260px;
+height:260px;
+background:#3d74ff;
+top:40%;
+left:55%;
+animation-delay:8s;
+}
+
+/* subtle world-tech grid */
+
+.grid-overlay{
+position:absolute;
+inset:0;
+background-image:
+linear-gradient(
+rgba(255,255,255,.03) 1px,
+transparent 1px
+),
+linear-gradient(
+90deg,
+rgba(255,255,255,.03) 1px,
+transparent 1px
+);
+
+background-size:60px 60px;
+mask-image:
+linear-gradient(
+to bottom,
+transparent,
+rgba(255,255,255,.4),
+transparent
+);
+
+opacity:.25;
+}
+
+/* floating particles */
+
+.particles span{
+position:absolute;
+display:block;
+width:4px;
+height:4px;
+background:rgba(138,180,255,.5);
+border-radius:50%;
+animation:particleMove linear infinite;
+}
+
+.particles span:nth-child(1){
+left:10%;
+animation-duration:20s;
+top:100%;
+}
+
+.particles span:nth-child(2){
+left:25%;
+animation-duration:24s;
+top:100%;
+}
+
+.particles span:nth-child(3){
+left:40%;
+animation-duration:18s;
+top:100%;
+}
+
+.particles span:nth-child(4){
+left:55%;
+animation-duration:26s;
+top:100%;
+}
+
+.particles span:nth-child(5){
+left:70%;
+animation-duration:22s;
+top:100%;
+}
+
+.particles span:nth-child(6){
+left:80%;
+animation-duration:28s;
+top:100%;
+}
+
+.particles span:nth-child(7){
+left:90%;
+animation-duration:19s;
+top:100%;
+}
+
+.particles span:nth-child(8){
+left:50%;
+animation-duration:30s;
+top:100%;
+}
+
+/* animations */
+
+@keyframes floatSlow{
+0%{
+transform:translateY(0px)
+translateX(0px);
+}
+
+50%{
+transform:translateY(-40px)
+translateX(30px);
+}
+
+100%{
+transform:translateY(0px)
+translateX(0px);
+}
+}
+
+@keyframes particleMove{
+0%{
+transform:translateY(0);
+opacity:0;
+}
+
+15%{
+opacity:1;
+}
+
+100%{
+transform:translateY(-120vh);
+opacity:0;
+}
+}
+
+/* ensure content above bg */
+
+body > *{
+position:relative;
+z-index:1;
+}
