@@ -1287,3 +1287,40 @@ transform:translateY(-5px);
 background:rgba(138,180,255,0.15);
 color:#fff;
 }
+.follow-title{
+margin-top:20px;
+margin-bottom:10px;
+font-size:14px;
+letter-spacing:2px;
+color:#8ab4ff;
+text-transform:uppercase;
+}
+
+.hero-contact-icons{
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+margin-top:10px;
+}
+
+.hero-contact-icons a{
+width:48px;
+height:48px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:14px;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+color:#8ab4ff;
+font-size:18px;
+transition:0.3s;
+position:relative;
+}
+
+.hero-contact-icons a:hover{
+transform:translateY(-6px);
+background:rgba(138,180,255,0.18);
+color:#fff;
+box-shadow:0 15px 35px rgba(0,0,0,0.3);
+}
