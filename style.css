@@ -1032,3 +1032,56 @@ opacity:1;
 transform:translateY(0);
 }
 }
+/* ===== FIX GLOBAL LAYOUT ===== */
+
+html, body{
+overflow-x:hidden !important;
+}
+
+section{
+width:100%;
+max-width:100%;
+overflow:hidden;
+}
+
+img{
+max-width:100%;
+display:block;
+}
+
+/* FIX FLEX WRAP CASSE LAYOUT */
+.hero-content,
+.contact-grid,
+.expertise-grid,
+.services-grid,
+.projects-grid,
+.premium-project-grid{
+flex-wrap:wrap;
+}
+
+/* FIX BAD POSITION SHIFT */
+.hero-left,
+.hero-right{
+min-width:0;
+}
+
+/* FORCE CENTER SAFE */
+.section{
+padding-left:20px !important;
+padding-right:20px !important;
+}
+
+/* FIX WHATSAPP FLOAT (IMPORTANT) */
+.whatsapp-float{
+position:fixed !important;
+bottom:25px !important;
+right:25px !important;
+z-index:99999 !important;
+}
+
+/* PREVENT OVERFLOW BUG CARDS */
+.premium-project-card,
+.service-card,
+.expertise-card{
+overflow:hidden;
+}
