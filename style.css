@@ -1163,3 +1163,77 @@ box-shadow:0 10px 30px rgba(0,0,0,0.3);
 .expertise-card{
 max-width:100%;
 }
+html {
+scroll-behavior: smooth;
+}
+
+/* ===== FINAL POLISH ANIMATIONS ===== */
+
+section {
+opacity: 0;
+transform: translateY(40px);
+transition: all 0.8s ease;
+}
+
+section.show {
+opacity: 1;
+transform: translateY(0);
+}
+
+/* smooth hover upgrade */
+.expertise-card,
+.service-card,
+.premium-project-card,
+.contact-card {
+transition: all 0.4s ease;
+}
+
+/* stronger premium hover */
+.expertise-card:hover,
+.service-card:hover,
+.premium-project-card:hover,
+.contact-card:hover {
+transform: translateY(-10px);
+box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+}
+
+/* FIX MOBILE SPACING */
+@media (max-width: 768px) {
+.hero h1 {
+font-size: 30px;
+}
+
+.section {
+padding: 70px 20px;
+}
+
+.hero-content {
+gap: 20px;
+}
+}
+
+/* ULTRA CLEAN BUTTON FEEL */
+.btn-primary,
+.btn-secondary,
+.send-btn,
+.contact-link-btn {
+transition: all 0.3s ease;
+}
+
+.btn-primary:hover,
+.send-btn:hover,
+.contact-link-btn:hover {
+transform: translateY(-3px);
+box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+}
+
+/* WHATSAPP FINAL FIX */
+.whatsapp-float {
+animation: pulse 2.5s infinite;
+}
+
+@keyframes pulse {
+0% { transform: scale(1); }
+50% { transform: scale(1.1); }
+100% { transform: scale(1); }
+}
