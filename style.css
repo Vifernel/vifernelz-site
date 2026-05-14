@@ -1324,3 +1324,72 @@ background:rgba(138,180,255,0.18);
 color:#fff;
 box-shadow:0 15px 35px rgba(0,0,0,0.3);
 }
+html, body {
+overflow-x: hidden;
+scroll-behavior: smooth;
+}
+
+section {
+width: 100%;
+max-width: 1200px;
+margin: auto;
+}
+
+/* améliore respiration globale */
+.section {
+padding: 90px 20px;
+}
+
+/* image safety */
+img {
+max-width: 100%;
+display: block;
+}
+
+/* hover premium global */
+.service-card,
+.expertise-card,
+.premium-project-card,
+.contact-card {
+transition: all 0.35s ease;
+}
+
+.service-card:hover,
+.expertise-card:hover,
+.premium-project-card:hover,
+.contact-card:hover {
+transform: translateY(-10px);
+box-shadow: 0 25px 60px rgba(0,0,0,0.35);
+}
+
+/* boutons cohérents */
+.btn-primary,
+.btn-secondary,
+.send-btn,
+.contact-link-btn {
+transition: all 0.3s ease;
+}
+
+.btn-primary:hover,
+.send-btn:hover,
+.contact-link-btn:hover {
+transform: translateY(-3px);
+box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+}
+
+/* fix mobile spacing */
+@media (max-width: 768px) {
+.section {
+padding: 60px 15px;
+}
+}
+.reveal {
+opacity: 0;
+transform: translateY(30px);
+transition: all 0.8s ease;
+}
+
+.reveal.active {
+opacity: 1;
+transform: translateY(0);
+}
