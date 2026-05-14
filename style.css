@@ -1237,3 +1237,27 @@ animation: pulse 2.5s infinite;
 50% { transform: scale(1.1); }
 100% { transform: scale(1); }
 }
+.hero-contact-icons{
+display:flex;
+gap:15px;
+margin-top:20px;
+}
+
+.hero-contact-icons a{
+width:45px;
+height:45px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:12px;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+color:#8ab4ff;
+font-size:18px;
+transition:0.3s;
+}
+
+.hero-contact-icons a:hover{
+transform:translateY(-5px);
+background:rgba(138,180,255,0.15);
+}
