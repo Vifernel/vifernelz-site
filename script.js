@@ -120,3 +120,24 @@ document.addEventListener("DOMContentLoaded", () => {
     observer.observe(section);
   });
 });
+document.addEventListener("DOMContentLoaded", () => {
+
+  // Animation scroll sections
+  const sections = document.querySelectorAll("section");
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("reveal");
+        entry.target.classList.add("active");
+      }
+    });
+  }, {
+    threshold: 0.15
+  });
+
+  sections.forEach(section => {
+    observer.observe(section);
+  });
+
+});
