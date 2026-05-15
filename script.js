@@ -4,37 +4,30 @@ const navMenu = document.querySelector(".nav-menu");
 const overlay = document.querySelector(".menu-overlay");
 const links = document.querySelectorAll(".nav-menu a");
 
-// Ouvrir menu
-function openMenu(){
-  navMenu.classList.add("active");
-  menuToggle.classList.add("active");
-  overlay.classList.add("active");
-  document.body.style.overflow = "hidden";
+// OUVRIR / FERMER MENU
+function toggleMenu() {
+  navMenu.classList.toggle("active");
+  menuToggle.classList.toggle("active");
+  overlay.classList.toggle("active");
 }
 
-// Fermer menu
-function closeMenu(){
+// click bouton menu
+menuToggle.addEventListener("click", toggleMenu);
+
+// click overlay = fermer menu
+overlay.addEventListener("click", () => {
   navMenu.classList.remove("active");
   menuToggle.classList.remove("active");
   overlay.classList.remove("active");
-  document.body.style.overflow = "";
-}
-
-// Toggle
-menuToggle.addEventListener("click", () => {
-  if(navMenu.classList.contains("active")){
-    closeMenu();
-  } else {
-    openMenu();
-  }
 });
 
-// Fermer en cliquant sur overlay
-overlay.addEventListener("click", closeMenu);
-
-// Fermer en cliquant sur un lien
+// click lien = fermer menu
 links.forEach(link => {
-  link.addEventListener("click", closeMenu);
+  link.addEventListener("click", () => {
+    navMenu.classList.remove("active");
+    menuToggle.classList.remove("active");
+    overlay.classList.remove("active");
+  });
 });
 
 // HEADER SCROLL EFFECT
