@@ -1812,10 +1812,17 @@ transparent
 
 /* bloc navigation */
 .menu-links{
-padding:90px 38px 40px;
+padding:78px 24px 28px;
 display:flex;
 flex-direction:column;
-gap:12px;
+gap:8px;
+height:100%;
+justify-content:flex-start;
+}
+
+.menu-links a{
+padding:14px 18px !important;
+font-size:17px !important;
 }
 
 /* label */
