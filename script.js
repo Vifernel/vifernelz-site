@@ -1,20 +1,40 @@
-// MENU
+// ===== MENU FIX STABLE =====
 const menuToggle = document.querySelector(".menu-toggle");
 const navMenu = document.querySelector(".nav-menu");
+const overlay = document.querySelector(".menu-overlay");
 const links = document.querySelectorAll(".nav-menu a");
 
-// Ouvrir / fermer menu
+// Ouvrir menu
+function openMenu(){
+  navMenu.classList.add("active");
+  menuToggle.classList.add("active");
+  overlay.classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+
+// Fermer menu
+function closeMenu(){
+  navMenu.classList.remove("active");
+  menuToggle.classList.remove("active");
+  overlay.classList.remove("active");
+  document.body.style.overflow = "";
+}
+
+// Toggle
 menuToggle.addEventListener("click", () => {
-navMenu.classList.toggle("active");
-menuToggle.classList.toggle("active");
+  if(navMenu.classList.contains("active")){
+    closeMenu();
+  } else {
+    openMenu();
+  }
 });
 
-// Fermer quand on clique sur un lien
+// Fermer en cliquant sur overlay
+overlay.addEventListener("click", closeMenu);
+
+// Fermer en cliquant sur un lien
 links.forEach(link => {
-link.addEventListener("click", () => {
-navMenu.classList.remove("active");
-menuToggle.classList.remove("active");
-});
+  link.addEventListener("click", closeMenu);
 });
 
 // HEADER SCROLL EFFECT
