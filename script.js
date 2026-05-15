@@ -1,38 +1,20 @@
 // MENU
-const menuToggle =
-document.querySelector(".menu-toggle");
+const menuToggle = document.querySelector(".menu-toggle");
+const navMenu = document.querySelector(".nav-menu");
+const links = document.querySelectorAll(".nav-menu a");
 
-const navMenu =
-document.querySelector(".nav-menu");
-
-const links =
-document.querySelectorAll(".nav-menu a");
-
+// Ouvrir / fermer menu
 menuToggle.addEventListener("click", () => {
-
 navMenu.classList.toggle("active");
-
-if(navMenu.classList.contains("active")){
-menuToggle.innerHTML =
-'<i class="fas fa-times"></i>';
-}else{
-menuToggle.innerHTML =
-'<i class="fas fa-bars"></i>';
-}
-
+menuToggle.classList.toggle("active");
 });
 
+// Fermer quand on clique sur un lien
 links.forEach(link => {
-
 link.addEventListener("click", () => {
-
 navMenu.classList.remove("active");
-
-menuToggle.innerHTML =
-'<i class="fas fa-bars"></i>';
-
+menuToggle.classList.remove("active");
 });
-
 });
 
 // HEADER SCROLL EFFECT
@@ -139,38 +121,5 @@ document.addEventListener("DOMContentLoaded", () => {
   sections.forEach(section => {
     observer.observe(section);
   });
-
-});
-const menuToggle =
-document.querySelector(".menu-toggle");
-
-const navMenu =
-document.querySelector(".nav-menu");
-
-menuToggle.addEventListener(
-"click",
-() => {
-
-navMenu.classList.toggle("active");
-
-menuToggle.classList.toggle("active");
-
-});
-
-/* CLOSE MENU WHEN CLICK */
-
-document
-.querySelectorAll(".nav-menu a")
-.forEach(link => {
-
-link.addEventListener(
-"click",
-() => {
-
-navMenu.classList.remove("active");
-
-menuToggle.classList.remove("active");
-
-});
 
 });
