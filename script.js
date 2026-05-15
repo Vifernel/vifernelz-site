@@ -123,3 +123,27 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 });
+const overlay = document.querySelector(".menu-overlay");
+
+// ouvrir / fermer overlay en même temps que menu
+menuToggle.addEventListener("click", () => {
+navMenu.classList.toggle("active");
+menuToggle.classList.toggle("active");
+overlay.classList.toggle("active");
+});
+
+// clic sur overlay = fermeture
+overlay.addEventListener("click", () => {
+navMenu.classList.remove("active");
+menuToggle.classList.remove("active");
+overlay.classList.remove("active");
+});
+
+// clic sur liens = fermeture aussi
+links.forEach(link => {
+link.addEventListener("click", () => {
+navMenu.classList.remove("active");
+menuToggle.classList.remove("active");
+overlay.classList.remove("active");
+});
+});
