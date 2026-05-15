@@ -2213,3 +2213,318 @@ transform:translateY(-8px);
 transform:translateY(0px);
 }
 }
+/* ==========================================
+   HERO CINEMATIC ELITE (SAFE VERSION)
+========================================== */
+
+/* hero plus premium */
+.hero{
+position:relative;
+min-height:100vh;
+display:flex;
+align-items:center;
+overflow:hidden;
+isolation:isolate;
+}
+
+/* lumière cinématique globale */
+.hero::before{
+content:"";
+position:absolute;
+top:-20%;
+right:-10%;
+width:700px;
+height:700px;
+border-radius:50%;
+
+background:
+radial-gradient(
+circle,
+rgba(212,175,55,.12),
+transparent 65%
+);
+
+filter:blur(60px);
+animation:cinematicGlow 8s ease-in-out infinite;
+z-index:-1;
+}
+
+/* glow secondaire */
+.hero::after{
+content:"";
+position:absolute;
+bottom:-20%;
+left:-10%;
+width:500px;
+height:500px;
+border-radius:50%;
+
+background:
+radial-gradient(
+circle,
+rgba(0,140,255,.08),
+transparent 70%
+);
+
+filter:blur(70px);
+animation:cinematicGlow2 10s ease-in-out infinite;
+z-index:-1;
+}
+
+/* texte plus premium */
+.hero-title{
+line-height:1.05;
+letter-spacing:-1.5px;
+font-weight:800;
+max-width:760px;
+}
+
+.hero-title span{
+background:
+linear-gradient(
+135deg,
+#d4af37,
+#f8e38a,
+#ffffff
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+/* description luxe */
+.hero-description{
+font-size:18px;
+line-height:1.9;
+max-width:720px;
+color:rgba(255,255,255,.82);
+}
+
+/* image premium cinematic */
+.hero-image-container{
+position:relative;
+transform-style:preserve-3d;
+animation:heroFloat 8s ease-in-out infinite;
+}
+
+/* halo luxe image */
+.hero-image-container::before{
+content:"";
+position:absolute;
+inset:-60px;
+
+background:
+radial-gradient(
+circle,
+rgba(255,215,0,.22),
+transparent 65%
+);
+
+filter:blur(40px);
+z-index:-1;
+animation:goldAura 5s ease-in-out infinite;
+}
+
+/* image haut de gamme */
+.hero-image{
+border-radius:30px;
+transform:perspective(1000px) rotateY(-4deg);
+box-shadow:
+0 50px 80px rgba(0,0,0,.45),
+0 0 60px rgba(212,175,55,.08);
+
+transition:.6s ease;
+}
+
+.hero-image:hover{
+transform:
+perspective(1000px)
+rotateY(0deg)
+translateY(-10px)
+scale(1.02);
+}
+
+/* badges cinematic */
+.floating-badge{
+background:
+rgba(255,255,255,.08);
+
+backdrop-filter:blur(22px);
+-webkit-backdrop-filter:blur(22px);
+
+border:
+1px solid rgba(255,255,255,.12);
+
+box-shadow:
+0 15px 40px rgba(0,0,0,.28);
+
+animation:
+premiumFloat 6s ease-in-out infinite;
+}
+
+/* CTA luxe */
+.hero-buttons{
+display:flex;
+gap:18px;
+flex-wrap:wrap;
+}
+
+.hero-btn{
+border-radius:20px;
+font-weight:700;
+letter-spacing:.2px;
+box-shadow:
+0 15px 40px rgba(0,0,0,.22);
+}
+
+.btn-primary{
+background:
+linear-gradient(
+135deg,
+#d4af37,
+#b8860b
+);
+}
+
+.btn-primary:hover{
+transform:
+translateY(-6px)
+scale(1.02);
+box-shadow:
+0 25px 50px rgba(212,175,55,.22);
+}
+
+/* stats premium */
+.hero-stat-card{
+background:
+rgba(255,255,255,.04);
+
+backdrop-filter:blur(18px);
+-webkit-backdrop-filter:blur(18px);
+
+border:
+1px solid rgba(255,255,255,.06);
+
+border-radius:22px;
+
+transition:.35s ease;
+}
+
+.hero-stat-card:hover{
+transform:
+translateY(-8px)
+scale(1.03);
+}
+
+/* socials luxe */
+.hero-socials a{
+width:52px;
+height:52px;
+border-radius:18px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+background:
+rgba(255,255,255,.05);
+
+backdrop-filter:blur(12px);
+
+transition:.35s ease;
+}
+
+.hero-socials a:hover{
+transform:
+translateY(-6px)
+scale(1.08);
+
+background:
+rgba(255,255,255,.12);
+}
+
+/* animations */
+@keyframes heroFloat{
+0%{
+transform:translateY(0px);
+}
+50%{
+transform:translateY(-16px);
+}
+100%{
+transform:translateY(0px);
+}
+}
+
+@keyframes goldAura{
+0%{
+transform:scale(1);
+opacity:.7;
+}
+50%{
+transform:scale(1.08);
+opacity:1;
+}
+100%{
+transform:scale(1);
+opacity:.7;
+}
+}
+
+@keyframes premiumFloat{
+0%{
+transform:translateY(0px);
+}
+50%{
+transform:translateY(-10px);
+}
+100%{
+transform:translateY(0px);
+}
+}
+
+@keyframes cinematicGlow{
+0%{
+transform:translate(0,0);
+}
+50%{
+transform:translate(-30px,20px);
+}
+100%{
+transform:translate(0,0);
+}
+}
+
+@keyframes cinematicGlow2{
+0%{
+transform:translate(0,0);
+}
+50%{
+transform:translate(20px,-20px);
+}
+100%{
+transform:translate(0,0);
+}
+}
+
+/* mobile safe */
+@media(max-width:768px){
+
+.hero{
+padding-top:120px;
+}
+
+.hero-title{
+font-size:42px;
+}
+
+.hero-description{
+font-size:16px;
+}
+
+.hero-image{
+transform:none;
+border-radius:24px;
+}
+
+}
