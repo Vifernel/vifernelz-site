@@ -1706,3 +1706,38 @@ right:20px !important;
 }
 
 }
+/* ELITE HERO SOCIALS */
+
+.hero-socials{
+display:flex;
+gap:14px;
+flex-wrap:wrap;
+margin-top:35px;
+}
+
+.hero-socials a{
+width:52px;
+height:52px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:16px;
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.06);
+font-size:20px;
+transition:.35s ease;
+}
+
+.hero-socials a:hover{
+transform:translateY(-6px);
+background:rgba(138,180,255,.1);
+border-color:rgba(138,180,255,.2);
+}
+
+@media(max-width:768px){
+
+.hero-socials{
+justify-content:center;
+}
+
+}
