@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // click bouton menu
+  // bouton menu
   if (menuToggle) {
     menuToggle.addEventListener("click", toggleMenu);
   }
@@ -39,13 +39,14 @@ document.addEventListener("DOMContentLoaded", () => {
     overlay.addEventListener("click", closeMenu);
   }
 
-  // click lien
+  // click lien menu
   links.forEach(link => {
     link.addEventListener("click", closeMenu);
   });
 
   // ===== HEADER SCROLL EFFECT =====
   window.addEventListener("scroll", () => {
+
     if (!header) return;
 
     if (window.scrollY > 50) {
@@ -53,49 +54,43 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       header.classList.remove("scrolled");
     }
+
   });
 
-  // ===== REVEAL ON SCROLL =====
+  // ===== REVEAL ON SCROLL FIX =====
   const revealElements = document.querySelectorAll(`
     section,
     .expertise-card,
     .service-card,
     .premium-project-card,
     .timeline-item,
-    .contact-card
+    .contact-card,
+    .hero-stat-card,
+    .about-image,
+    .about-content
   `);
 
-  const observer = new IntersectionObserver((entries) => {
+  // état initial AVANT apparition
+  revealElements.forEach(el => {
+    el.classList.add("reveal");
+  });
+
+  const revealObserver = new IntersectionObserver((entries) => {
+
     entries.forEach(entry => {
+
       if (entry.isIntersecting) {
-        entry.target.classList.add("reveal");
         entry.target.classList.add("active");
       }
+
     });
+
   }, {
     threshold: 0.12
   });
 
   revealElements.forEach(el => {
-    el.classList.add("reveal");
-    observer.observe(el);
-  });
-
-  // ===== SECTION ANIMATION =====
-  const sections = document.querySelectorAll("section");
-
-  const sectionObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("show");
-      }
-    });
-  }, {
-    threshold: 0.15
-  });
-
-  sections.forEach(section => {
-    sectionObserver.observe(section);
+    revealObserver.observe(el);
   });
 
 });
