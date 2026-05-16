@@ -868,12 +868,14 @@ scroll-behavior:smooth;
 
 /* Smooth section reveal */
 
+/* SAFE PREMIUM REVEAL */
+
 .reveal{
-opacity:1 !important;
-transform:translateY(0) !important;
+opacity:.15;
+transform:translateY(25px);
 transition:
-opacity .9s ease,
-transform .9s ease;
+opacity .8s ease,
+transform .8s ease;
 will-change:transform, opacity;
 }
 
