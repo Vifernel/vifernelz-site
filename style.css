@@ -2611,18 +2611,17 @@ transition:.25s ease;
 a:hover{
 opacity:.9;
 }
-/* ===== REVEAL ANIMATION RESTORE ===== */
+/* ===== SAFE REVEAL ===== */
 
 .reveal{
 opacity:0;
-transform:translateY(70px);
+transform:translateY(40px);
 transition:
-opacity .9s ease,
-transform .9s ease;
-will-change:transform, opacity;
+opacity .8s ease,
+transform .8s ease;
 }
 
 .reveal.active{
-opacity:1;
-transform:translateY(0);
+opacity:1 !important;
+transform:translateY(0) !important;
 }
