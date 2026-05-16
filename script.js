@@ -1,12 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  // ===== MENU =====
+  // ===== ELEMENTS =====
   const menuToggle = document.querySelector(".menu-toggle");
   const navMenu = document.querySelector(".nav-menu");
   const overlay = document.querySelector(".menu-overlay");
   const links = document.querySelectorAll(".nav-menu a");
   const header = document.querySelector(".header");
 
+  // sécurité
+  if (!menuToggle || !navMenu || !overlay) return;
+
+  // ===== MENU SIMPLE STABLE =====
   function openMenu() {
     navMenu.classList.add("active");
     menuToggle.classList.add("active");
@@ -21,82 +25,41 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.remove("menu-open");
   }
 
-  function toggleMenu() {
+  menuToggle.addEventListener("click", () => {
     if (navMenu.classList.contains("active")) {
       closeMenu();
     } else {
       openMenu();
     }
-  }
-
-  // bouton menu
-  if (menuToggle) {
-    menuToggle.addEventListener("click", toggleMenu);
-  }
-
-  // click overlay
-  if (overlay) {
-    overlay.addEventListener("click", closeMenu);
-  }
-
-  // click lien menu
-  links.forEach(link => {
-    link.addEventListener("click", closeMenu);
   });
 
-  // ===== HEADER SCROLL EFFECT =====
+  overlay.addEventListener("click", closeMenu);
+
+  links.forEach(link => link.addEventListener("click", closeMenu));
+
+
+  // ===== HEADER SCROLL =====
   window.addEventListener("scroll", () => {
-
     if (!header) return;
-
-    if (window.scrollY > 50) {
-      header.classList.add("scrolled");
-    } else {
-      header.classList.remove("scrolled");
-    }
-
+    header.classList.toggle("scrolled", window.scrollY > 50);
   });
 
-  // ===== REVEAL ON SCROLL (FIX TOTAL) =====
-  const revealElements = document.querySelectorAll(`
-    section,
-    .expertise-card,
-    .service-card,
-    .premium-project-card,
-    .timeline-item,
-    .contact-card,
-    .hero-stat-card,
-    .about-image,
-    .about-content
-  `);
 
-  // état initial
-  revealElements.forEach(el => {
-    el.classList.add("reveal");
-  });
+  // ===== REVEAL ULTRA SAFE (IMPORTANT) =====
+  const items = document.querySelectorAll(
+    "section, .expertise-card, .service-card, .premium-project-card, .timeline-item, .contact-card, .hero-stat-card"
+  );
 
-  const revealObserver = new IntersectionObserver((entries) => {
-
+  const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-
       if (entry.isIntersecting) {
-
         entry.target.classList.add("active");
-
-        // évite bug section figée
-        revealObserver.unobserve(entry.target);
-
       }
-
     });
-
   }, {
-    threshold: 0.02,
-    rootMargin: "0px 0px -80px 0px"
+    threshold: 0.15
   });
 
-  revealElements.forEach(el => {
-    revealObserver.observe(el);
-  });
+  items.forEach(el => observer.observe(el));
 
 });
