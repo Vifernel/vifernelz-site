@@ -869,8 +869,8 @@ scroll-behavior:smooth;
 /* Smooth section reveal */
 
 .reveal{
-opacity:0;
-transform:translateY(40px);
+opacity:1 !important;
+transform:translateY(0) !important;
 transition:
 opacity .9s ease,
 transform .9s ease;
@@ -878,8 +878,8 @@ will-change:transform, opacity;
 }
 
 .reveal.active{
-opacity:1;
-transform:translateY(0);
+opacity:1 !important;
+transform:translateY(0) !important;
 }
 
 /* Floating premium */
