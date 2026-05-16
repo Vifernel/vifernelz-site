@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   });
 
-  // ===== REVEAL ON SCROLL (FIX TOTAL) =====
+  // ===== SAFE REVEAL =====
   const revealElements = document.querySelectorAll(`
     section,
     .expertise-card,
@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .about-content
   `);
 
-  // état initial
+  // ajoute reveal proprement
   revealElements.forEach(el => {
     el.classList.add("reveal");
   });
@@ -83,16 +83,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         entry.target.classList.add("active");
 
-        // évite bug section figée
-        revealObserver.unobserve(entry.target);
-
       }
 
     });
 
   }, {
-    threshold: 0.02,
-    rootMargin: "0px 0px -80px 0px"
+    threshold: 0.08,
+    rootMargin: "0px 0px -40px 0px"
   });
 
   revealElements.forEach(el => {
