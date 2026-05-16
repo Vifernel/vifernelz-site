@@ -22,23 +22,29 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function toggleMenu() {
-    navMenu.classList.contains("active")
-      ? closeMenu()
-      : openMenu();
+    if (navMenu.classList.contains("active")) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
   }
 
-  // menu button
-  menuToggle?.addEventListener("click", toggleMenu);
+  // bouton menu
+  if (menuToggle) {
+    menuToggle.addEventListener("click", toggleMenu);
+  }
 
-  // overlay close
-  overlay?.addEventListener("click", closeMenu);
+  // click overlay
+  if (overlay) {
+    overlay.addEventListener("click", closeMenu);
+  }
 
-  // links close
+  // click lien menu
   links.forEach(link => {
     link.addEventListener("click", closeMenu);
   });
 
-  // ===== HEADER EFFECT =====
+  // ===== HEADER SCROLL EFFECT =====
   window.addEventListener("scroll", () => {
 
     if (!header) return;
@@ -51,8 +57,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   });
 
-  // ===== SCROLL REVEAL FIX =====
-  const revealItems = document.querySelectorAll(`
+  // ===== REVEAL ON SCROLL (FIX TOTAL) =====
+  const revealElements = document.querySelectorAll(`
     section,
     .expertise-card,
     .service-card,
@@ -64,22 +70,33 @@ document.addEventListener("DOMContentLoaded", () => {
     .about-content
   `);
 
-  const observer = new IntersectionObserver((entries) => {
+  // état initial
+  revealElements.forEach(el => {
+    el.classList.add("reveal");
+  });
+
+  const revealObserver = new IntersectionObserver((entries) => {
 
     entries.forEach(entry => {
 
       if (entry.isIntersecting) {
+
         entry.target.classList.add("active");
+
+        // évite bug section figée
+        revealObserver.unobserve(entry.target);
+
       }
 
     });
 
   }, {
-    threshold: 0.01
+    threshold: 0.02,
+    rootMargin: "0px 0px -80px 0px"
   });
 
-  revealItems.forEach(item => {
-    observer.observe(item);
+  revealElements.forEach(el => {
+    revealObserver.observe(el);
   });
 
 });
