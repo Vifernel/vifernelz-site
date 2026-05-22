@@ -27,29 +27,37 @@ exports.handler = async (event) => {
     });
 
     // AUTO-RÉPONSE CLIENT
-    await fetch("https://api.brevo.com/v3/smtp/email", {
-      method: "POST",
-      headers: {
-        "accept": "application/json",
-        "api-key": process.env.BREVO_API_KEY,
-        "content-type": "application/json"
-      },
-      body: JSON.stringify({
-        sender: {
-          name: "VifernelZ",
-          email: "contact@vifernelz.com"
-        },
-        to: [{ email: data.email }],
-        subject: "Merci pour votre message",
-        htmlContent: `
-          <h2>Merci ${data.name}</h2>
-          <p>Nous avons bien reçu ton message.</p>
-          <p>Notre équipe te répond sous 24h.</p>
-          <br>
-          <p>— VifernelZ</p>
-        `
-      })
-    });
+await fetch("https://api.brevo.com/v3/smtp/email", {
+  method: "POST",
+  headers: {
+    "accept": "application/json",
+    "api-key": process.env.BREVO_API_KEY,
+    "content-type": "application/json"
+  },
+  body: JSON.stringify({
+    sender: {
+      name: "VifernelZ",
+      email: "contact@vifernelz.com"
+    },
+    replyTo: {
+      email: "contact@vifernelz.com",
+      name: "VifernelZ"
+    },
+    to: [
+      {
+        email: data.email
+      }
+    ],
+    subject: "Merci pour votre message",
+    htmlContent: `
+      <h2>Merci ${data.name}</h2>
+      <p>Nous avons bien reçu votre message.</p>
+      <p>Notre équipe vous répondra sous 24h.</p>
+      <br>
+      <p>— VifernelZ</p>
+    `
+  })
+});
 
     return {
       statusCode: 200,
