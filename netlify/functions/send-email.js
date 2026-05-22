@@ -28,13 +28,12 @@ exports.handler = async (event) => {
             email: "contact@vifernelz.com"
           }
         ],
-        subject:
-          data.subject || "Nouveau message site VifernelZ",
+        subject: data.subject || "Nouveau message site VifernelZ",
         htmlContent: `
           <h3>Nouveau message</h3>
-          <p><b>Nom:</b> ${data.name}</p>
-          <p><b>Email:</b> ${data.email}</p>
-          <p><b>Message:</b><br>${data.message}</p>
+          <p><b>Nom:</b> ${data.name || ""}</p>
+          <p><b>Email:</b> ${data.email || ""}</p>
+          <p><b>Message:</b><br>${data.message || ""}</p>
         `
       })
     });
@@ -63,7 +62,7 @@ exports.handler = async (event) => {
         ],
         subject: "Merci pour votre message",
         htmlContent: `
-          <h2>Merci ${data.name}</h2>
+          <h2>Merci ${data.name || ""}</h2>
           <p>Nous avons bien reçu votre message.</p>
           <p>Notre équipe vous répondra sous 24h.</p>
           <br>
@@ -78,6 +77,7 @@ exports.handler = async (event) => {
         message: "Message envoyé avec succès"
       })
     };
+
   } catch (error) {
     return {
       statusCode: 500,
