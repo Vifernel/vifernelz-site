@@ -734,26 +734,52 @@ FOLLOW ME
 <form action="https://formsubmit.co/contact@vifernelz.com"
 method="POST">
 
-<!-- CONFIGURATION FORM SUBMIT (IMPORTANT) -->
-<input type="hidden" name="_captcha" value="false">
-<input type="hidden" name="_subject" value="Nouveau message depuis VifernelZ Website">
+  <!-- CONFIGURATION -->
+  <input type="hidden" name="_captcha" value="false">
 
-<!-- FORM FIELDS -->
-<label>Nom complet</label>
-<input type="text" name="name" placeholder="Votre nom complet" required>
+  <input type="hidden"
+  name="_subject"
+  value="Nouveau message depuis VifernelZ Website">
 
-<label>Email</label>
-<input type="email" name="email" placeholder="votre@email.com" required>
+  <input type="hidden"
+  name="_template"
+  value="table">
 
-<label>Type de projet</label>
-<input type="text" name="subject" placeholder="Site web, business, branding, IA...">
+  <input type="hidden"
+  name="_replyto"
+  value="%email%">
 
-<label>Votre message</label>
-<textarea name="message" placeholder="Décrivez votre projet ou besoin..." required></textarea>
+  <input type="hidden"
+  name="_autoresponse"
+  value="Bonjour, merci pour votre message. Nous avons bien reçu votre demande chez VifernelZ et nous vous répondrons sous 24 heures. Cordialement, L’équipe VifernelZ.">
 
-<button type="submit" class="send-btn">
-Envoyer le message
-</button>
+  <!-- FORM FIELDS -->
+  <label>Nom complet</label>
+  <input type="text"
+  name="name"
+  placeholder="Votre nom complet"
+  required>
+
+  <label>Email</label>
+  <input type="email"
+  name="email"
+  placeholder="votre@email.com"
+  required>
+
+  <label>Type de projet</label>
+  <input type="text"
+  name="subject"
+  placeholder="Site web, business, branding, IA...">
+
+  <label>Votre message</label>
+  <textarea
+  name="message"
+  placeholder="Décrivez votre projet ou besoin..."
+  required></textarea>
+
+  <button type="submit" class="send-btn">
+    Envoyer le message
+  </button>
 
 </form>
 
