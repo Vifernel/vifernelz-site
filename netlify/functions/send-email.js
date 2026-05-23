@@ -1,8 +1,97 @@
-exports.handler = async () => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: "NETLIFY FUNCTION WORKS"
-    })
-  };
+exports.handler = async (event) => {
+  try {
+    const params = new URLSearchParams(event.body);
+
+    const data = {
+      name: params.get("name"),
+      email: params.get("email"),
+      subject: params.get("subject"),
+      message: params.get("message")
+    };
+
+    // EMAIL ADMIN
+    const adminResponse = await fetch(
+      "https://api.brevo.com/v3/smtp/email",
+      {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "api-key": process.env.BREVO_API_KEY,
+          "content-type": "application/json"
+        },
+        body: JSON.stringify({
+          sender: {
+            name: "VifernelZ",
+            email: "contact@vifernelz.com"
+          },
+          to: [
+            {
+              email: "contact@vifernelz.com"
+            }
+          ],
+          subject:
+            data.subject || "Nouveau message site VifernelZ",
+          htmlContent: `
+            <h3>Nouveau message</h3>
+            <p><b>Nom:</b> ${data.name}</p>
+            <p><b>Email:</b> ${data.email}</p>
+            <p><b>Message:</b><br>${data.message}</p>
+          `
+        })
+      }
+    );
+
+    const adminResult = await adminResponse.text();
+
+    // AUTO EMAIL CLIENT
+    const clientResponse = await fetch(
+      "https://api.brevo.com/v3/smtp/email",
+      {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "api-key": process.env.BREVO_API_KEY,
+          "content-type": "application/json"
+        },
+        body: JSON.stringify({
+          sender: {
+            name: "VifernelZ",
+            email: "contact@vifernelz.com"
+          },
+          to: [
+            {
+              email: data.email
+            }
+          ],
+          subject: "Merci pour votre message",
+          htmlContent: `
+            <h2>Merci ${data.name}</h2>
+            <p>Nous avons bien reçu votre message.</p>
+            <p>Notre équipe vous répondra sous 24h.</p>
+            <br>
+            <p>— VifernelZ</p>
+          `
+        })
+      }
+    );
+
+    const clientResult = await clientResponse.text();
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        success: true,
+        admin: adminResult,
+        client: clientResult
+      })
+    };
+
+  } catch (error) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        error: error.message
+      })
+    };
+  }
 };
