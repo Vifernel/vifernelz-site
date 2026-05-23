@@ -97,3 +97,24 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 });
+document.getElementById("contactForm").addEventListener("submit", function(e) {
+
+  const form = e.target;
+
+  const honeypot = form.website.value;
+  const captcha = form.captcha.value;
+
+  // BLOQUE BOTS
+  if (honeypot !== "") {
+    e.preventDefault();
+    return;
+  }
+
+  // CAPTCHA SIMPLE
+  if (parseInt(captcha) !== 7) {
+    e.preventDefault();
+    alert("Captcha incorrect");
+    return;
+  }
+
+});
