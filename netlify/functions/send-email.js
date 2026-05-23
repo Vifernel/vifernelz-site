@@ -11,41 +11,12 @@ exports.handler = async (event) => {
 
     console.log("FORM DATA:", data);
 
-    // =========================
-    // EMAIL ADMIN (CONTACT)
-    // =========================
-    await fetch("https://api.brevo.com/v3/smtp/email", {
-      method: "POST",
-      headers: {
-        accept: "application/json",
-        "api-key": process.env.BREVO_API_KEY,
-        "content-type": "application/json"
-      },
-      body: JSON.stringify({
-        sender: {
-          name: "VifernelZ",
-          email: "contact@vifernelz.com"
-        },
-        to: [
-          {
-            email: "contact@vifernelz.com"
-          }
-        ],
-        subject: data.subject || "Nouveau message site VifernelZ",
-        htmlContent: `
-          <h3>Nouveau message reçu</h3>
-          <p><b>Nom:</b> ${data.name}</p>
-          <p><b>Email:</b> ${data.email}</p>
-          <p><b>Message:</b><br>${data.message}</p>
-        `
-      })
-    });
-
-    // =========================
-    // AUTO-RÉPONSE CLIENT
-    // =========================
-    if (data.email) {
-      await fetch("https://api.brevo.com/v3/smtp/email", {
+    // ======================
+    // EMAIL ADMIN
+    // ======================
+    const adminResponse = await fetch(
+      "https://api.brevo.com/v3/smtp/email",
+      {
         method: "POST",
         headers: {
           accept: "application/json",
@@ -57,32 +28,71 @@ exports.handler = async (event) => {
             name: "VifernelZ",
             email: "contact@vifernelz.com"
           },
-          replyTo: {
-            email: "contact@vifernelz.com",
-            name: "VifernelZ"
-          },
           to: [
             {
-              email: data.email
+              email: "contact@vifernelz.com"
             }
           ],
-          subject: "Merci pour votre message",
+          subject:
+            data.subject || "Nouveau message site VifernelZ",
           htmlContent: `
-            <h2>Merci ${data.name}</h2>
-            <p>Nous avons bien reçu votre message.</p>
-            <p>Notre équipe vous répondra sous 24h.</p>
-            <br>
-            <p>— VifernelZ</p>
+            <h3>Nouveau message reçu</h3>
+            <p><b>Nom:</b> ${data.name}</p>
+            <p><b>Email:</b> ${data.email}</p>
+            <p><b>Message:</b><br>${data.message}</p>
           `
         })
-      });
+      }
+    );
+
+    const adminResult = await adminResponse.json();
+    console.log("ADMIN EMAIL:", adminResult);
+
+    // ======================
+    // AUTO-RÉPONSE CLIENT
+    // ======================
+    if (data.email) {
+      const clientResponse = await fetch(
+        "https://api.brevo.com/v3/smtp/email",
+        {
+          method: "POST",
+          headers: {
+            accept: "application/json",
+            "api-key": process.env.BREVO_API_KEY,
+            "content-type": "application/json"
+          },
+          body: JSON.stringify({
+            sender: {
+              name: "VifernelZ",
+              email: "contact@vifernelz.com"
+            },
+            to: [
+              {
+                email: data.email
+              }
+            ],
+            subject: "Merci pour votre message",
+            htmlContent: `
+              <h2>Merci ${data.name}</h2>
+              <p>Nous avons bien reçu votre message.</p>
+              <p>Notre équipe vous répondra sous 24h.</p>
+              <br>
+              <p>— VifernelZ</p>
+            `
+          })
+        }
+      );
+
+      const clientResult = await clientResponse.json();
+      console.log("CLIENT EMAIL:", clientResult);
     }
 
+    // Redirection vers ton site au lieu du JSON
     return {
-      statusCode: 200,
-      body: JSON.stringify({
-        message: "Message envoyé avec succès"
-      })
+      statusCode: 302,
+      headers: {
+        Location: "https://vifernelz.com"
+      }
     };
 
   } catch (error) {
