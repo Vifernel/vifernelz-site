@@ -45,7 +45,24 @@ color:#fff;
 .logo span{
 color:#8ab4ff;
 }
+.site-logo{
+  height: 68px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  transition: 0.3s ease;
+}
 
+.site-logo:hover{
+  transform: scale(1.03);
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  .site-logo{
+    height: 52px;
+  }
+}
 .nav-actions{
 display:flex;
 align-items:center;
