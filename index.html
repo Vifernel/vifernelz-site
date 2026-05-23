@@ -731,53 +731,50 @@ FOLLOW ME
 <!-- RIGHT -->
 <div class="contact-form-box">
 
-<form action="https://formsubmit.co/contact@vifernelz.com"
-method="POST">
+<form id="contactForm">
 
-  <!-- CONFIGURATION -->
-  <input type="hidden" name="_captcha" value="false">
+  <input type="hidden" name="bot-field" />
 
-  <input type="hidden"
-  name="_subject"
-  value="Nouveau message depuis VifernelZ Website">
-<input type="hidden"
-name="_next"
-value="https://www.vifernelz.com">
-  <input type="hidden"
-  name="_template"
-  value="table">
+  <!-- HONEYPOT ANTI-SPAM -->
+  <input type="text"
+  name="website"
+  style="display:none">
 
-  <input type="hidden"
-  name="_replyto"
-  value="%email%">
-
-  <input type="hidden"
-  name="_autoresponse"
-  value="Bonjour, merci pour votre message. Nous avons bien reçu votre demande chez VifernelZ et nous vous répondrons sous 24 heures. Cordialement, L’équipe VifernelZ.">
-
-  <!-- FORM FIELDS -->
+  <!-- NOM -->
   <label>Nom complet</label>
   <input type="text"
   name="name"
   placeholder="Votre nom complet"
+  minlength="3"
   required>
 
+  <!-- EMAIL -->
   <label>Email</label>
   <input type="email"
   name="email"
   placeholder="votre@email.com"
   required>
 
+  <!-- SUJET -->
   <label>Type de projet</label>
   <input type="text"
   name="subject"
-  placeholder="Site web, business, branding, IA...">
+  placeholder="Site web, branding, IA..."
+  minlength="3">
 
+  <!-- MESSAGE -->
   <label>Votre message</label>
   <textarea
   name="message"
-  placeholder="Décrivez votre projet ou besoin..."
+  placeholder="Décrivez votre projet..."
+  minlength="10"
   required></textarea>
+
+  <!-- CAPTCHA SIMPLE (ANTI BOT HUMAIN) -->
+  <label>Combien font 3 + 4 ?</label>
+  <input type="number"
+  name="captcha"
+  required>
 
   <button type="submit" class="send-btn">
     Envoyer le message
