@@ -731,50 +731,30 @@ FOLLOW ME
 <!-- RIGHT -->
 <div class="contact-form-box">
 
-<form id="contactForm">
+<form action="https://formsubmit.co/contact@vifernelz.com" method="POST">
 
-  <input type="hidden" name="bot-field" />
+  <input type="hidden" name="_captcha" value="false">
+  <input type="hidden" name="_subject" value="Nouveau message VifernelZ">
+  <input type="hidden" name="_template" value="table">
 
-  <!-- HONEYPOT ANTI-SPAM -->
-  <input type="text"
-  name="website"
-  style="display:none">
+  <!-- HONEYPOT -->
+  <input type="text" name="_honey" style="display:none">
 
-  <!-- NOM -->
+  <!-- ANTI BOT CHECK -->
+  <input type="hidden" name="_autoresponse"
+  value="Merci pour votre message. Nous vous répondrons sous 24h.">
+
   <label>Nom complet</label>
-  <input type="text"
-  name="name"
-  placeholder="Votre nom complet"
-  minlength="3"
-  required>
+  <input type="text" name="name" required minlength="3">
 
-  <!-- EMAIL -->
   <label>Email</label>
-  <input type="email"
-  name="email"
-  placeholder="votre@email.com"
-  required>
+  <input type="email" name="email" required>
 
-  <!-- SUJET -->
   <label>Type de projet</label>
-  <input type="text"
-  name="subject"
-  placeholder="Site web, branding, IA..."
-  minlength="3">
+  <input type="text" name="subject">
 
-  <!-- MESSAGE -->
   <label>Votre message</label>
-  <textarea
-  name="message"
-  placeholder="Décrivez votre projet..."
-  minlength="10"
-  required></textarea>
-
-  <!-- CAPTCHA SIMPLE (ANTI BOT HUMAIN) -->
-  <label>Combien font 3 + 4 ?</label>
-  <input type="number"
-  name="captcha"
-  required>
+  <textarea name="message" required minlength="10"></textarea>
 
   <button type="submit" class="send-btn">
     Envoyer le message
