@@ -46,7 +46,7 @@ color:#fff;
 color:#8ab4ff;
 }
 .site-logo{
-  height: 68px;
+  height: 120px;
   width: auto;
   object-fit: contain;
   display: block;
@@ -60,7 +60,7 @@ color:#8ab4ff;
 /* MOBILE */
 @media(max-width:768px){
   .site-logo{
-    height: 52px;
+    height: 90px;
   }
 }
 .nav-actions{
