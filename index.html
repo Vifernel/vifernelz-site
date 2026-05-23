@@ -731,10 +731,26 @@ FOLLOW ME
 <!-- RIGHT -->
 <div class="contact-form-box">
 
-<form action="/.netlify/functions/send-email" method="POST">
+<form action="https://formsubmit.co/contact@vifernelz.com" method="POST">
 
+  <!-- CONFIG -->
+  <input type="hidden" name="_captcha" value="false">
+
+  <input type="hidden" name="_subject"
+  value="Nouveau message depuis VifernelZ Website">
+
+  <input type="hidden" name="_template" value="table">
+
+  <input type="hidden" name="_next"
+  value="https://vifernelz.com">
+
+  <!-- AUTO EMAIL CLIENT -->
+  <input type="hidden" name="_autoresponse"
+  value="Bonjour, merci pour votre message. Nous avons bien reçu votre demande chez VifernelZ et nous vous répondrons sous 24 heures. Cordialement, L'équipe VifernelZ.">
+
+  <!-- FIELDS -->
   <label>Nom complet</label>
-  <input type="text" 
+  <input type="text"
   name="name"
   placeholder="Votre nom complet"
   required>
