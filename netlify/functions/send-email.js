@@ -1,15 +1,24 @@
 exports.handler = async (event) => {
   try {
-
     console.log("RAW BODY:", event.body);
+
+    const BREVO_KEY = process.env.BREVO_API_KEY;
+
+    // 🔥 DEBUG CRITIQUE
+    console.log("BREVO KEY EXISTS:", !!BREVO_KEY);
+    console.log("BREVO KEY LENGTH:", BREVO_KEY ? BREVO_KEY.length : 0);
+
+    if (!BREVO_KEY) {
+      throw new Error("BREVO_API_KEY is missing in Netlify environment variables");
+    }
 
     let data = {};
 
-    // SAFE PARSING (IMPORTANT)
+    // SAFE PARSING
     try {
       data = JSON.parse(event.body);
     } catch (e) {
-      const params = new URLSearchParams(event.body);
+      const params = new URLSearchParams(event.body || "");
       data = {
         name: params.get("name"),
         email: params.get("email"),
@@ -24,7 +33,7 @@ exports.handler = async (event) => {
       method: "POST",
       headers: {
         accept: "application/json",
-        "api-key": process.env.BREVO_API_KEY,
+        "api-key": BREVO_KEY.trim(),
         "content-type": "application/json"
       },
       body: JSON.stringify({
@@ -36,15 +45,16 @@ exports.handler = async (event) => {
         subject: data.subject || "Nouveau message site",
         htmlContent: `
           <h3>Nouveau message</h3>
-          <p><b>Nom:</b> ${data.name}</p>
-          <p><b>Email:</b> ${data.email}</p>
-          <p><b>Message:</b><br>${data.message}</p>
+          <p><b>Nom:</b> ${data.name || "N/A"}</p>
+          <p><b>Email:</b> ${data.email || "N/A"}</p>
+          <p><b>Message:</b><br>${data.message || "N/A"}</p>
         `
       })
     });
 
     const result = await response.text();
 
+    console.log("BREVO STATUS:", response.status);
     console.log("BREVO RESULT:", result);
 
     if (!response.ok) {
