@@ -19,7 +19,7 @@ exports.handler = async (event) => {
         "accept": "application/json"
       },
       body: JSON.stringify({
-        templateId: 1, // 👈 ton template Brevo
+        templateId: 1,
         sender: {
           name: "VifernelZ",
           email: "contact@vifernelz.com"
@@ -34,18 +34,16 @@ exports.handler = async (event) => {
           name: name
         },
         params: {
-          name: name,
-          email: email,
-          subject: subject,
-          message: message
+          name,
+          email,
+          subject,
+          message
         }
       })
     });
 
-    const adminResult = await adminResponse.text();
-
     // =========================
-    // 2️⃣ AUTO EMAIL CLIENT
+    // 2️⃣ AUTO EMAIL CLIENT (DARK MODE)
     // =========================
     const clientResponse = await fetch("https://api.brevo.com/v3/smtp/email", {
       method: "POST",
@@ -66,43 +64,47 @@ exports.handler = async (event) => {
         ],
         subject: "Merci pour votre message - VifernelZ",
         htmlContent: `
-          <div style="font-family:Arial;padding:20px;">
+          <div style="font-family:Arial;background:#0b0f1a;color:#ffffff;padding:30px;border-radius:12px;">
+
             <div style="text-align:center;">
               <img src="https://vifernelz.com/images/44D0E6A3-D26B-4797-9088-91885C732E69.png"
-              style="height:90px;">
+              style="height:90px;margin-bottom:20px;">
             </div>
 
-            <h2>Merci ${name} 🙌</h2>
+            <h2 style="color:#8ab4ff;">Merci ${name} 🙌</h2>
 
-            <p>Nous avons bien reçu votre message.</p>
+            <p style="color:#e5e7eb;">
+              Nous avons bien reçu votre message.
+            </p>
 
-            <p>Notre équipe vous répondra sous 24h.</p>
+            <p style="color:#cbd5e1;">
+              Notre équipe vous répondra sous 24h.
+            </p>
 
-            <hr>
+            <hr style="border:1px solid #1f2a44;margin:20px 0;">
 
-            <p><b>Votre message :</b></p>
-            <p>${message}</p>
+            <div style="background:#111827;padding:15px;border-radius:10px;">
+              <p style="color:#8ab4ff;"><b>Votre message :</b></p>
+              <p style="color:#ffffff;">${message}</p>
+            </div>
 
             <br>
-            <p>— VifernelZ Team</p>
+
+            <p style="color:#94a3b8;">— VifernelZ Team</p>
+
           </div>
         `
       })
     });
 
-    const clientResult = await clientResponse.text();
-
     // =========================
-    // 3️⃣ RETURN DEBUG
+    // 3️⃣ RETURN CLEAN (PLUS DE JSON AFFICHÉ)
     // =========================
     return {
-      statusCode: 200,
-      body: JSON.stringify({
-        success: true,
-        message: "Emails sent via Brevo",
-        admin: adminResult,
-        client: clientResult
-      })
+      statusCode: 302,
+      headers: {
+        Location: "/?success=true"
+      }
     };
 
   } catch (error) {
