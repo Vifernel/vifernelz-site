@@ -737,33 +737,22 @@ FOLLOW ME
 <!-- RIGHT -->
 <div class="contact-form-box">
 
-<form action="https://formsubmit.co/contact@vifernelz.com" method="POST">
-
-  <input type="hidden" name="_captcha" value="false">
-  <input type="hidden" name="_subject" value="Nouveau message VifernelZ">
-  <input type="hidden" name="_template" value="table">
-
-  <!-- HONEYPOT -->
-  <input type="text" name="_honey" style="display:none">
-
-  <!-- ANTI BOT CHECK -->
-  <input type="hidden" name="_autoresponse"
-  value="Merci pour votre message. Nous vous répondrons sous 24h.">
+<form action="/.netlify/functions/send-email" method="POST">
 
   <label>Nom complet</label>
-  <input type="text" name="name" required minlength="3">
+  <input type="text" name="name" required>
 
   <label>Email</label>
   <input type="email" name="email" required>
 
-  <label>Type de projet</label>
+  <label>Sujet</label>
   <input type="text" name="subject">
 
-  <label>Votre message</label>
-  <textarea name="message" required minlength="10"></textarea>
+  <label>Message</label>
+  <textarea name="message" required></textarea>
 
-  <button type="submit" class="send-btn">
-    Envoyer le message
+  <button type="submit">
+    Envoyer
   </button>
 
 </form>
