@@ -29,22 +29,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // bouton menu
+  // Bouton menu
   if (menuToggle) {
     menuToggle.addEventListener("click", toggleMenu);
   }
 
-  // click overlay
+  // Overlay
   if (overlay) {
     overlay.addEventListener("click", closeMenu);
   }
 
-  // click lien menu
+  // Liens menu
   links.forEach(link => {
     link.addEventListener("click", closeMenu);
   });
 
-  // ===== HEADER SCROLL EFFECT =====
+  // ===== HEADER SCROLL =====
   window.addEventListener("scroll", () => {
 
     if (!header) return;
@@ -57,25 +57,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
   });
 
-  // ===== SAFE REVEAL =====
+  // ===== REVEAL PREMIUM =====
+
   const revealElements = document.querySelectorAll(`
-    section,
+    .section-title,
+    .about-image,
+    .about-content,
     .expertise-card,
     .service-card,
-    .premium-project-card,
     .timeline-item,
+    .premium-project-card,
+    .availability-box,
     .contact-card,
+    .contact-form-box,
     .hero-stat-card,
-    .about-image,
-    .about-content
+    .hero-socials a
   `);
 
-  // ajoute reveal proprement
   revealElements.forEach(el => {
     el.classList.add("reveal");
   });
 
-  const revealObserver = new IntersectionObserver((entries) => {
+  const observer = new IntersectionObserver((entries) => {
 
     entries.forEach(entry => {
 
@@ -83,38 +86,47 @@ document.addEventListener("DOMContentLoaded", () => {
 
         entry.target.classList.add("active");
 
+        observer.unobserve(entry.target);
+
       }
 
     });
 
   }, {
-    threshold: 0.08,
-    rootMargin: "0px 0px -40px 0px"
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px"
   });
 
   revealElements.forEach(el => {
-    revealObserver.observe(el);
+    observer.observe(el);
   });
 
-});
-document.getElementById("contactForm").addEventListener("submit", function(e) {
+  // ===== CONTACT FORM SAFE =====
 
-  const form = e.target;
+  const contactForm = document.querySelector(".contact-form-box form");
 
-  const honeypot = form.website.value;
-  const captcha = form.captcha.value;
+  if (contactForm) {
 
-  // BLOQUE BOTS
-  if (honeypot !== "") {
-    e.preventDefault();
-    return;
-  }
+    contactForm.addEventListener("submit", function(e) {
 
-  // CAPTCHA SIMPLE
-  if (parseInt(captcha) !== 7) {
-    e.preventDefault();
-    alert("Captcha incorrect");
-    return;
+      const honeypot = this.website?.value || "";
+      const captcha = this.captcha?.value || "";
+
+      // Anti-bot
+      if (honeypot !== "") {
+        e.preventDefault();
+        return;
+      }
+
+      // Captcha si présent
+      if (captcha && parseInt(captcha) !== 7) {
+        e.preventDefault();
+        alert("Captcha incorrect");
+        return;
+      }
+
+    });
+
   }
 
 });
