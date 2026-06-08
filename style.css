@@ -2662,3 +2662,14 @@ pointer-events: none;
 position: relative;
 z-index: 2;
 }
+.hero-video{
+width:100%;
+max-width:650px;
+border-radius:24px;
+display:block;
+object-fit:cover;
+border:1px solid rgba(255,255,255,.1);
+box-shadow:
+0 0 30px rgba(255,215,0,.15),
+0 20px 60px rgba(0,0,0,.35);
+}
