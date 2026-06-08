@@ -149,4 +149,18 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(playVideo, 1000);
     setTimeout(playVideo, 3000);
   }
+  const video = document.querySelector(".hero-video");
+
+if (video) {
+  video.muted = true;
+  video.playsInline = true;
+
+  const playVideo = () => {
+    video.play().catch(() => {});
+  };
+
+  window.addEventListener("load", playVideo);
+  setTimeout(playVideo, 500);
+  setTimeout(playVideo, 2000);
+}
 });
