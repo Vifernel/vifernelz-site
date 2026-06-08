@@ -128,5 +128,25 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
   }
+  // ===== HERO VIDEO AUTOPLAY FIX =====
+  const heroVideo = document.querySelector("#heroVideo");
 
+  if (heroVideo) {
+    heroVideo.muted = true;
+    heroVideo.defaultMuted = true;
+    heroVideo.playsInline = true;
+
+    const playVideo = () => {
+      heroVideo.play().catch(() => {
+        console.log("Autoplay bloqué, retry...");
+      });
+    };
+
+    // tentative immédiate
+    playVideo();
+
+    // retry si navigateur bloque
+    setTimeout(playVideo, 1000);
+    setTimeout(playVideo, 3000);
+  }
 });
