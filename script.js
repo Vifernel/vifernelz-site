@@ -130,17 +130,3 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 });
-<script>
-window.addEventListener("load", () => {
-  const video = document.getElementById("heroVideo");
-
-  if (video) {
-    video.muted = true;
-    video.setAttribute("muted", "");
-    video.play().catch(() => {
-      // fallback silencieux
-      console.log("Autoplay bloqué par le navigateur");
-    });
-  }
-});
-</script>
