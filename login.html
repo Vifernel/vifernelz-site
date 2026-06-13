@@ -34,10 +34,13 @@
   import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
   const firebaseConfig = {
-    apiKey: "AIzaSyCDzr8uruU4UMNjCMa50zs4erXK_n_fyQ",
+    apiKey: "AIzaSyCDzr8uruU4UMNjCMa50zs4erHGXkN_fyQ",
     authDomain: "vifernel-trading-academy.firebaseapp.com",
     projectId: "vifernel-trading-academy",
-    appId: "1:1000145148349:web:f0688610a67859a6999ad4"
+    storageBucket: "vifernel-trading-academy.firebasestorage.app",
+    messagingSenderId: "1000145148349",
+    appId: "1:1000145148349:web:f0688610a67859a6999ad4",
+    measurementId: "G-FR882HDS3K"
   };
 
   const app = initializeApp(firebaseConfig);
@@ -54,7 +57,7 @@
         msg.innerHTML = "Connexion réussie 🔥";
 
         setTimeout(() => {
-          window.location.href = "dashboard.html";
+          window.location.replace("dashboard.html");
         }, 1000);
       })
       .catch((error) => {
