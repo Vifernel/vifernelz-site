@@ -8,10 +8,10 @@
 
 <body style="background:#000;color:white;">
 
-<div style="max-width:400px;margin:120px auto;padding:25px;background:#111;border-radius:15px;">
+<div style="max-width:400px;margin:100px auto;padding:25px;background:#111;border-radius:15px;">
 
   <h2 style="text-align:center;color:#d4af37;margin-bottom:20px;">
-    Connexion Académie Trading
+    Académie Trading
   </h2>
 
   <input id="email" type="email" placeholder="Email"
@@ -25,13 +25,22 @@
     Se connecter
   </button>
 
+  <button onclick="registerUser()"
+    style="width:100%;padding:12px;margin-top:10px;background:#444;color:white;border:none;border-radius:8px;">
+    Créer un compte
+  </button>
+
   <p id="msg" style="text-align:center;margin-top:10px;"></p>
 
 </div>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import {
+    getAuth,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyCDzr8uruU4UMNjCMa50zs4erHGXkN_fyQ",
@@ -46,16 +55,16 @@
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
-  window.loginUser = function () {
+  const msg = document.getElementById("msg");
 
+  // 🔐 LOGIN
+  window.loginUser = function () {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
-    const msg = document.getElementById("msg");
 
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
         msg.innerHTML = "Connexion réussie 🔥";
-
         setTimeout(() => {
           window.location.replace("dashboard.html");
         }, 1000);
@@ -63,7 +72,20 @@
       .catch((error) => {
         msg.innerHTML = error.message;
       });
+  }
 
+  // 🆕 REGISTER
+  window.registerUser = function () {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        msg.innerHTML = "Compte créé avec succès 🎉";
+      })
+      .catch((error) => {
+        msg.innerHTML = error.message;
+      });
   }
 </script>
 
