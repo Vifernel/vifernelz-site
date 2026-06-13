@@ -2612,3 +2612,43 @@ a:hover {
     height: 38px !important;
   }
 }
+/* =========================
+SAFARI FIX PATCH (IMPORTANT)
+========================= */
+
+/* Fix images / logos Safari */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Fix logos Safari */
+.site-logo,
+.mini-vz-logo {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Fix backdrop-filter Safari */
+.header,
+.nav-menu,
+.floating-card {
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+/* Fix stacking images Safari */
+.hero-right img {
+  display: block;
+  object-fit: contain;
+}
+
+/* Prevent Safari “missing image” glitch */
+.hero,
+.section,
+.navbar {
+  transform: translateZ(0);
+}
