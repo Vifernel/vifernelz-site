@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard - Vifernel Academy</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body style="background:#000;color:white;">
+
+<!-- HEADER -->
+<div style="text-align:center;padding:40px;">
+  <h1 style="color:#d4af37;font-size:32px;">
+    Bienvenue dans l’Académie Trading
+  </h1>
+
+  <p style="color:#aaa;margin-top:10px;">
+    Accès réservé aux membres
+  </p>
+
+  <button onclick="logout()"
+    style="margin-top:20px;padding:10px 20px;background:red;color:white;border:none;border-radius:8px;">
+    Déconnexion
+  </button>
+</div>
+
+<!-- MODULES -->
+<div style="max-width:900px;margin:auto;padding:20px;">
+
+  <h2 style="color:#d4af37;margin-bottom:15px;">Module 1 - Forex</h2>
+
+  <div style="background:#111;padding:15px;border-radius:10px;margin-bottom:20px;">
+    <iframe width="100%" height="400"
+      src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <h2 style="color:#d4af37;margin-bottom:15px;">Module 2 - Crypto</h2>
+
+  <div style="background:#111;padding:15px;border-radius:10px;">
+    <iframe width="100%" height="400"
+      src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+</div>
+
+<!-- FIREBASE LOGOUT -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCDzr8uruU4UMNjCMa50zs4erXK_n_fyQ",
+    authDomain: "vifernel-trading-academy.firebaseapp.com",
+    projectId: "vifernel-trading-academy"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  window.logout = function () {
+    signOut(auth).then(() => {
+      window.location.href = "login.html";
+    });
+  }
+</script>
+
+</body>
+</html>
