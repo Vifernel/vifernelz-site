@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Connexion - Vifernel Academy</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body style="background:#000;color:white;">
+
+<div style="max-width:400px;margin:120px auto;padding:25px;background:#111;border-radius:15px;">
+
+  <h2 style="text-align:center;color:#d4af37;margin-bottom:20px;">
+    Connexion Académie Trading
+  </h2>
+
+  <input id="email" type="email" placeholder="Email"
+    style="width:100%;padding:12px;margin:10px 0;border-radius:8px;">
+
+  <input id="password" type="password" placeholder="Mot de passe"
+    style="width:100%;padding:12px;margin:10px 0;border-radius:8px;">
+
+  <button onclick="loginUser()"
+    style="width:100%;padding:12px;background:#d4af37;color:black;font-weight:bold;border:none;border-radius:8px;">
+    Se connecter
+  </button>
+
+  <p id="msg" style="text-align:center;margin-top:10px;"></p>
+
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCDzr8uruU4UMNjCMa50zs4erXK_n_fyQ",
+    authDomain: "vifernel-trading-academy.firebaseapp.com",
+    projectId: "vifernel-trading-academy",
+    appId: "1:1000145148349:web:f0688610a67859a6999ad4"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  window.loginUser = function () {
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const msg = document.getElementById("msg");
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        msg.innerHTML = "Connexion réussie 🔥";
+
+        setTimeout(() => {
+          window.location.href = "dashboard.html";
+        }, 1000);
+      })
+      .catch((error) => {
+        msg.innerHTML = error.message;
+      });
+
+  }
+</script>
+
+</body>
+</html>
