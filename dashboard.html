@@ -4,12 +4,36 @@
 <meta charset="UTF-8">
 <title>Dashboard - Vifernel Academy</title>
 <script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+body{
+  background:#000;
+  color:white;
+}
+
+.card{
+  background:#111;
+  padding:15px;
+  margin-bottom:20px;
+  border-radius:12px;
+}
+
+.hidden{
+  display:none;
+}
+
+.badge{
+  color:#d4af37;
+  font-weight:bold;
+}
+</style>
 </head>
 
-<body style="background:#000;color:white;">
+<body>
 
+<!-- HEADER -->
 <div style="text-align:center;padding:30px;">
-  <h1 style="color:#d4af37;">Bienvenue dans l’Académie</h1>
+  <h1 style="color:#d4af37;">🎓 Académie Trading</h1>
   <p id="planText">Chargement du plan...</p>
 
   <button onclick="logout()"
@@ -18,32 +42,39 @@
   </button>
 </div>
 
+<!-- STATUS -->
+<div id="status" style="text-align:center;color:#aaa;"></div>
+
 <!-- MODULES -->
 <div style="max-width:900px;margin:auto;padding:20px;">
 
   <!-- MODULE 1 -->
-  <h2 style="color:#d4af37;">Module 1 - Forex</h2>
-  <div class="module vip" style="background:#111;padding:15px;margin-bottom:20px;">
-    <iframe width="100%" height="350"
-      src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe>
+  <h2 style="color:#d4af37;">📘 Module 1 - Forex</h2>
+  <div class="card vip">
+    <iframe width="100%" height="300"
+      src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+      allowfullscreen></iframe>
   </div>
 
   <!-- MODULE 2 -->
-  <h2 style="color:#d4af37;">Module 2 - Crypto</h2>
-  <div class="module vvip" style="background:#111;padding:15px;margin-bottom:20px;">
-    <iframe width="100%" height="350"
-      src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe>
+  <h2 style="color:#d4af37;">📗 Module 2 - Crypto</h2>
+  <div class="card vvip">
+    <iframe width="100%" height="300"
+      src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+      allowfullscreen></iframe>
   </div>
 
   <!-- MODULE 3 -->
-  <h2 style="color:#d4af37;">Module 3 - Avancé</h2>
-  <div class="module vvip vippp" style="background:#111;padding:15px;">
-    <iframe width="100%" height="350"
-      src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe>
+  <h2 style="color:red;">📕 Module 3 - Mentorat</h2>
+  <div class="card vippp">
+    <iframe width="100%" height="300"
+      src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+      allowfullscreen></iframe>
   </div>
 
 </div>
 
+<!-- FIREBASE -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -63,6 +94,7 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 const planText = document.getElementById("planText");
+const status = document.getElementById("status");
 
 onAuthStateChanged(auth, async (user) => {
 
@@ -75,32 +107,36 @@ onAuthStateChanged(auth, async (user) => {
   const snap = await getDoc(ref);
 
   if (!snap.exists()) {
-    planText.innerHTML = "❌ Aucun profil trouvé";
+    status.innerHTML = "❌ Profil introuvable";
     return;
   }
 
   const data = snap.data();
   const plan = data.plan || "FREE";
 
-  planText.innerHTML = "Plan actif : " + plan;
+  planText.innerHTML = "Plan actif : <span class='badge'>" + plan + "</span>";
 
-  // 🔥 BLOQUAGE INTELLIGENT
+  // =========================
+  // ACCÈS INTELLIGENT
+  // =========================
+
+  // VIP → module 2 & 3 cachés
   if (plan === "VIP") {
-    document.querySelectorAll(".vvip, .vippp").forEach(el => el.style.display = "none");
+    document.querySelectorAll(".vvip, .vippp").forEach(el => el.classList.add("hidden"));
   }
 
+  // VVIP → module 3 caché
   if (plan === "VVIP") {
-    document.querySelectorAll(".vippp").forEach(el => el.style.display = "none");
+    document.querySelectorAll(".vippp").forEach(el => el.classList.add("hidden"));
   }
 
-  if (plan === "VVVIP") {
-    // tout affiché
-  }
+  // VVVIP → tout visible
 
-  if (!data.paid) {
+  // sécurité finale
+  if (!data.access || data.paid !== true) {
     document.body.innerHTML = `
       <div style="text-align:center;margin-top:100px;color:white;">
-        <h1>Accès bloqué ❌</h1>
+        <h1>⛔ Accès refusé</h1>
         <p>Abonnement requis</p>
       </div>
     `;
