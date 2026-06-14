@@ -65,10 +65,19 @@ const db = getFirestore(app);
 const msg = document.getElementById("msg");
 
 
-// 🔐 LOGIN
+// 🔐 LOGIN PRO
 window.loginUser = function () {
+
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
+
+  // 🔥 validation
+  if (!email || !password) {
+    msg.innerHTML = "❌ Veuillez remplir tous les champs";
+    return;
+  }
+
+  msg.innerHTML = "⏳ Connexion...";
 
   signInWithEmailAndPassword(auth, email, password)
     .then(() => {
@@ -84,18 +93,28 @@ window.loginUser = function () {
 };
 
 
-// 🆕 REGISTER + FIRESTORE
+// 🆕 REGISTER PRO + FIRESTORE
 window.registerUser = function () {
+
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
+
+  // 🔥 validation
+  if (!email || !password) {
+    msg.innerHTML = "❌ Veuillez remplir tous les champs";
+    return;
+  }
+
+  msg.innerHTML = "⏳ Création du compte...";
 
   createUserWithEmailAndPassword(auth, email, password)
     .then(async (userCredential) => {
 
       const user = userCredential.user;
 
-      // 🔥 CREATE USER IN FIRESTORE
+      // 🔥 CREATE USER FIRESTORE PRO
       await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
         email: user.email,
         paid: false,
         plan: null,
@@ -104,7 +123,6 @@ window.registerUser = function () {
 
       msg.innerHTML = "Compte créé 🎉";
 
-      // 👉 REDIRECT vers pricing
       setTimeout(() => {
         window.location.replace("pricing.html");
       }, 1000);
@@ -114,6 +132,7 @@ window.registerUser = function () {
       msg.innerHTML = error.message;
     });
 };
+
 </script>
 
 </body>
