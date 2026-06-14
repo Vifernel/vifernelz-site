@@ -16,14 +16,19 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
+  apiKey: "AIzaSyCDzr8uruU4UMNjCMa50zs4erHGXkN_fyQ",
   authDomain: "vifernel-trading-academy.firebaseapp.com",
-  projectId: "vifernel-trading-academy"
+  projectId: "vifernel-trading-academy",
+  storageBucket: "vifernel-trading-academy.firebasestorage.app",
+  messagingSenderId: "1000145148349",
+  appId: "1:1000145148349:web:f0688610a67859a6999ad4",
+  measurementId: "G-FR882HDS3K"
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+// 🔐 protection login
 onAuthStateChanged(auth, (user) => {
   if (!user) {
     window.location.href = "login.html";
