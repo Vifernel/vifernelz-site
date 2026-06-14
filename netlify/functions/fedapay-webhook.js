@@ -13,10 +13,10 @@ exports.handler = async (event) => {
   try {
     const body = JSON.parse(event.body);
 
-    console.log("🔥 Webhook reçu:", JSON.stringify(body, null, 2));
+    console.log("🔥 WEBHOOK RECEIVED:", JSON.stringify(body, null, 2));
 
     // =========================
-    // 1. Vérification paiement
+    // 1. VERIFY PAYMENT STATUS
     // =========================
     const isApproved =
       body?.status === "approved" ||
@@ -30,7 +30,7 @@ exports.handler = async (event) => {
     const db = admin.firestore();
 
     // =========================
-    // 2. EMAIL CLIENT (robuste)
+    // 2. EMAIL EXTRACTION (ROBUST)
     // =========================
     const email =
       body?.customer?.email ||
@@ -39,39 +39,40 @@ exports.handler = async (event) => {
       body?.payment_request?.customer?.email;
 
     // =========================
-    // 3. MONTANT (important fallback plan)
+    // 3. AMOUNT EXTRACTION
     // =========================
     const amount =
       body?.amount ||
       body?.data?.amount ||
       body?.transaction?.amount ||
+      body?.payment_request?.amount ||
       0;
 
     // =========================
-    // 4. PLAN (priorité + fallback)
+    // 4. PLAN DETECTION (SMART LOGIC)
     // =========================
     let plan =
       body?.metadata?.plan ||
       body?.data?.metadata?.plan ||
       body?.plan;
 
-    // 🔥 fallback intelligent si metadata absent
+    // 🔥 fallback ultra fiable
     if (!plan) {
-      if (amount == 50000) plan = "VIP";
-      else if (amount == 100000) plan = "VVIP";
-      else if (amount == 300000) plan = "VVVIP";
+      if (Number(amount) === 50000) plan = "VIP";
+      else if (Number(amount) === 100000) plan = "VVIP";
+      else if (Number(amount) === 300000) plan = "VVVIP";
       else plan = "UNKNOWN";
     }
 
-    console.log("👤 Email:", email);
-    console.log("💳 Amount:", amount);
-    console.log("📦 Plan:", plan);
+    console.log("👤 EMAIL:", email);
+    console.log("💳 AMOUNT:", amount);
+    console.log("📦 PLAN:", plan);
 
     // =========================
-    // 5. sécurité email obligatoire
+    // 5. SECURITY CHECK
     // =========================
     if (!email) {
-      console.log("❌ Email introuvable dans webhook");
+      console.log("❌ Missing email in webhook");
       return { statusCode: 200, body: "no email" };
     }
 
@@ -82,12 +83,12 @@ exports.handler = async (event) => {
     const snapshot = await usersRef.where("email", "==", email).get();
 
     if (snapshot.empty) {
-      console.log("❌ User introuvable:", email);
+      console.log("❌ User not found:", email);
       return { statusCode: 200, body: "user not found" };
     }
 
     // =========================
-    // 7. ACTIVER ACCÈS
+    // 7. UPDATE USER ACCESS
     // =========================
     snapshot.forEach((doc) => {
       doc.ref.update({
@@ -99,7 +100,7 @@ exports.handler = async (event) => {
       });
     });
 
-    console.log("✅ ACCÈS ACTIVÉ:", email, plan);
+    console.log("✅ ACCESS GRANTED:", email, plan);
 
     return {
       statusCode: 200,
@@ -107,7 +108,7 @@ exports.handler = async (event) => {
     };
 
   } catch (error) {
-    console.error("❌ Webhook error:", error);
+    console.error("❌ WEBHOOK ERROR:", error);
 
     return {
       statusCode: 500,
