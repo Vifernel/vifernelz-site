@@ -35,6 +35,7 @@
 </div>
 
 <script type="module">
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
   getAuth,
@@ -64,14 +65,20 @@ const db = getFirestore(app);
 
 const msg = document.getElementById("msg");
 
+/* =========================
+   PLAN RECUPÉRATION
+========================= */
+const urlParams = new URLSearchParams(window.location.search);
+const selectedPlan = urlParams.get("plan");
 
-// 🔐 LOGIN PRO
+/* =========================
+   LOGIN PRO
+========================= */
 window.loginUser = function () {
 
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  // 🔥 validation
   if (!email || !password) {
     msg.innerHTML = "❌ Veuillez remplir tous les champs";
     return;
@@ -81,25 +88,45 @@ window.loginUser = function () {
 
   signInWithEmailAndPassword(auth, email, password)
     .then(() => {
+
       msg.innerHTML = "Connexion réussie 🔥";
 
       setTimeout(() => {
-        window.location.replace("dashboard.html");
+
+        // 💎 REDIRECTION INTELLIGENTE VERS PAIEMENT
+        if (selectedPlan === "VIP") {
+          window.location.replace("https://me.fedapay.com/vipacademy");
+        }
+
+        else if (selectedPlan === "VVIP") {
+          window.location.replace("https://me.fedapay.com/vvipacademy");
+        }
+
+        else if (selectedPlan === "VVVIP") {
+          window.location.replace("https://me.fedapay.com/vvvipacademy");
+        }
+
+        else {
+          // fallback
+          window.location.replace("dashboard.html");
+        }
+
       }, 1000);
+
     })
     .catch((error) => {
       msg.innerHTML = error.message;
     });
 };
 
-
-// 🆕 REGISTER PRO + FIRESTORE
+/* =========================
+   REGISTER PRO
+========================= */
 window.registerUser = function () {
 
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  // 🔥 validation
   if (!email || !password) {
     msg.innerHTML = "❌ Veuillez remplir tous les champs";
     return;
@@ -112,19 +139,34 @@ window.registerUser = function () {
 
       const user = userCredential.user;
 
-      // 🔥 CREATE USER FIRESTORE PRO
       await setDoc(doc(db, "users", user.uid), {
         uid: user.uid,
         email: user.email,
         paid: false,
-        plan: null,
+        plan: selectedPlan || null,
         createdAt: new Date().toISOString()
       });
 
       msg.innerHTML = "Compte créé 🎉";
 
       setTimeout(() => {
-        window.location.replace("pricing.html");
+
+        if (selectedPlan === "VIP") {
+          window.location.replace("https://me.fedapay.com/vipacademy");
+        }
+
+        else if (selectedPlan === "VVIP") {
+          window.location.replace("https://me.fedapay.com/vvipacademy");
+        }
+
+        else if (selectedPlan === "VVVIP") {
+          window.location.replace("https://me.fedapay.com/vvvipacademy");
+        }
+
+        else {
+          window.location.replace("pricing.html");
+        }
+
       }, 1000);
 
     })
