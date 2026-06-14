@@ -8,15 +8,9 @@
 
 <body style="background:#000;color:white;">
 
-<!-- HEADER -->
-<div style="text-align:center;padding:40px;">
-  <h1 style="color:#d4af37;font-size:32px;">
-    Bienvenue dans l’Académie Trading
-  </h1>
-
-  <p style="color:#aaa;margin-top:10px;">
-    Accès réservé aux membres
-  </p>
+<div style="text-align:center;padding:30px;">
+  <h1 style="color:#d4af37;">Bienvenue dans l’Académie</h1>
+  <p id="planText">Chargement du plan...</p>
 
   <button onclick="logout()"
     style="margin-top:20px;padding:10px 20px;background:red;color:white;border:none;border-radius:8px;">
@@ -27,78 +21,98 @@
 <!-- MODULES -->
 <div style="max-width:900px;margin:auto;padding:20px;">
 
-  <h2 style="color:#d4af37;margin-bottom:15px;">Module 1 - Forex</h2>
-
-  <div style="background:#111;padding:15px;border-radius:10px;margin-bottom:20px;">
-    <iframe width="100%" height="400"
-      src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-      allowfullscreen>
-    </iframe>
+  <!-- MODULE 1 -->
+  <h2 style="color:#d4af37;">Module 1 - Forex</h2>
+  <div class="module vip" style="background:#111;padding:15px;margin-bottom:20px;">
+    <iframe width="100%" height="350"
+      src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe>
   </div>
 
-  <h2 style="color:#d4af37;margin-bottom:15px;">Module 2 - Crypto</h2>
+  <!-- MODULE 2 -->
+  <h2 style="color:#d4af37;">Module 2 - Crypto</h2>
+  <div class="module vvip" style="background:#111;padding:15px;margin-bottom:20px;">
+    <iframe width="100%" height="350"
+      src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe>
+  </div>
 
-  <div style="background:#111;padding:15px;border-radius:10px;">
-    <iframe width="100%" height="400"
-      src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-      allowfullscreen>
-    </iframe>
+  <!-- MODULE 3 -->
+  <h2 style="color:#d4af37;">Module 3 - Avancé</h2>
+  <div class="module vvip vippp" style="background:#111;padding:15px;">
+    <iframe width="100%" height="350"
+      src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe>
   </div>
 
 </div>
 
-<!-- 🔒 FIREBASE AUTH PROPRE -->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCDzr8uruU4UMNjCMa50zs4erHGXkN_fyQ",
-    authDomain: "vifernel-trading-academy.firebaseapp.com",
-    projectId: "vifernel-trading-academy",
-    storageBucket: "vifernel-trading-academy.firebasestorage.app",
-    messagingSenderId: "1000145148349",
-    appId: "1:1000145148349:web:f0688610a67859a6999ad4"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyCDzr8uruU4UMNjCMa50zs4erHGXkN_fyQ",
+  authDomain: "vifernel-trading-academy.firebaseapp.com",
+  projectId: "vifernel-trading-academy",
+  storageBucket: "vifernel-trading-academy.firebasestorage.app",
+  messagingSenderId: "1000145148349",
+  appId: "1:1000145148349:web:f0688610a67859a6999ad4"
+};
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-  const videoSection = document.querySelectorAll("iframe");
+const planText = document.getElementById("planText");
 
-  onAuthStateChanged(auth, async (user) => {
+onAuthStateChanged(auth, async (user) => {
 
-    if (!user) {
-      window.location.replace("login.html");
-      return;
-    }
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
 
-    // 🔥 vérifier si user a payé
-    const ref = doc(db, "users", user.uid);
-    const snap = await getDoc(ref);
+  const ref = doc(db, "users", user.uid);
+  const snap = await getDoc(ref);
 
-    if (!snap.exists() || snap.data().paid !== true) {
+  if (!snap.exists()) {
+    planText.innerHTML = "❌ Aucun profil trouvé";
+    return;
+  }
 
-  document.body.innerHTML = `
-    <div style="text-align:center;margin-top:100px;color:white;">
-      <h1 style="color:#d4af37;">Accès Premium Requis</h1>
-      <p>Votre abonnement n’est pas actif.</p>
-      <p>Veuillez contacter l’administrateur.</p>
-    </div>
-  `;
+  const data = snap.data();
+  const plan = data.plan || "FREE";
 
-  return;
-}
+  planText.innerHTML = "Plan actif : " + plan;
 
+  // 🔥 BLOQUAGE INTELLIGENT
+  if (plan === "VIP") {
+    document.querySelectorAll(".vvip, .vippp").forEach(el => el.style.display = "none");
+  }
+
+  if (plan === "VVIP") {
+    document.querySelectorAll(".vippp").forEach(el => el.style.display = "none");
+  }
+
+  if (plan === "VVVIP") {
+    // tout affiché
+  }
+
+  if (!data.paid) {
+    document.body.innerHTML = `
+      <div style="text-align:center;margin-top:100px;color:white;">
+        <h1>Accès bloqué ❌</h1>
+        <p>Abonnement requis</p>
+      </div>
+    `;
+  }
+
+});
+
+window.logout = function () {
+  signOut(auth).then(() => {
+    window.location.href = "login.html";
   });
-
-  window.logout = function () {
-    signOut(auth).then(() => {
-      window.location.replace("login.html");
-    });
-  };
+};
 </script>
 
 </body>
