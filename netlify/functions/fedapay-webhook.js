@@ -5,7 +5,7 @@ if (!admin.apps.length) {
   admin.initializeApp({
     credential: admin.credential.cert(
       JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT)
-    ),
+    )
   });
 }
 
@@ -15,51 +15,53 @@ exports.handler = async (event) => {
 
     console.log("Webhook reçu:", body);
 
-    const eventType =
-      body.event ||
-      body.type ||
-      body.status;
+    // paiement validé
+    if (body.status === "approved") {
 
-    // ✅ paiement confirmé
-    if (eventType === "transaction.approved") {
+      const email = body?.customer?.email;
+      const amount = body?.amount;
 
-      const email =
-        body?.data?.customer?.email ||
-        body?.customer?.email;
+      let plan = null;
 
-      if (!email) {
-        console.log("Email introuvable");
-        return { statusCode: 200, body: "NO EMAIL" };
+      // 🧠 DÉTECTION DU PLAN
+      if (amount == 50000) plan = "VIP";
+      if (amount == 100000) plan = "VVIP";
+      if (amount == 300000) plan = "VVVIP";
+
+      if (!email || !plan) {
+        return {
+          statusCode: 200,
+          body: "missing data"
+        };
       }
 
       const db = admin.firestore();
 
-      const snapshot = await db
-        .collection("users")
-        .where("email", "==", email)
-        .get();
+      const usersRef = db.collection("users");
 
-      snapshot.forEach((doc) => {
+      const snapshot = await usersRef.where("email", "==", email).get();
+
+      snapshot.forEach(doc => {
         doc.ref.update({
           paid: true,
-          paidAt: new Date().toISOString(),
+          plan: plan,
+          paidAt: new Date().toISOString()
         });
       });
 
-      console.log("Paiement activé pour:", email);
+      console.log("Utilisateur mis à jour:", email, plan);
     }
 
     return {
       statusCode: 200,
-      body: "OK",
+      body: "OK"
     };
 
   } catch (error) {
-    console.error("Webhook error:", error);
-
+    console.error(error);
     return {
       statusCode: 500,
-      body: error.message,
+      body: error.message
     };
   }
 };
