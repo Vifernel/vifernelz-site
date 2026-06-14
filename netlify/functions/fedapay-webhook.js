@@ -1,11 +1,11 @@
 const admin = require("firebase-admin");
 
-// init Firebase Admin
+// 🔐 init Firebase Admin (une seule fois)
 if (!admin.apps.length) {
   admin.initializeApp({
     credential: admin.credential.cert(
       JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT)
-    )
+    ),
   });
 }
 
@@ -13,55 +13,77 @@ exports.handler = async (event) => {
   try {
     const body = JSON.parse(event.body);
 
-    console.log("Webhook reçu:", body);
+    console.log("🔥 Webhook reçu:", body);
 
-    // paiement validé
-    if (body.status === "approved") {
+    // ✅ Vérification paiement
+    const isApproved =
+      body.status === "approved" ||
+      body.event === "transaction.approved" ||
+      body.event === "payment_request.approved";
 
-      const email = body?.customer?.email;
-      const amount = body?.amount;
-
-      let plan = null;
-
-      // 🧠 DÉTECTION DU PLAN
-      if (amount == 50000) plan = "VIP";
-      if (amount == 100000) plan = "VVIP";
-      if (amount == 300000) plan = "VVVIP";
-
-      if (!email || !plan) {
-        return {
-          statusCode: 200,
-          body: "missing data"
-        };
-      }
-
-      const db = admin.firestore();
-
-      const usersRef = db.collection("users");
-
-      const snapshot = await usersRef.where("email", "==", email).get();
-
-      snapshot.forEach(doc => {
-        doc.ref.update({
-          paid: true,
-          plan: plan,
-          paidAt: new Date().toISOString()
-        });
-      });
-
-      console.log("Utilisateur mis à jour:", email, plan);
+    if (!isApproved) {
+      return {
+        statusCode: 200,
+        body: "ignored",
+      };
     }
+
+    const db = admin.firestore();
+
+    // 📧 email client (clé principale)
+    const email = body?.customer?.email;
+
+    // 💳 PLAN (très important)
+    let plan =
+      body?.metadata?.plan ||
+      body?.plan ||
+      body?.payment?.metadata?.plan ||
+      "UNKNOWN";
+
+    console.log("👤 Email:", email);
+    console.log("📦 Plan:", plan);
+
+    if (!email) {
+      return {
+        statusCode: 200,
+        body: "no email",
+      };
+    }
+
+    // 🔍 chercher user par email
+    const usersRef = db.collection("users");
+    const snapshot = await usersRef.where("email", "==", email).get();
+
+    if (snapshot.empty) {
+      console.log("❌ User introuvable");
+      return {
+        statusCode: 200,
+        body: "user not found",
+      };
+    }
+
+    // 🔥 ACTIVER ACCÈS
+    snapshot.forEach((doc) => {
+      doc.ref.update({
+        paid: true,
+        plan: plan,
+        access: true,
+        paidAt: new Date().toISOString(),
+      });
+    });
+
+    console.log("✅ Accès activé pour:", email);
 
     return {
       statusCode: 200,
-      body: "OK"
+      body: "success",
     };
-
   } catch (error) {
-    console.error(error);
+    console.error("❌ Webhook error:", error);
+
     return {
       statusCode: 500,
-      body: error.message
+      body: error.message,
     };
   }
 };
