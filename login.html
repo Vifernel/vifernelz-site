@@ -11,7 +11,7 @@
 <div style="max-width:400px;margin:100px auto;padding:25px;background:#111;border-radius:15px;">
 
   <h2 style="text-align:center;color:#d4af37;margin-bottom:20px;">
-    Académie Trading
+    Vifernel Academy
   </h2>
 
   <input id="email" type="email" placeholder="Email"
@@ -37,6 +37,7 @@
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -66,14 +67,9 @@ const db = getFirestore(app);
 const msg = document.getElementById("msg");
 
 /* =========================
-   PLAN RECUPÉRATION
-========================= */
-const urlParams = new URLSearchParams(window.location.search);
-const selectedPlan = urlParams.get("plan");
-
-/* =========================
    LOGIN PRO
 ========================= */
+
 window.loginUser = function () {
 
   const email = document.getElementById("email").value;
@@ -87,41 +83,27 @@ window.loginUser = function () {
   msg.innerHTML = "⏳ Connexion...";
 
   signInWithEmailAndPassword(auth, email, password)
+
     .then(() => {
 
       msg.innerHTML = "Connexion réussie 🔥";
 
       setTimeout(() => {
-
-        // 💎 REDIRECTION INTELLIGENTE VERS PAIEMENT
-        if (selectedPlan === "VIP") {
-          window.location.replace("https://me.fedapay.com/vipacademy");
-        }
-
-        else if (selectedPlan === "VVIP") {
-          window.location.replace("https://me.fedapay.com/vvipacademy");
-        }
-
-        else if (selectedPlan === "VVVIP") {
-          window.location.replace("https://me.fedapay.com/vvvipacademy");
-        }
-
-        else {
-          // fallback
-          window.location.replace("dashboard.html");
-        }
-
+        window.location.replace("academy.html");
       }, 1000);
 
     })
+
     .catch((error) => {
       msg.innerHTML = error.message;
     });
 };
 
+
 /* =========================
    REGISTER PRO
 ========================= */
+
 window.registerUser = function () {
 
   const email = document.getElementById("email").value;
@@ -135,6 +117,7 @@ window.registerUser = function () {
   msg.innerHTML = "⏳ Création du compte...";
 
   createUserWithEmailAndPassword(auth, email, password)
+
     .then(async (userCredential) => {
 
       const user = userCredential.user;
@@ -143,33 +126,18 @@ window.registerUser = function () {
         uid: user.uid,
         email: user.email,
         paid: false,
-        plan: selectedPlan || null,
+        plan: null,
         createdAt: new Date().toISOString()
       });
 
       msg.innerHTML = "Compte créé 🎉";
 
       setTimeout(() => {
-
-        if (selectedPlan === "VIP") {
-          window.location.replace("https://me.fedapay.com/vipacademy");
-        }
-
-        else if (selectedPlan === "VVIP") {
-          window.location.replace("https://me.fedapay.com/vvipacademy");
-        }
-
-        else if (selectedPlan === "VVVIP") {
-          window.location.replace("https://me.fedapay.com/vvvipacademy");
-        }
-
-        else {
-          window.location.replace("pricing.html");
-        }
-
+        window.location.replace("academy.html");
       }, 1000);
 
     })
+
     .catch((error) => {
       msg.innerHTML = error.message;
     });
