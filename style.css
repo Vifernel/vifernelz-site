@@ -2652,3 +2652,36 @@ img {
 .navbar {
   transform: translateZ(0);
 }
+/* LOGIN HEADER */
+
+.nav-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.header-icon{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:30px;
+  height:30px;
+  color:#d4af37;
+  text-decoration:none;
+  font-size:15px;
+  border-radius:50%;
+  transition:0.3s ease;
+}
+
+.header-icon:hover{
+  background:rgba(212,175,55,0.1);
+  transform:scale(1.05);
+}
+
+@media (max-width:768px){
+  .header-icon{
+    width:28px;
+    height:28px;
+    font-size:14px;
+  }
+}
