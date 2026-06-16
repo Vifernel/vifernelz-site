@@ -48,27 +48,71 @@ body{
 <!-- MODULES -->
 <div style="max-width:900px;margin:auto;padding:20px;">
 
-  <!-- MODULE 1 -->
-  <h2 style="color:#d4af37;">📘 Module 1 - Forex</h2>
+  <!-- VIP SECTION -->
+  <h2 style="color:#d4af37;text-align:center;">
+    📘 Formation Trading VIP
+  </h2>
+
   <div class="card vip">
-    <iframe width="100%" height="300"
-      src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+    <h3>Vidéo 1</h3>
+    <iframe width="100%" height="300" style="border-radius:12px;"
+      src="https://www.youtube.com/embed/7EQC5n0mVYk"
       allowfullscreen></iframe>
   </div>
 
-  <!-- MODULE 2 -->
-  <h2 style="color:#d4af37;">📗 Module 2 - Crypto</h2>
-  <div class="card vvip">
-    <iframe width="100%" height="300"
-      src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+  <div class="card vip">
+    <h3>Vidéo 2</h3>
+    <iframe width="100%" height="300" style="border-radius:12px;"
+      src="https://www.youtube.com/embed/sXyYPjuCo20"
       allowfullscreen></iframe>
   </div>
 
-  <!-- MODULE 3 -->
-  <h2 style="color:red;">📕 Module 3 - Mentorat</h2>
-  <div class="card vippp">
-    <iframe width="100%" height="300"
-      src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+  <div class="card vip">
+    <h3>Vidéo 3</h3>
+    <iframe width="100%" height="300" style="border-radius:12px;"
+      src="https://www.youtube.com/embed/hE-J-rlPdjk"
+      allowfullscreen></iframe>
+  </div>
+
+  <div class="card vip">
+    <h3>Vidéo 4</h3>
+    <iframe width="100%" height="300" style="border-radius:12px;"
+      src="https://www.youtube.com/embed/ECpmx1agKto"
+      allowfullscreen></iframe>
+  </div>
+
+  <div class="card vip">
+    <h3>Vidéo 5</h3>
+    <iframe width="100%" height="300" style="border-radius:12px;"
+      src="https://www.youtube.com/embed/-SrWV_dJSqg"
+      allowfullscreen></iframe>
+  </div>
+
+  <div class="card vip">
+    <h3>Vidéo 6</h3>
+    <iframe width="100%" height="300" style="border-radius:12px;"
+      src="https://www.youtube.com/embed/0IFb-dUK0-o"
+      allowfullscreen></iframe>
+  </div>
+
+  <div class="card vip">
+    <h3>Vidéo 7</h3>
+    <iframe width="100%" height="300" style="border-radius:12px;"
+      src="https://www.youtube.com/embed/r7grkqzHH54"
+      allowfullscreen></iframe>
+  </div>
+
+  <div class="card vip">
+    <h3>Vidéo 8</h3>
+    <iframe width="100%" height="300" style="border-radius:12px;"
+      src="https://www.youtube.com/embed/ZUeOO15zH5o"
+      allowfullscreen></iframe>
+  </div>
+
+  <div class="card vip">
+    <h3>Vidéo 9</h3>
+    <iframe width="100%" height="300" style="border-radius:12px;"
+      src="https://www.youtube.com/embed/CmNR5EssrH8"
       allowfullscreen></iframe>
   </div>
 
@@ -116,23 +160,16 @@ onAuthStateChanged(auth, async (user) => {
 
   planText.innerHTML = "Plan actif : <span class='badge'>" + plan + "</span>";
 
-  // =========================
   // ACCÈS INTELLIGENT
-  // =========================
-
-  // VIP → module 2 & 3 cachés
   if (plan === "VIP") {
     document.querySelectorAll(".vvip, .vippp").forEach(el => el.classList.add("hidden"));
   }
 
-  // VVIP → module 3 caché
   if (plan === "VVIP") {
     document.querySelectorAll(".vippp").forEach(el => el.classList.add("hidden"));
   }
 
-  // VVVIP → tout visible
-
-  // sécurité finale
+  // BLOQUAGE SI NON PAYÉ
   if (!data.access || data.paid !== true) {
     document.body.innerHTML = `
       <div style="text-align:center;margin-top:100px;color:white;">
