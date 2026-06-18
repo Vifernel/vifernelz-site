@@ -17,9 +17,8 @@
   <input id="email" type="email" placeholder="Email"
   style="width:100%;padding:12px;margin:10px 0;border-radius:8px;color:black;background:white;">
 
-<input id="password" type="password" placeholder="Mot de passe"
+  <input id="password" type="password" placeholder="Mot de passe"
   style="width:100%;padding:12px;margin:10px 0;border-radius:8px;color:black;background:white;">
-
 
   <button onclick="loginUser()"
     style="width:100%;padding:12px;background:#d4af37;color:black;font-weight:bold;border:none;border-radius:8px;">
@@ -42,13 +41,15 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import {
   getAuth,
   signInWithEmailAndPassword,
-  createUserWithEmailAndPassword
+  createUserWithEmailAndPassword,
+  signOut
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
   getFirestore,
   doc,
-  setDoc
+  setDoc,
+  getDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -68,13 +69,28 @@ const db = getFirestore(app);
 const msg = document.getElementById("msg");
 
 /* =========================
-   LOGIN PRO
+   DEVICE ID SYSTEM
+========================= */
+function getDeviceId() {
+  let id = localStorage.getItem("device_id");
+
+  if (!id) {
+    id = crypto.randomUUID();
+    localStorage.setItem("device_id", id);
+  }
+
+  return id;
+}
+
+/* =========================
+   LOGIN PRO (DEVICE LOCK)
 ========================= */
 
 window.loginUser = function () {
 
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
+  const deviceId = getDeviceId();
 
   if (!email || !password) {
     msg.innerHTML = "❌ Veuillez remplir tous les champs";
@@ -84,8 +100,34 @@ window.loginUser = function () {
   msg.innerHTML = "⏳ Connexion...";
 
   signInWithEmailAndPassword(auth, email, password)
+    .then(async (cred) => {
 
-    .then(() => {
+      const user = cred.user;
+
+      const ref = doc(db, "users", user.uid);
+      const snap = await getDoc(ref);
+
+      if (!snap.exists()) {
+        msg.innerHTML = "❌ Profil introuvable";
+        await signOut(auth);
+        return;
+      }
+
+      const data = snap.data();
+
+      // 🔒 DEVICE CHECK
+      if (data.deviceId && data.deviceId !== deviceId) {
+        msg.innerHTML = "⛔ Compte déjà utilisé sur un autre appareil";
+        await signOut(auth);
+        return;
+      }
+
+      // 🟢 SAVE DEVICE FIRST TIME
+      if (!data.deviceId) {
+        await setDoc(ref, {
+          deviceId: deviceId
+        }, { merge: true });
+      }
 
       msg.innerHTML = "Connexion réussie 🔥";
 
@@ -94,7 +136,6 @@ window.loginUser = function () {
       }, 1000);
 
     })
-
     .catch((error) => {
       msg.innerHTML = error.message;
     });
@@ -102,13 +143,14 @@ window.loginUser = function () {
 
 
 /* =========================
-   REGISTER PRO
+   REGISTER PRO (DEVICE SAVE)
 ========================= */
 
 window.registerUser = function () {
 
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
+  const deviceId = getDeviceId();
 
   if (!email || !password) {
     msg.innerHTML = "❌ Veuillez remplir tous les champs";
@@ -118,7 +160,6 @@ window.registerUser = function () {
   msg.innerHTML = "⏳ Création du compte...";
 
   createUserWithEmailAndPassword(auth, email, password)
-
     .then(async (userCredential) => {
 
       const user = userCredential.user;
@@ -128,6 +169,7 @@ window.registerUser = function () {
         email: user.email,
         paid: false,
         plan: null,
+        deviceId: deviceId,
         createdAt: new Date().toISOString()
       });
 
@@ -138,7 +180,6 @@ window.registerUser = function () {
       }, 1000);
 
     })
-
     .catch((error) => {
       msg.innerHTML = error.message;
     });
