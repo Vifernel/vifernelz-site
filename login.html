@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -17,7 +18,7 @@
   <input id="email" type="email" placeholder="Email"
   style="width:100%;padding:12px;margin:10px 0;border-radius:8px;color:black;background:white;">
 
-  <input id="password" type="password" placeholder="Mot de passe"
+<input id="password" type="password" placeholder="Mot de passe"
   style="width:100%;padding:12px;margin:10px 0;border-radius:8px;color:black;background:white;">
 
   <button onclick="loginUser()"
@@ -41,20 +42,15 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import {
   getAuth,
   signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  signOut
+  createUserWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
   getFirestore,
   doc,
-  setDoc,
-  getDoc
+  setDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-/* =========================
-   FIREBASE CONFIG
-========================= */
 const firebaseConfig = {
   apiKey: "AIzaSyCDzr8uruU4UMNjCMa50zs4erHGXkN_fyQ",
   authDomain: "vifernel-trading-academy.firebaseapp.com",
@@ -72,27 +68,13 @@ const db = getFirestore(app);
 const msg = document.getElementById("msg");
 
 /* =========================
-   DEVICE ID (ANTI-SHARING SIMPLE)
+   LOGIN PRO
 ========================= */
-function getDeviceId() {
-  let id = localStorage.getItem("device_id");
 
-  if (!id) {
-    id = crypto.randomUUID();
-    localStorage.setItem("device_id", id);
-  }
-
-  return id;
-}
-
-/* =========================
-   LOGIN (STABLE)
-========================= */
 window.loginUser = function () {
 
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
-  const deviceId = getDeviceId();
 
   if (!email || !password) {
     msg.innerHTML = "❌ Veuillez remplir tous les champs";
@@ -102,59 +84,30 @@ window.loginUser = function () {
   msg.innerHTML = "⏳ Connexion...";
 
   signInWithEmailAndPassword(auth, email, password)
-    .then(async (cred) => {
 
-      const user = cred.user;
-      const ref = doc(db, "users", user.uid);
-
-      let snap;
-      try {
-        snap = await getDoc(ref);
-      } catch (e) {
-        msg.innerHTML = "⚠️ Problème réseau, réessaie";
-        return;
-      }
-
-      if (!snap.exists()) {
-        msg.innerHTML = "❌ Profil introuvable";
-        await signOut(auth);
-        return;
-      }
-
-      const data = snap.data();
-
-      // 🔒 DEVICE LOCK
-      if (data.deviceId && data.deviceId !== deviceId) {
-        msg.innerHTML = "⛔ Appareil non autorisé";
-        await signOut(auth);
-        return;
-      }
-
-      // save device if first login
-      if (!data.deviceId) {
-        await setDoc(ref, { deviceId }, { merge: true });
-      }
+    .then(() => {
 
       msg.innerHTML = "Connexion réussie 🔥";
 
       setTimeout(() => {
-        window.location.href = "academy.html";
-      }, 700);
+        window.location.replace("academy.html");
+      }, 1000);
 
     })
+
     .catch((error) => {
-      msg.innerHTML = "❌ " + error.message;
+      msg.innerHTML = error.message;
     });
 };
 
 /* =========================
-   REGISTER (SAFE + DEVICE SAVE)
+   REGISTER PRO
 ========================= */
+
 window.registerUser = function () {
 
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
-  const deviceId = getDeviceId();
 
   if (!email || !password) {
     msg.innerHTML = "❌ Veuillez remplir tous les champs";
@@ -164,6 +117,7 @@ window.registerUser = function () {
   msg.innerHTML = "⏳ Création du compte...";
 
   createUserWithEmailAndPassword(auth, email, password)
+
     .then(async (userCredential) => {
 
       const user = userCredential.user;
@@ -173,19 +127,19 @@ window.registerUser = function () {
         email: user.email,
         paid: false,
         plan: null,
-        deviceId: deviceId,
         createdAt: new Date().toISOString()
       });
 
       msg.innerHTML = "Compte créé 🎉";
 
       setTimeout(() => {
-        window.location.href = "academy.html";
-      }, 700);
+        window.location.replace("academy.html");
+      }, 1000);
 
     })
+
     .catch((error) => {
-      msg.innerHTML = "❌ " + error.message;
+      msg.innerHTML = error.message;
     });
 };
 
