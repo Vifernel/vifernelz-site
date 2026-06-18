@@ -37,7 +37,6 @@
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -52,14 +51,16 @@ import {
   getDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+/* =========================
+   FIREBASE CONFIG (CORRIGÉ)
+========================= */
 const firebaseConfig = {
-  apiKey: "AIzaSyCDzr8uruU4UMNjCMa50zs4erHGXKN_fyQ",
+  apiKey: "AIzaSyCDzr8uruU4UMNjCMa50zs4erHGXkN_fyQ",
   authDomain: "vifernel-trading-academy.firebaseapp.com",
   projectId: "vifernel-trading-academy",
   storageBucket: "vifernel-trading-academy.firebasestorage.app",
   messagingSenderId: "1000145148349",
-  appId: "1:1000145148349:web:f0688610a67859a6999ad4",
-  measurementId: "G-FR882HDS3K"
+  appId: "1:1000145148349:web:f0688610a67859a6999ad4"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -69,7 +70,7 @@ const db = getFirestore(app);
 const msg = document.getElementById("msg");
 
 /* =========================
-   DEVICE ID SYSTEM
+   DEVICE ID SYSTEM (ANTI PARTAGE)
 ========================= */
 function getDeviceId() {
   let id = localStorage.getItem("device_id");
@@ -83,9 +84,8 @@ function getDeviceId() {
 }
 
 /* =========================
-   LOGIN PRO (DEVICE LOCK)
+   LOGIN + DEVICE LOCK
 ========================= */
-
 window.loginUser = function () {
 
   const email = document.getElementById("email").value;
@@ -103,7 +103,6 @@ window.loginUser = function () {
     .then(async (cred) => {
 
       const user = cred.user;
-
       const ref = doc(db, "users", user.uid);
       const snap = await getDoc(ref);
 
@@ -115,24 +114,22 @@ window.loginUser = function () {
 
       const data = snap.data();
 
-      // 🔒 DEVICE CHECK
+      // 🔒 DEVICE LOCK
       if (data.deviceId && data.deviceId !== deviceId) {
         msg.innerHTML = "⛔ Compte déjà utilisé sur un autre appareil";
         await signOut(auth);
         return;
       }
 
-      // 🟢 SAVE DEVICE FIRST TIME LOGIN
+      // 🟢 SAVE DEVICE FIRST LOGIN
       if (!data.deviceId) {
-        await setDoc(ref, {
-          deviceId: deviceId
-        }, { merge: true });
+        await setDoc(ref, { deviceId: deviceId }, { merge: true });
       }
 
       msg.innerHTML = "Connexion réussie 🔥";
 
       setTimeout(() => {
-        window.location.replace("academy.html");
+        window.location.replace("dashboard.html");
       }, 1000);
 
     })
@@ -141,11 +138,9 @@ window.loginUser = function () {
     });
 };
 
-
 /* =========================
-   REGISTER PRO (DEVICE SAVE) ✅ CORRIGÉ
+   REGISTER + DEVICE SAVE
 ========================= */
-
 window.registerUser = function () {
 
   const email = document.getElementById("email").value;
@@ -168,7 +163,7 @@ window.registerUser = function () {
         uid: user.uid,
         email: user.email,
         paid: false,
-        plan: null,
+        plan: "FREE",
         deviceId: deviceId,
         createdAt: new Date().toISOString()
       });
@@ -176,7 +171,7 @@ window.registerUser = function () {
       msg.innerHTML = "Compte créé 🎉";
 
       setTimeout(() => {
-        window.location.replace("academy.html");
+        window.location.replace("dashboard.html");
       }, 1000);
 
     })
