@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -15,10 +16,10 @@
   </h2>
 
   <input id="email" type="email" placeholder="Email"
-    style="width:100%;padding:12px;margin:10px 0;border-radius:8px;color:black;background:white;">
+  style="width:100%;padding:12px;margin:10px 0;border-radius:8px;color:black;background:white;">
 
-  <input id="password" type="password" placeholder="Mot de passe"
-    style="width:100%;padding:12px;margin:10px 0;border-radius:8px;color:black;background:white;">
+<input id="password" type="password" placeholder="Mot de passe"
+  style="width:100%;padding:12px;margin:10px 0;border-radius:8px;color:black;background:white;">
 
   <button onclick="loginUser()"
     style="width:100%;padding:12px;background:#d4af37;color:black;font-weight:bold;border:none;border-radius:8px;">
@@ -37,23 +38,19 @@
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
 import {
   getAuth,
   signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  signOut
+  createUserWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
   getFirestore,
   doc,
-  setDoc,
-  getDoc
+  setDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-/* =========================
-   FIREBASE CONFIG
-========================= */
 const firebaseConfig = {
   apiKey: "AIzaSyCDzr8uruU4UMNjCMa50zs4erHGXkN_fyQ",
   authDomain: "vifernel-trading-academy.firebaseapp.com",
@@ -71,27 +68,13 @@ const db = getFirestore(app);
 const msg = document.getElementById("msg");
 
 /* =========================
-   DEVICE ID SYSTEM (ANTI SHARING)
+   LOGIN PRO
 ========================= */
-function getDeviceId() {
-  let id = localStorage.getItem("device_id");
 
-  if (!id) {
-    id = crypto.randomUUID();
-    localStorage.setItem("device_id", id);
-  }
-
-  return id;
-}
-
-/* =========================
-   LOGIN
-========================= */
 window.loginUser = function () {
 
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
-  const deviceId = getDeviceId();
 
   if (!email || !password) {
     msg.innerHTML = "❌ Veuillez remplir tous les champs";
@@ -101,53 +84,30 @@ window.loginUser = function () {
   msg.innerHTML = "⏳ Connexion...";
 
   signInWithEmailAndPassword(auth, email, password)
-    .then(async (cred) => {
 
-      const user = cred.user;
-      const ref = doc(db, "users", user.uid);
-      const snap = await getDoc(ref);
-
-      if (!snap.exists()) {
-        msg.innerHTML = "❌ Profil introuvable";
-        await signOut(auth);
-        return;
-      }
-
-      const data = snap.data();
-
-      // 🔒 DEVICE LOCK
-      if (data.deviceId && data.deviceId !== deviceId) {
-        msg.innerHTML = "⛔ Compte déjà utilisé sur un autre appareil";
-        await signOut(auth);
-        return;
-      }
-
-      // enregistrer device si premier login
-      if (!data.deviceId) {
-        await setDoc(ref, { deviceId }, { merge: true });
-      }
+    .then(() => {
 
       msg.innerHTML = "Connexion réussie 🔥";
 
-      // FLOW FINAL
       setTimeout(() => {
-        window.location.href = "academy.html";
-      }, 800);
+        window.location.replace("academy.html");
+      }, 1000);
 
     })
+
     .catch((error) => {
-      msg.innerHTML = "❌ " + error.message;
+      msg.innerHTML = error.message;
     });
 };
 
 /* =========================
-   REGISTER (ANTI BYPASS DEVICE)
+   REGISTER PRO
 ========================= */
+
 window.registerUser = function () {
 
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
-  const deviceId = getDeviceId();
 
   if (!email || !password) {
     msg.innerHTML = "❌ Veuillez remplir tous les champs";
@@ -156,51 +116,31 @@ window.registerUser = function () {
 
   msg.innerHTML = "⏳ Création du compte...";
 
-  // 🔥 BLOQUER SI DEVICE DÉJÀ UTILISÉ
-  const deviceRef = doc(db, "deviceLocks", deviceId);
+  createUserWithEmailAndPassword(auth, email, password)
 
-  getDoc(deviceRef).then((deviceSnap) => {
+    .then(async (userCredential) => {
 
-    if (deviceSnap.exists()) {
-      msg.innerHTML = "⛔ Cet appareil a déjà un compte";
-      return;
-    }
+      const user = userCredential.user;
 
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(async (userCredential) => {
-
-        const user = userCredential.user;
-        const userRef = doc(db, "users", user.uid);
-
-        await setDoc(userRef, {
-          uid: user.uid,
-          email: user.email,
-          plan: "FREE",
-          paid: false,
-          deviceId: deviceId,
-          createdAt: new Date().toISOString()
-        });
-
-        // 🔒 LOCK DEVICE GLOBAL
-        await setDoc(deviceRef, {
-          uid: user.uid,
-          createdAt: new Date().toISOString()
-        });
-
-        msg.innerHTML = "Compte créé 🎉";
-
-        // FLOW FINAL
-        setTimeout(() => {
-          window.location.href = "academy.html";
-        }, 800);
-
-      })
-      .catch((error) => {
-        msg.innerHTML = "❌ " + error.message;
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        email: user.email,
+        paid: false,
+        plan: null,
+        createdAt: new Date().toISOString()
       });
 
-  });
+      msg.innerHTML = "Compte créé 🎉";
 
+      setTimeout(() => {
+        window.location.replace("academy.html");
+      }, 1000);
+
+    })
+
+    .catch((error) => {
+      msg.innerHTML = error.message;
+    });
 };
 
 </script>
