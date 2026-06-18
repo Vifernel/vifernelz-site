@@ -71,7 +71,7 @@ const db = getFirestore(app);
 const msg = document.getElementById("msg");
 
 /* =========================
-   DEVICE ID (ANTI-SHARING)
+   DEVICE ID SYSTEM (ANTI SHARING)
 ========================= */
 function getDeviceId() {
   let id = localStorage.getItem("device_id");
@@ -85,19 +85,7 @@ function getDeviceId() {
 }
 
 /* =========================
-   SAFE GET (ANTI BUG OFFLINE)
-========================= */
-function safeGetDoc(ref) {
-  return Promise.race([
-    getDoc(ref),
-    new Promise((_, reject) =>
-      setTimeout(() => reject(new Error("timeout")), 8000)
-    )
-  ]);
-}
-
-/* =========================
-   LOGIN FLOW COMPLET
+   LOGIN
 ========================= */
 window.loginUser = function () {
 
@@ -106,7 +94,7 @@ window.loginUser = function () {
   const deviceId = getDeviceId();
 
   if (!email || !password) {
-    msg.innerHTML = "❌ Remplis tous les champs";
+    msg.innerHTML = "❌ Veuillez remplir tous les champs";
     return;
   }
 
@@ -117,15 +105,7 @@ window.loginUser = function () {
 
       const user = cred.user;
       const ref = doc(db, "users", user.uid);
-
-      let snap;
-
-      try {
-        snap = await safeGetDoc(ref);
-      } catch (e) {
-        msg.innerHTML = "⚠️ Problème réseau, réessaie";
-        return;
-      }
+      const snap = await getDoc(ref);
 
       if (!snap.exists()) {
         msg.innerHTML = "❌ Profil introuvable";
@@ -142,14 +122,14 @@ window.loginUser = function () {
         return;
       }
 
-      // enregistrer device si 1er login
+      // enregistrer device si premier login
       if (!data.deviceId) {
         await setDoc(ref, { deviceId }, { merge: true });
       }
 
       msg.innerHTML = "Connexion réussie 🔥";
 
-      // 🔥 FLOW COMPLET
+      // FLOW FINAL
       setTimeout(() => {
         window.location.href = "academy.html";
       }, 800);
@@ -161,7 +141,7 @@ window.loginUser = function () {
 };
 
 /* =========================
-   REGISTER FLOW + ANTI BYPASS DEVICE
+   REGISTER (ANTI BYPASS DEVICE)
 ========================= */
 window.registerUser = function () {
 
@@ -170,57 +150,57 @@ window.registerUser = function () {
   const deviceId = getDeviceId();
 
   if (!email || !password) {
-    msg.innerHTML = "❌ Remplis tous les champs";
+    msg.innerHTML = "❌ Veuillez remplir tous les champs";
     return;
   }
 
   msg.innerHTML = "⏳ Création du compte...";
 
-  // 🔥 CHECK DEVICE AVANT CREATION (ANTI BYPASS)
-  const usersRef = doc(db, "users", deviceId);
+  // 🔥 BLOQUER SI DEVICE DÉJÀ UTILISÉ
+  const deviceRef = doc(db, "deviceLocks", deviceId);
 
-  createUserWithEmailAndPassword(auth, email, password)
-    .then(async (userCredential) => {
+  getDoc(deviceRef).then((deviceSnap) => {
 
-      const user = userCredential.user;
-      const ref = doc(db, "users", user.uid);
+    if (deviceSnap.exists()) {
+      msg.innerHTML = "⛔ Cet appareil a déjà un compte";
+      return;
+    }
 
-      // vérifier si device déjà utilisé
-      const deviceCheck = await getDoc(doc(db, "deviceLocks", deviceId));
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(async (userCredential) => {
 
-      if (deviceCheck.exists()) {
-        msg.innerHTML = "⛔ Cet appareil a déjà un compte";
-        await signOut(auth);
-        return;
-      }
+        const user = userCredential.user;
+        const userRef = doc(db, "users", user.uid);
 
-      // enregistrer user
-      await setDoc(ref, {
-        uid: user.uid,
-        email: user.email,
-        plan: "FREE",
-        paid: false,
-        deviceId: deviceId,
-        createdAt: new Date().toISOString()
+        await setDoc(userRef, {
+          uid: user.uid,
+          email: user.email,
+          plan: "FREE",
+          paid: false,
+          deviceId: deviceId,
+          createdAt: new Date().toISOString()
+        });
+
+        // 🔒 LOCK DEVICE GLOBAL
+        await setDoc(deviceRef, {
+          uid: user.uid,
+          createdAt: new Date().toISOString()
+        });
+
+        msg.innerHTML = "Compte créé 🎉";
+
+        // FLOW FINAL
+        setTimeout(() => {
+          window.location.href = "academy.html";
+        }, 800);
+
+      })
+      .catch((error) => {
+        msg.innerHTML = "❌ " + error.message;
       });
 
-      // 🔒 LOCK DEVICE GLOBAL
-      await setDoc(doc(db, "deviceLocks", deviceId), {
-        uid: user.uid,
-        createdAt: new Date().toISOString()
-      });
+  });
 
-      msg.innerHTML = "Compte créé 🎉";
-
-      // 🔥 FLOW COMPLET
-      setTimeout(() => {
-        window.location.href = "academy.html";
-      }, 800);
-
-    })
-    .catch((error) => {
-      msg.innerHTML = "❌ " + error.message;
-    });
 };
 
 </script>
