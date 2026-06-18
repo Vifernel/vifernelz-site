@@ -71,7 +71,7 @@ const db = getFirestore(app);
 const msg = document.getElementById("msg");
 
 /* =========================
-   DEVICE ID (ANTI PARTAGE)
+   DEVICE ID (ANTI-SHARING)
 ========================= */
 function getDeviceId() {
   let id = localStorage.getItem("device_id");
@@ -85,7 +85,19 @@ function getDeviceId() {
 }
 
 /* =========================
-   LOGIN
+   SAFE GET (ANTI BUG OFFLINE)
+========================= */
+function safeGetDoc(ref) {
+  return Promise.race([
+    getDoc(ref),
+    new Promise((_, reject) =>
+      setTimeout(() => reject(new Error("timeout")), 8000)
+    )
+  ]);
+}
+
+/* =========================
+   LOGIN FLOW COMPLET
 ========================= */
 window.loginUser = function () {
 
@@ -105,7 +117,15 @@ window.loginUser = function () {
 
       const user = cred.user;
       const ref = doc(db, "users", user.uid);
-      const snap = await getDoc(ref);
+
+      let snap;
+
+      try {
+        snap = await safeGetDoc(ref);
+      } catch (e) {
+        msg.innerHTML = "⚠️ Problème réseau, réessaie";
+        return;
+      }
 
       if (!snap.exists()) {
         msg.innerHTML = "❌ Profil introuvable";
@@ -129,10 +149,10 @@ window.loginUser = function () {
 
       msg.innerHTML = "Connexion réussie 🔥";
 
-      // ✅ REDIRECTION FLOW CORRECT
+      // 🔥 FLOW COMPLET
       setTimeout(() => {
         window.location.href = "academy.html";
-      }, 1000);
+      }, 800);
 
     })
     .catch((error) => {
@@ -141,7 +161,7 @@ window.loginUser = function () {
 };
 
 /* =========================
-   REGISTER
+   REGISTER FLOW + ANTI BYPASS DEVICE
 ========================= */
 window.registerUser = function () {
 
@@ -156,12 +176,26 @@ window.registerUser = function () {
 
   msg.innerHTML = "⏳ Création du compte...";
 
+  // 🔥 CHECK DEVICE AVANT CREATION (ANTI BYPASS)
+  const usersRef = doc(db, "users", deviceId);
+
   createUserWithEmailAndPassword(auth, email, password)
     .then(async (userCredential) => {
 
       const user = userCredential.user;
+      const ref = doc(db, "users", user.uid);
 
-      await setDoc(doc(db, "users", user.uid), {
+      // vérifier si device déjà utilisé
+      const deviceCheck = await getDoc(doc(db, "deviceLocks", deviceId));
+
+      if (deviceCheck.exists()) {
+        msg.innerHTML = "⛔ Cet appareil a déjà un compte";
+        await signOut(auth);
+        return;
+      }
+
+      // enregistrer user
+      await setDoc(ref, {
         uid: user.uid,
         email: user.email,
         plan: "FREE",
@@ -170,11 +204,18 @@ window.registerUser = function () {
         createdAt: new Date().toISOString()
       });
 
+      // 🔒 LOCK DEVICE GLOBAL
+      await setDoc(doc(db, "deviceLocks", deviceId), {
+        uid: user.uid,
+        createdAt: new Date().toISOString()
+      });
+
       msg.innerHTML = "Compte créé 🎉";
 
+      // 🔥 FLOW COMPLET
       setTimeout(() => {
         window.location.href = "academy.html";
-      }, 1000);
+      }, 800);
 
     })
     .catch((error) => {
