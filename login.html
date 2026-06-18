@@ -15,10 +15,10 @@
   </h2>
 
   <input id="email" type="email" placeholder="Email"
-  style="width:100%;padding:12px;margin:10px 0;border-radius:8px;color:black;background:white;">
+    style="width:100%;padding:12px;margin:10px 0;border-radius:8px;color:black;background:white;">
 
   <input id="password" type="password" placeholder="Mot de passe"
-  style="width:100%;padding:12px;margin:10px 0;border-radius:8px;color:black;background:white;">
+    style="width:100%;padding:12px;margin:10px 0;border-radius:8px;color:black;background:white;">
 
   <button onclick="loginUser()"
     style="width:100%;padding:12px;background:#d4af37;color:black;font-weight:bold;border:none;border-radius:8px;">
@@ -52,7 +52,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 /* =========================
-   FIREBASE CONFIG (CORRIGÉ)
+   FIREBASE CONFIG
 ========================= */
 const firebaseConfig = {
   apiKey: "AIzaSyCDzr8uruU4UMNjCMa50zs4erHGXkN_fyQ",
@@ -60,7 +60,8 @@ const firebaseConfig = {
   projectId: "vifernel-trading-academy",
   storageBucket: "vifernel-trading-academy.firebasestorage.app",
   messagingSenderId: "1000145148349",
-  appId: "1:1000145148349:web:f0688610a67859a6999ad4"
+  appId: "1:1000145148349:web:f0688610a67859a6999ad4",
+  measurementId: "G-FR882HDS3K"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -70,7 +71,7 @@ const db = getFirestore(app);
 const msg = document.getElementById("msg");
 
 /* =========================
-   DEVICE ID SYSTEM (ANTI PARTAGE)
+   DEVICE ID (ANTI PARTAGE)
 ========================= */
 function getDeviceId() {
   let id = localStorage.getItem("device_id");
@@ -84,7 +85,7 @@ function getDeviceId() {
 }
 
 /* =========================
-   LOGIN + DEVICE LOCK
+   LOGIN
 ========================= */
 window.loginUser = function () {
 
@@ -93,7 +94,7 @@ window.loginUser = function () {
   const deviceId = getDeviceId();
 
   if (!email || !password) {
-    msg.innerHTML = "❌ Veuillez remplir tous les champs";
+    msg.innerHTML = "❌ Remplis tous les champs";
     return;
   }
 
@@ -121,25 +122,26 @@ window.loginUser = function () {
         return;
       }
 
-      // 🟢 SAVE DEVICE FIRST LOGIN
+      // enregistrer device si 1er login
       if (!data.deviceId) {
-        await setDoc(ref, { deviceId: deviceId }, { merge: true });
+        await setDoc(ref, { deviceId }, { merge: true });
       }
 
       msg.innerHTML = "Connexion réussie 🔥";
 
+      // ✅ REDIRECTION FLOW CORRECT
       setTimeout(() => {
-        window.location.replace("dashboard.html");
+        window.location.href = "academy.html";
       }, 1000);
 
     })
     .catch((error) => {
-      msg.innerHTML = error.message;
+      msg.innerHTML = "❌ " + error.message;
     });
 };
 
 /* =========================
-   REGISTER + DEVICE SAVE
+   REGISTER
 ========================= */
 window.registerUser = function () {
 
@@ -148,7 +150,7 @@ window.registerUser = function () {
   const deviceId = getDeviceId();
 
   if (!email || !password) {
-    msg.innerHTML = "❌ Veuillez remplir tous les champs";
+    msg.innerHTML = "❌ Remplis tous les champs";
     return;
   }
 
@@ -162,8 +164,8 @@ window.registerUser = function () {
       await setDoc(doc(db, "users", user.uid), {
         uid: user.uid,
         email: user.email,
-        paid: false,
         plan: "FREE",
+        paid: false,
         deviceId: deviceId,
         createdAt: new Date().toISOString()
       });
@@ -171,12 +173,12 @@ window.registerUser = function () {
       msg.innerHTML = "Compte créé 🎉";
 
       setTimeout(() => {
-        window.location.replace("dashboard.html");
+        window.location.href = "academy.html";
       }, 1000);
 
     })
     .catch((error) => {
-      msg.innerHTML = error.message;
+      msg.innerHTML = "❌ " + error.message;
     });
 };
 
