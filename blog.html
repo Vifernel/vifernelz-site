@@ -10,46 +10,84 @@
 
 <style>
 body {
-  background:#0b0f14;
-  color:white;
-  font-family:Poppins;
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: #0b0f14;
+  color: #eaeaea;
 }
 
+/* CONTAINER */
 .blog-container {
-  max-width: 900px;
+  max-width: 1000px;
   margin: 120px auto;
   padding: 20px;
 }
 
+/* TITLE */
 .blog-title {
-  font-size: 32px;
-  margin-bottom: 30px;
+  font-size: 38px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 40px;
+  color: #ffffff;
 }
 
+/* GRID POSTS */
+#posts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+/* CARD POST */
 .post {
-  background: rgba(255,255,255,0.05);
-  padding: 20px;
-  border-radius: 15px;
-  margin-bottom: 20px;
-  transition: 0.3s;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  overflow: hidden;
+  transition: 0.35s ease;
+  backdrop-filter: blur(10px);
 }
 
 .post:hover {
-  transform: translateY(-5px);
+  transform: translateY(-8px);
+  border-color: rgba(212, 175, 55, 0.4);
 }
 
+/* IMAGE */
 .post img {
   width: 100%;
-  border-radius: 12px;
-  margin-bottom: 10px;
+  height: 200px;
+  object-fit: cover;
+  display: block;
 }
 
+/* CONTENT */
 .post h2 {
-  margin-bottom: 10px;
+  font-size: 20px;
+  margin: 15px;
+  color: #fff;
 }
 
 .post small {
+  display: block;
+  margin: 0 15px;
   opacity: 0.7;
+  font-size: 12px;
+}
+
+.post p {
+  margin: 15px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #b8c0cc;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .blog-title {
+    font-size: 28px;
+  }
 }
 </style>
 
