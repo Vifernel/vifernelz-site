@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -11,262 +12,847 @@
 <style>
 
 /* ================= GLOBAL ================= */
+
 body {
-  margin: 0;
-  font-family: "Poppins", sans-serif;
-  background: #0b0f14;
-  color: #eaeaea;
-  overflow-x: hidden;
+  margin:0;
+  font-family:"Poppins", sans-serif;
+  background:#0b0f14;
+  color:#eaeaea;
+  overflow-x:hidden;
 }
 
-/* ================= BACKGROUND ANIMÉ ================= */
+
+/* ================= BACKGROUND ================= */
+
 .animated-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  overflow: hidden;
-  background: linear-gradient(180deg, #05080d 0%, #0b0f14 50%, #070b10 100%);
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  overflow:hidden;
+  background:
+  linear-gradient(
+    180deg,
+    #05080d 0%,
+    #0b0f14 50%,
+    #070b10 100%
+  );
 }
 
-/* ORBES */
+
 .gradient-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.18;
-  animation: floatSlow 18s ease-in-out infinite;
+  position:absolute;
+  border-radius:50%;
+  filter:blur(80px);
+  opacity:.18;
+  animation:floatSlow 18s ease-in-out infinite;
 }
+
 
 .orb-1 {
-  width: 420px;
-  height: 420px;
-  background: #4c8dff;
-  top: -120px;
-  left: -120px;
+ width:420px;
+ height:420px;
+ background:#4c8dff;
+ top:-120px;
+ left:-120px;
 }
+
 
 .orb-2 {
-  width: 340px;
-  height: 340px;
-  background: #6aa5ff;
-  bottom: -100px;
-  right: -80px;
-  animation-delay: 4s;
+ width:340px;
+ height:340px;
+ background:#6aa5ff;
+ bottom:-100px;
+ right:-80px;
+ animation-delay:4s;
 }
+
 
 .orb-3 {
-  width: 260px;
-  height: 260px;
-  background: #3d74ff;
-  top: 40%;
-  left: 55%;
-  animation-delay: 8s;
+ width:260px;
+ height:260px;
+ background:#3d74ff;
+ top:40%;
+ left:55%;
+ animation-delay:8s;
 }
 
-/* GRID */
+
+
 .grid-overlay {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-  opacity: 0.25;
+
+ position:absolute;
+ inset:0;
+
+ background-image:
+ linear-gradient(
+ rgba(255,255,255,.03) 1px,
+ transparent 1px
+ ),
+
+ linear-gradient(
+ 90deg,
+ rgba(255,255,255,.03) 1px,
+ transparent 1px
+ );
+
+ background-size:60px 60px;
+
+ opacity:.25;
+
 }
 
-/* PARTICLES */
+
+
 .particles span {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: rgba(138, 180, 255, 0.5);
-  border-radius: 50%;
-  animation: particleMove 20s linear infinite;
+
+ position:absolute;
+
+ width:4px;
+ height:4px;
+
+ background:
+ rgba(138,180,255,.5);
+
+ border-radius:50%;
+
+ animation:
+ particleMove 20s linear infinite;
+
 }
 
-.particles span:nth-child(1){ left:10%; animation-duration:20s; top:100%; }
-.particles span:nth-child(2){ left:25%; animation-duration:24s; top:100%; }
-.particles span:nth-child(3){ left:40%; animation-duration:18s; top:100%; }
-.particles span:nth-child(4){ left:55%; animation-duration:26s; top:100%; }
-.particles span:nth-child(5){ left:70%; animation-duration:22s; top:100%; }
-.particles span:nth-child(6){ left:80%; animation-duration:28s; top:100%; }
-.particles span:nth-child(7){ left:90%; animation-duration:19s; top:100%; }
-.particles span:nth-child(8){ left:50%; animation-duration:30s; top:100%; }
+
+.particles span:nth-child(1){left:10%;top:100%}
+.particles span:nth-child(2){left:25%;top:100%;animation-duration:24s}
+.particles span:nth-child(3){left:40%;top:100%;animation-duration:18s}
+.particles span:nth-child(4){left:55%;top:100%;animation-duration:26s}
+.particles span:nth-child(5){left:70%;top:100%;animation-duration:22s}
+.particles span:nth-child(6){left:80%;top:100%;animation-duration:28s}
+.particles span:nth-child(7){left:90%;top:100%;animation-duration:19s}
+.particles span:nth-child(8){left:50%;top:100%;animation-duration:30s}
+
+
 
 /* ================= BLOG ================= */
 
+
 .blog-container {
-  max-width: 1000px;
-  margin: 120px auto;
-  padding: 20px;
-  position: relative;
-  z-index: 2;
+
+ max-width:1100px;
+
+ margin:120px auto;
+
+ padding:20px;
+
+ position:relative;
+
+ z-index:2;
+
 }
+
+
 
 .blog-title {
-  font-size: 38px;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 40px;
-  color: #ffffff;
+
+ text-align:center;
+
+ font-size:40px;
+
+ font-weight:800;
+
+ color:white;
+
+ margin-bottom:45px;
+
 }
 
-/* POSTS GRID */
+
+
 #posts {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 25px;
+
+ display:grid;
+
+ grid-template-columns:
+ repeat(
+ auto-fit,
+ minmax(290px,1fr)
+ );
+
+ gap:25px;
+
 }
 
-/* CARD POST PREMIUM */
+
+
+/* ================= CARD ================= */
+
+
 .post {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
-  overflow: hidden;
-  transition: 0.35s ease;
-  backdrop-filter: blur(14px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-  word-break: break-word;
+
+ background:
+ rgba(255,255,255,.05);
+
+ border:
+
+ 1px solid
+ rgba(255,255,255,.08);
+
+ border-radius:22px;
+
+ overflow:hidden;
+
+ backdrop-filter:blur(14px);
+
+ transition:.35s;
+
+ box-shadow:
+ 0 15px 40px rgba(0,0,0,.25);
+
 }
+
+
 
 .post:hover {
-  transform: translateY(-10px);
-  border-color: rgba(138, 180, 255, 0.4);
-  box-shadow: 0 20px 50px rgba(138, 180, 255, 0.08);
+
+ transform:translateY(-10px);
+
+ border-color:
+ rgba(138,180,255,.45);
+
 }
 
-/* IMAGE */
+
+
 .post img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-  display: block;
-  transition: 0.4s ease;
+
+ width:100%;
+
+ height:220px;
+
+ object-fit:cover;
+
 }
 
-.post:hover img {
-  transform: scale(1.05);
+
+
+.post-content {
+
+ padding:18px;
+
 }
 
-/* TEXT */
+
+
 .post h2 {
-  font-size: 20px;
-  margin: 15px;
-  color: #fff;
+
+ margin:0 0 10px;
+
+ font-size:21px;
+
+ color:white;
+
 }
+
+
 
 .post small {
-  display: block;
-  margin: 0 15px;
-  opacity: 0.7;
-  font-size: 12px;
+
+ opacity:.7;
+
+ font-size:12px;
+
 }
+
+
 
 .post p {
-  margin: 15px;
-  font-size: 14px;
-  line-height: 1.7;
-  color: #cbd5e1;
+
+ color:#cbd5e1;
+
+ line-height:1.7;
+
+ font-size:14px;
+
 }
 
-/* RESPONSIVE */
-@media (max-width: 768px) {
-  .blog-title {
-    font-size: 28px;
-  }
+
+
+/* ================= ACTIONS ================= */
+
+
+.post-actions {
+
+ display:flex;
+
+ justify-content:space-between;
+
+ align-items:center;
+
+ padding:0 18px 18px;
+
 }
+
+
+.action-btn {
+
+ border:none;
+
+ background:
+ rgba(255,255,255,.08);
+
+ color:white;
+
+ padding:8px 14px;
+
+ border-radius:20px;
+
+ cursor:pointer;
+
+ transition:.3s;
+
+}
+
+
+
+.action-btn:hover {
+
+ background:
+ rgba(138,180,255,.25);
+
+}
+
+
+
+.like-active {
+
+ color:#ff4d6d;
+
+}
+
+
+
+/* ================= RESPONSIVE ================= */
+
+
+@media(max-width:768px){
+
+.blog-title{
+
+font-size:28px;
+
+}
+
+}
+
 
 /* ================= ANIMATIONS ================= */
 
+
 @keyframes floatSlow {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-40px); }
-  100% { transform: translateY(0); }
+
+0%{
+transform:translateY(0)
 }
 
-@keyframes particleMove {
-  0% { transform: translateY(0); opacity:0; }
-  15% { opacity:1; }
-  100% { transform: translateY(-120vh); opacity:0; }
+50%{
+transform:translateY(-40px)
 }
+
+100%{
+transform:translateY(0)
+}
+
+}
+
+
+@keyframes particleMove {
+
+0%{
+
+transform:translateY(0);
+
+opacity:0;
+
+}
+
+15%{
+
+opacity:1;
+
+}
+
+100%{
+
+transform:
+translateY(-120vh);
+
+opacity:0;
+
+}
+
+}
+
 
 </style>
 
 </head>
 
+
 <body>
 
-<!-- BACKGROUND ANIMÉ -->
+
 <div class="animated-bg">
-  <div class="gradient-orb orb-1"></div>
-  <div class="gradient-orb orb-2"></div>
-  <div class="gradient-orb orb-3"></div>
 
-  <div class="grid-overlay"></div>
+<div class="gradient-orb orb-1"></div>
+<div class="gradient-orb orb-2"></div>
+<div class="gradient-orb orb-3"></div>
 
-  <div class="particles">
-    <span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span>
-  </div>
+
+<div class="grid-overlay"></div>
+
+
+<div class="particles">
+
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+
 </div>
 
-<!-- BLOG CONTENT -->
+</div>
+
+
+
 <div class="blog-container">
 
-  <h1 class="blog-title">📰 Blog VifernelZ</h1>
 
-  <div id="posts"></div>
+<h1 class="blog-title">
+📰 Blog VifernelZ
+</h1>
+
+
+<div id="posts">
+
+<!-- Les articles Firebase apparaîtront ici -->
 
 </div>
 
-<!-- FIREBASE -->
+
+</div>
+<!-- ================= FIREBASE ================= -->
+
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { 
+initializeApp 
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+
+import { 
+
+getFirestore,
+collection,
+getDocs,
+doc,
+updateDoc,
+increment,
+getDoc,
+setDoc,
+query,
+orderBy
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCDzr8uruU4UMNjCMa50zs4erHGXkN_fyQ",
-  authDomain: "vifernel-trading-academy.firebaseapp.com",
-  projectId: "vifernel-trading-academy",
-  storageBucket: "vifernel-trading-academy.firebasestorage.app",
-  messagingSenderId: "1000145148349",
-  appId: "1:1000145148349:web:f0688610a67859a6999ad4"
+
+apiKey: "AIzaSyCDzr8uruU4UMNjCMa50zs4erHGXkN_fyQ",
+
+authDomain:
+"vifernel-trading-academy.firebaseapp.com",
+
+projectId:
+"vifernel-trading-academy",
+
+storageBucket:
+"vifernel-trading-academy.firebasestorage.app",
+
+messagingSenderId:
+"1000145148349",
+
+appId:
+"1:1000145148349:web:f0688610a67859a6999ad4"
+
 };
 
+
+
 const app = initializeApp(firebaseConfig);
+
 const db = getFirestore(app);
 
-const postsDiv = document.getElementById("posts");
 
-async function loadPosts() {
 
-  const querySnapshot = await getDocs(collection(db, "articles"));
+const postsDiv =
+document.getElementById("posts");
 
-  postsDiv.innerHTML = "";
 
-  querySnapshot.forEach((doc) => {
-    const data = doc.data();
 
-    postsDiv.innerHTML += `
-      <div class="post">
-        <img src="${data.image || ''}" alt="">
-        <h2>${data.title}</h2>
-        <small>${data.date} • ${data.author}</small>
-        <p>${data.content}</p>
-      </div>
-    `;
-  });
+
+
+// ================= CHARGER ARTICLES =================
+
+
+async function loadPosts(){
+
+
+try{
+
+
+const articlesQuery =
+query(
+collection(db,"articles"),
+orderBy("date","desc")
+);
+
+
+
+const snapshot =
+await getDocs(articlesQuery);
+
+
+
+postsDiv.innerHTML="";
+
+
+
+snapshot.forEach((article)=>{
+
+
+const data =
+article.data();
+
+
+const id =
+article.id;
+
+
+
+const likes =
+data.likes || 0;
+
+
+const views =
+data.views || 0;
+
+
+
+postsDiv.innerHTML += `
+
+
+<div class="post">
+
+
+<img 
+src="${data.image || 'https://via.placeholder.com/600x300'}"
+alt="article">
+
+
+<div class="post-content">
+
+
+<h2>
+${escapeHTML(data.title)}
+</h2>
+
+
+<small>
+
+${data.date || ""}
+ • 
+${data.author || "VifernelZ"}
+
+</small>
+
+
+
+<p>
+
+${escapeHTML(data.content)}
+
+</p>
+
+
+</div>
+
+
+
+
+<div class="post-actions">
+
+
+<button 
+class="action-btn like-btn"
+data-id="${id}">
+
+❤️ 
+<span>${likes}</span>
+
+</button>
+
+
+
+<button 
+class="action-btn view-btn"
+data-id="${id}">
+
+👁️ 
+<span>${views}</span>
+
+</button>
+
+
+
+</div>
+
+
+
+</div>
+
+
+`;
+
+
+// Ajouter une vue automatiquement
+
+addView(id);
+
+
+});
+
+
+
+// Activer les boutons likes
+
+activateLikes();
+
+
 
 }
 
+catch(error){
+
+console.error(
+"Erreur chargement articles:",
+error
+);
+
+postsDiv.innerHTML=
+
+`
+<p>
+Impossible de charger les articles.
+</p>
+`;
+
+}
+
+
+
+}
+
+
+
+
+
+
+// ================= AJOUTER VUE =================
+
+
+async function addView(articleId){
+
+
+const articleRef =
+doc(
+db,
+"articles",
+articleId
+);
+
+
+
+const articleSnap =
+await getDoc(articleRef);
+
+
+
+if(articleSnap.exists()){
+
+
+await updateDoc(
+articleRef,
+{
+
+views:
+increment(1)
+
+}
+
+);
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+// ================= LIKES =================
+
+
+function activateLikes(){
+
+
+const buttons =
+document.querySelectorAll(".like-btn");
+
+
+
+buttons.forEach(button=>{
+
+
+button.addEventListener(
+"click",
+async()=>{
+
+
+const id =
+button.dataset.id;
+
+
+
+const alreadyLiked =
+localStorage.getItem(
+"liked_"+id
+);
+
+
+
+if(alreadyLiked){
+
+return;
+
+}
+
+
+
+const articleRef =
+doc(
+db,
+"articles",
+id
+);
+
+
+
+await updateDoc(
+articleRef,
+{
+
+likes:
+increment(1)
+
+}
+
+);
+
+
+
+localStorage.setItem(
+"liked_"+id,
+"true"
+);
+
+
+
+const count =
+button.querySelector("span");
+
+
+
+count.textContent =
+Number(count.textContent)+1;
+
+
+
+button.classList.add(
+"like-active"
+);
+
+
+
+});
+
+
+});
+
+
+}
+
+
+
+
+
+
+// ================= SECURITE TEXTE =================
+
+
+function escapeHTML(text){
+
+
+if(!text)
+return "";
+
+
+return text
+
+.replace(/&/g,"&amp;")
+
+.replace(/</g,"&lt;")
+
+.replace(/>/g,"&gt;")
+
+.replace(/"/g,"&quot;")
+
+.replace(/'/g,"&#039;");
+
+
+}
+
+
+
+
+
+
 loadPosts();
+
+
 
 </script>
 
+
+
 </body>
+
 </html>
