@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Blog - VifernelZ</title>
 
-<link rel="stylesheet" href="style.css">
-
 <style>
 body{
   background:#0b0f14;
@@ -39,6 +37,13 @@ button{
   font-weight:bold;
   cursor:pointer;
 }
+
+.post{
+  background:rgba(255,255,255,0.05);
+  padding:10px;
+  margin-top:10px;
+  border-radius:10px;
+}
 </style>
 
 </head>
@@ -47,48 +52,61 @@ button{
 
 <div class="admin-box">
 
-<h2>🛠 Admin Blog VifernelZ</h2>
+<h2>🛠 Admin Blog</h2>
 
 <input id="title" placeholder="Titre">
 <input id="image" placeholder="Image URL">
 <input id="author" placeholder="Auteur">
 <textarea id="content" placeholder="Contenu"></textarea>
 
-<button onclick="publish()">Publier</button>
+<button onclick="addPost()">Publier</button>
 
 <p id="msg"></p>
+
+<hr>
+
+<div id="list"></div>
 
 </div>
 
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCDzr8uruU4UMNjCMa50zs4erHGXkN_fyQ",
   authDomain: "vifernel-trading-academy.firebaseapp.com",
-  projectId: "vifernel-trading-academy",
+  projectId: "vifernel-trading-academy"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const msg = document.getElementById("msg");
+const list = document.getElementById("list");
 
-window.publish = async function () {
+/* ================= CREATE ================= */
+window.addPost = async function () {
 
   const title = document.getElementById("title").value;
   const image = document.getElementById("image").value;
   const author = document.getElementById("author").value;
   const content = document.getElementById("content").value;
 
-  if(!title || !content){
-    msg.innerText = "❌ Remplis titre + contenu";
+  if (!title || !content) {
+    msg.innerText = "❌ Titre + contenu obligatoires";
     return;
   }
 
-  await addDoc(collection(db,"articles"),{
+  await addDoc(collection(db, "articles"), {
     title,
     image,
     author,
@@ -96,8 +114,38 @@ window.publish = async function () {
     date: new Date().toLocaleDateString()
   });
 
-  msg.innerText = "✅ Article publié !";
+  msg.innerText = "✅ Article publié";
+
+  loadPosts();
 };
+
+/* ================= READ ================= */
+async function loadPosts() {
+
+  const snap = await getDocs(collection(db, "articles"));
+
+  list.innerHTML = "";
+
+  snap.forEach((d) => {
+
+    const data = d.data();
+
+    list.innerHTML += `
+      <div class="post">
+        <h3>${data.title}</h3>
+        <button onclick="deletePost('${d.id}')">Supprimer</button>
+      </div>
+    `;
+  });
+}
+
+/* ================= DELETE ================= */
+window.deletePost = async function(id){
+  await deleteDoc(doc(db,"articles",id));
+  loadPosts();
+};
+
+loadPosts();
 
 </script>
 
