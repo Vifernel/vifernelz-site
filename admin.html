@@ -78,9 +78,11 @@ import {
   addDoc,
   getDocs,
   deleteDoc,
-  doc
+  doc,
+  updateDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+/* FIREBASE CONFIG */
 const firebaseConfig = {
   apiKey: "AIzaSyCDzr8uruU4UMNjCMa50zs4erHGXkN_fyQ",
   authDomain: "vifernel-trading-academy.firebaseapp.com",
@@ -93,7 +95,28 @@ const db = getFirestore(app);
 const msg = document.getElementById("msg");
 const list = document.getElementById("list");
 
-/* ================= CREATE ================= */
+/* =========================
+   🔐 ADMIN LOGIN SIMPLE
+========================= */
+window.loginAdmin = function () {
+
+  const email = prompt("Email admin ?");
+  const password = prompt("Mot de passe ?");
+
+  if (
+    email === "contact@vifernelz.com" &&
+    password === "VifernelZ200$"
+  ) {
+    msg.innerText = "✅ Accès autorisé";
+    loadPosts();
+  } else {
+    msg.innerText = "❌ Accès refusé";
+  }
+};
+
+/* =========================
+   ➕ CREATE ARTICLE
+========================= */
 window.addPost = async function () {
 
   const title = document.getElementById("title").value;
@@ -119,7 +142,9 @@ window.addPost = async function () {
   loadPosts();
 };
 
-/* ================= READ ================= */
+/* =========================
+   📖 READ ARTICLES
+========================= */
 async function loadPosts() {
 
   const snap = await getDocs(collection(db, "articles"));
@@ -133,19 +158,41 @@ async function loadPosts() {
     list.innerHTML += `
       <div class="post">
         <h3>${data.title}</h3>
-        <button onclick="deletePost('${d.id}')">Supprimer</button>
+
+        <button onclick="deletePost('${d.id}')">🗑 Supprimer</button>
+        <button onclick="editPost('${d.id}', '${data.title}', '${data.content}')">
+          ✏ Modifier
+        </button>
       </div>
     `;
   });
 }
 
-/* ================= DELETE ================= */
-window.deletePost = async function(id){
-  await deleteDoc(doc(db,"articles",id));
+/* =========================
+   🗑 DELETE
+========================= */
+window.deletePost = async function (id) {
+  await deleteDoc(doc(db, "articles", id));
   loadPosts();
 };
 
-loadPosts();
+/* =========================
+   ✏ UPDATE
+========================= */
+window.editPost = async function (id, oldTitle, oldContent) {
+
+  const newTitle = prompt("Nouveau titre", oldTitle);
+  const newContent = prompt("Nouveau contenu", oldContent);
+
+  if (!newTitle || !newContent) return;
+
+  await updateDoc(doc(db, "articles", id), {
+    title: newTitle,
+    content: newContent
+  });
+
+  loadPosts();
+};
 
 </script>
 
