@@ -1,409 +1,138 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Blog - VifernelZ</title>
+
+<title>
+Blog VifernelZ | Technologie, Trading, Business Digital & Innovation
+</title>
+
+
+<meta name="description" content="
+Blog VifernelZ : découvrez des articles sur le développement web,
+le trading éducatif, l'intelligence artificielle, l'e-commerce,
+le business en ligne et les stratégies digitales.
+">
+
+
+<meta name="keywords" content="
+VifernelZ,
+Vifernel Zounma,
+développement web,
+formation trading,
+business digital,
+intelligence artificielle,
+e-commerce,
+entrepreneuriat digital
+">
+
+
+<meta name="author" content="Vifernel Zounma">
+
+
+<!-- SEO ROBOTS -->
+
+<meta name="robots" content="index, follow">
+
+
+<!-- OPEN GRAPH FACEBOOK -->
+
+<meta property="og:type" content="website">
+
+<meta property="og:title" content="
+Blog VifernelZ | Technologie & Business Digital
+">
+
+<meta property="og:description" content="
+Articles et ressources sur le digital,
+le trading éducatif,
+l'intelligence artificielle et l'entrepreneuriat.
+">
+
+<meta property="og:image" content="
+images/profile1.jpg
+">
+
+<meta property="og:url" content="
+https://vifernelz.com/blog.html
+">
+
+
+<!-- TWITTER CARD -->
+
+<meta name="twitter:card" content="summary_large_image">
+
+<meta name="twitter:title" content="
+Blog VifernelZ | Technologie & Business Digital
+">
+
+<meta name="twitter:description" content="
+Découvrez les contenus éducatifs VifernelZ.
+">
+
+<meta name="twitter:image" content="
+https://vifernelz.com/images/profile1.jpg
+">
+
+
+<!-- SCHEMA.ORG BLOG -->
+
+<script type="application/ld+json">
+
+{
+ "@context":"https://schema.org",
+ "@type":"Blog",
+ "name":"Blog VifernelZ",
+ "url":"https://vifernelz.com/blog.html",
+ "author":{
+   "@type":"Person",
+   "name":"Vifernel Zounma"
+ },
+ "description":
+ "Blog sur la technologie, le business digital, le trading éducatif et l'innovation."
+}
+
+</script>
+
+
 
 <link rel="stylesheet" href="style.css">
 
-<style>
 
-/* ================= GLOBAL ================= */
+<link rel="preconnect" href="https://fonts.googleapis.com">
 
-body {
-  margin:0;
-  font-family:"Poppins", sans-serif;
-  background:#0b0f14;
-  color:#eaeaea;
-  overflow-x:hidden;
-}
+<link href="
+https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap
+" rel="stylesheet">
 
 
-/* ================= BACKGROUND ================= */
+<link rel="stylesheet" href="
+https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css
+">
 
-.animated-bg {
-  position:fixed;
-  inset:0;
-  z-index:-1;
-  overflow:hidden;
-  background:
-  linear-gradient(
-    180deg,
-    #05080d 0%,
-    #0b0f14 50%,
-    #070b10 100%
-  );
-}
-
-
-.gradient-orb {
-  position:absolute;
-  border-radius:50%;
-  filter:blur(80px);
-  opacity:.18;
-  animation:floatSlow 18s ease-in-out infinite;
-}
-
-
-.orb-1 {
- width:420px;
- height:420px;
- background:#4c8dff;
- top:-120px;
- left:-120px;
-}
-
-
-.orb-2 {
- width:340px;
- height:340px;
- background:#6aa5ff;
- bottom:-100px;
- right:-80px;
- animation-delay:4s;
-}
-
-
-.orb-3 {
- width:260px;
- height:260px;
- background:#3d74ff;
- top:40%;
- left:55%;
- animation-delay:8s;
-}
-
-
-
-.grid-overlay {
-
- position:absolute;
- inset:0;
-
- background-image:
- linear-gradient(
- rgba(255,255,255,.03) 1px,
- transparent 1px
- ),
-
- linear-gradient(
- 90deg,
- rgba(255,255,255,.03) 1px,
- transparent 1px
- );
-
- background-size:60px 60px;
-
- opacity:.25;
-
-}
-
-
-
-.particles span {
-
- position:absolute;
-
- width:4px;
- height:4px;
-
- background:
- rgba(138,180,255,.5);
-
- border-radius:50%;
-
- animation:
- particleMove 20s linear infinite;
-
-}
-
-
-.particles span:nth-child(1){left:10%;top:100%}
-.particles span:nth-child(2){left:25%;top:100%;animation-duration:24s}
-.particles span:nth-child(3){left:40%;top:100%;animation-duration:18s}
-.particles span:nth-child(4){left:55%;top:100%;animation-duration:26s}
-.particles span:nth-child(5){left:70%;top:100%;animation-duration:22s}
-.particles span:nth-child(6){left:80%;top:100%;animation-duration:28s}
-.particles span:nth-child(7){left:90%;top:100%;animation-duration:19s}
-.particles span:nth-child(8){left:50%;top:100%;animation-duration:30s}
-
-
-
-/* ================= BLOG ================= */
-
-
-.blog-container {
-
- max-width:1100px;
-
- margin:120px auto;
-
- padding:20px;
-
- position:relative;
-
- z-index:2;
-
-}
-
-
-
-.blog-title {
-
- text-align:center;
-
- font-size:40px;
-
- font-weight:800;
-
- color:white;
-
- margin-bottom:45px;
-
-}
-
-
-
-#posts {
-
- display:grid;
-
- grid-template-columns:
- repeat(
- auto-fit,
- minmax(290px,1fr)
- );
-
- gap:25px;
-
-}
-
-
-
-/* ================= CARD ================= */
-
-
-.post {
-
- background:
- rgba(255,255,255,.05);
-
- border:
-
- 1px solid
- rgba(255,255,255,.08);
-
- border-radius:22px;
-
- overflow:hidden;
-
- backdrop-filter:blur(14px);
-
- transition:.35s;
-
- box-shadow:
- 0 15px 40px rgba(0,0,0,.25);
-
-}
-
-
-
-.post:hover {
-
- transform:translateY(-10px);
-
- border-color:
- rgba(138,180,255,.45);
-
-}
-
-
-
-.post img {
-
- width:100%;
-
- height:220px;
-
- object-fit:cover;
-
-}
-
-
-
-.post-content {
-
- padding:18px;
-
-}
-
-
-
-.post h2 {
-
- margin:0 0 10px;
-
- font-size:21px;
-
- color:white;
-
-}
-
-
-
-.post small {
-
- opacity:.7;
-
- font-size:12px;
-
-}
-
-
-
-.post p {
-
- color:#cbd5e1;
-
- line-height:1.7;
-
- font-size:14px;
-
-}
-
-
-
-/* ================= ACTIONS ================= */
-
-
-.post-actions {
-
- display:flex;
-
- justify-content:space-between;
-
- align-items:center;
-
- padding:0 18px 18px;
-
-}
-
-
-.action-btn {
-
- border:none;
-
- background:
- rgba(255,255,255,.08);
-
- color:white;
-
- padding:8px 14px;
-
- border-radius:20px;
-
- cursor:pointer;
-
- transition:.3s;
-
-}
-
-
-
-.action-btn:hover {
-
- background:
- rgba(138,180,255,.25);
-
-}
-
-
-
-.like-active {
-
- color:#ff4d6d;
-
-}
-
-
-
-/* ================= RESPONSIVE ================= */
-
-
-@media(max-width:768px){
-
-.blog-title{
-
-font-size:28px;
-
-}
-
-}
-
-
-/* ================= ANIMATIONS ================= */
-
-
-@keyframes floatSlow {
-
-0%{
-transform:translateY(0)
-}
-
-50%{
-transform:translateY(-40px)
-}
-
-100%{
-transform:translateY(0)
-}
-
-}
-
-
-@keyframes particleMove {
-
-0%{
-
-transform:translateY(0);
-
-opacity:0;
-
-}
-
-15%{
-
-opacity:1;
-
-}
-
-100%{
-
-transform:
-translateY(-120vh);
-
-opacity:0;
-
-}
-
-}
-
-
-</style>
 
 </head>
+
 
 
 <body>
 
 
+
+<!-- BACKGROUND PREMIUM -->
+
 <div class="animated-bg">
 
+
 <div class="gradient-orb orb-1"></div>
+
 <div class="gradient-orb orb-2"></div>
+
 <div class="gradient-orb orb-3"></div>
 
 
@@ -423,36 +152,682 @@ opacity:0;
 
 </div>
 
+
 </div>
 
 
 
-<div class="blog-container">
 
 
-<h1 class="blog-title">
-📰 Blog VifernelZ
+<!-- HEADER -->
+
+<header class="header">
+
+
+<nav class="navbar">
+
+
+
+<a href="index.html" class="logo">
+
+
+
+<img
+src="images/2C602103-AE8E-43F3-803B-4034791017D2.png"
+alt="Logo VZ"
+class="mini-vz-logo">
+
+
+
+<img
+src="images/44D0E6A3-D26B-4797-9088-91885C732E69.png"
+alt="VifernelZ"
+class="site-logo">
+
+
+
+</a>
+
+
+
+
+<div class="nav-actions">
+
+
+<a href="index.html"
+class="header-blog-btn">
+
+<i class="fas fa-home"></i>
+
+Accueil
+
+</a>
+
+
+
+<a href="login.html"
+class="header-icon">
+
+<i class="fas fa-user"></i>
+
+</a>
+
+
+
+
+<button class="menu-toggle">
+
+<span></span>
+
+<span></span>
+
+<span></span>
+
+</button>
+
+
+
+</div>
+
+
+
+</nav>
+
+
+</header>
+<!-- MENU RESPONSIVE -->
+
+<div class="nav-menu">
+
+
+<div class="menu-links">
+
+
+
+<div class="menu-profile">
+
+
+<img 
+src="images/profile1.jpg"
+alt="Vifernel Zounma"
+class="menu-profile-img">
+
+
+
+<h3>
+Vifernel Zounma
+</h3>
+
+
+
+<p>
+Entrepreneur Digital
+<br>
+Ghana 🇬🇭 • Bénin 🇧🇯 • International 🌍
+</p>
+
+
+
+
+<div class="menu-status">
+
+<span class="status-dot"></span>
+
+Disponible pour projets
+
+</div>
+
+
+
+
+
+<a href="https://wa.me/message/UKJGIUBGIZ32F1"
+target="_blank"
+class="menu-whatsapp-btn">
+
+
+<i class="fab fa-whatsapp"></i>
+
+Discuter maintenant
+
+
+</a>
+
+
+
+</div>
+
+
+
+
+
+<span class="menu-label">
+
+Navigation
+
+</span>
+
+
+
+
+
+<a href="index.html#home">
+
+Accueil
+
+</a>
+
+
+
+<a href="index.html#about">
+
+À propos
+
+</a>
+
+
+
+<a href="index.html#expertise">
+
+Expertise
+
+</a>
+
+
+
+<a href="index.html#services">
+
+Services
+
+</a>
+
+
+
+<a href="blog.html">
+
+Blog
+
+</a>
+
+
+
+<a href="index.html#contact">
+
+Contact
+
+</a>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+<div class="menu-overlay"></div>
+
+
+
+
+
+<!-- BLOG HEADER HERO -->
+
+
+<section class="blog-hero">
+
+
+<div class="blog-hero-content">
+
+
+<span class="premium-badge">
+
+<span class="dot-live"></span>
+
+VIFERNELZ BLOG • DIGITAL • BUSINESS • INNOVATION
+
+</span>
+
+
+
+
+<h1>
+
+Explorer les connaissances
+du monde digital
+
 </h1>
 
 
-<div id="posts">
 
-<!-- Les articles Firebase apparaîtront ici -->
+
+<p>
+
+Découvrez les articles VifernelZ autour du développement web,
+de l'intelligence artificielle, du trading éducatif,
+du business en ligne et des nouvelles technologies.
+
+</p>
+
+
+
+
+<div class="blog-search-box">
+
+
+<i class="fas fa-search"></i>
+
+
+<input 
+type="search"
+id="searchArticles"
+placeholder="Rechercher un article..."
+>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+</section>
+<!-- ================= BLOG ARTICLES ================= -->
+
+
+<section class="blog-section">
+
+
+<div class="section-title">
+
+
+<span>
+ARTICLES
+</span>
+
+
+<h2>
+Dernières publications VifernelZ
+</h2>
+
+
+<p>
+Découvrez nos contenus éducatifs et nos analyses
+sur le digital, la technologie et le business.
+</p>
+
+
+</div>
+
+
+
+
+
+<div id="posts" class="posts-grid">
+
+<!-- Les articles Firebase seront injectés ici -->
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+<!-- ================= FOOTER PLACEHOLDER ================= -->
+
+<div id="articleModal" class="article-modal">
+
+
+<div class="article-modal-content">
+
+
+<button 
+class="close-modal">
+
+×
+
+</button>
+
+
+
+<div id="modalContent">
+
+</div>
+
+
 
 </div>
 
 
 </div>
-<!-- ================= FIREBASE ================= -->
-
-<script type="module">
-
-import { 
-initializeApp 
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+/* ================= BLOG PREMIUM ================= */
 
 
-import { 
+.blog-section{
+
+max-width:1200px;
+
+margin:80px auto;
+
+padding:20px;
+
+}
+
+
+
+.posts-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(300px,1fr));
+
+gap:30px;
+
+}
+
+
+
+
+
+.blog-card{
+
+background:
+rgba(255,255,255,.06);
+
+border:
+
+1px solid rgba(255,255,255,.12);
+
+border-radius:25px;
+
+overflow:hidden;
+
+backdrop-filter:blur(15px);
+
+transition:.4s;
+
+box-shadow:
+0 20px 50px rgba(0,0,0,.25);
+
+}
+
+
+
+.blog-card:hover{
+
+transform:translateY(-12px);
+
+border-color:
+rgba(212,175,55,.5);
+
+}
+
+
+
+
+
+.blog-card-image{
+
+height:230px;
+
+width:100%;
+
+object-fit:cover;
+
+}
+
+
+
+
+
+.blog-card-content{
+
+padding:22px;
+
+}
+
+
+
+
+
+.blog-meta{
+
+display:flex;
+
+justify-content:space-between;
+
+font-size:13px;
+
+opacity:.7;
+
+margin-bottom:12px;
+
+}
+
+
+
+
+
+.blog-card h2{
+
+font-size:22px;
+
+color:white;
+
+margin-bottom:12px;
+
+}
+
+
+
+
+
+.blog-card p{
+
+color:#cbd5e1;
+
+line-height:1.7;
+
+}
+
+
+
+
+
+.blog-actions{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:18px 22px;
+
+border-top:
+1px solid rgba(255,255,255,.08);
+
+}
+
+
+
+
+
+.blog-btn{
+
+border:none;
+
+background:
+rgba(255,255,255,.08);
+
+color:white;
+
+padding:10px 16px;
+
+border-radius:30px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+
+
+.blog-btn:hover{
+
+background:#d4af37;
+
+color:black;
+
+}
+
+
+
+
+.read-btn{
+
+background:#d4af37;
+
+color:black;
+
+font-weight:600;
+
+}
+
+
+
+
+
+.share-btn{
+
+background:
+rgba(37,211,102,.15);
+
+}
+
+
+
+
+.article-modal{
+
+display:none;
+
+position:fixed;
+
+inset:0;
+
+background:
+rgba(0,0,0,.8);
+
+z-index:9999;
+
+align-items:center;
+
+justify-content:center;
+
+padding:20px;
+
+}
+
+
+
+
+
+.article-modal.active{
+
+display:flex;
+
+}
+
+
+
+
+
+.article-modal-content{
+
+max-width:800px;
+
+width:100%;
+
+max-height:90vh;
+
+overflow:auto;
+
+background:#10151d;
+
+border-radius:25px;
+
+padding:30px;
+
+position:relative;
+
+}
+
+
+
+
+
+.close-modal{
+
+position:absolute;
+
+right:20px;
+
+top:15px;
+
+font-size:30px;
+
+background:none;
+
+border:none;
+
+color:white;
+
+cursor:pointer;
+
+}
+
+
+
+
+@media(max-width:768px){
+
+
+.blog-section{
+
+margin-top:40px;
+
+}
+
+
+
+.blog-card h2{
+
+font-size:19px;
+
+}
+
+
+}
+  <script type="module">
+
+import { initializeApp } 
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+
+import {
 
 getFirestore,
 collection,
@@ -461,29 +836,41 @@ doc,
 updateDoc,
 increment,
 getDoc,
-setDoc,
 query,
 orderBy
 
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+}
 
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+
+
+// ================= FIREBASE =================
 
 
 const firebaseConfig = {
 
-apiKey: "AIzaSyCDzr8uruU4UMNjCMa50zs4erHGXkN_fyQ",
+
+apiKey:
+"AIzaSyCDzr8uruU4UMNjCMa50zs4erHGXkN_fyQ",
+
 
 authDomain:
 "vifernel-trading-academy.firebaseapp.com",
 
+
 projectId:
 "vifernel-trading-academy",
+
 
 storageBucket:
 "vifernel-trading-academy.firebasestorage.app",
 
+
 messagingSenderId:
 "1000145148349",
+
 
 appId:
 "1:1000145148349:web:f0688610a67859a6999ad4"
@@ -493,6 +880,7 @@ appId:
 
 
 const app = initializeApp(firebaseConfig);
+
 
 const db = getFirestore(app);
 
@@ -505,7 +893,8 @@ document.getElementById("posts");
 
 
 
-// ================= CHARGER ARTICLES =================
+// ================= CHARGEMENT ARTICLES =================
+
 
 
 async function loadPosts(){
@@ -514,10 +903,12 @@ async function loadPosts(){
 try{
 
 
-const articlesQuery =
-query(
+const articlesQuery = query(
+
 collection(db,"articles"),
+
 orderBy("date","desc")
+
 );
 
 
@@ -531,7 +922,7 @@ postsDiv.innerHTML="";
 
 
 
-snapshot.forEach((article)=>{
+snapshot.forEach(article=>{
 
 
 const data =
@@ -552,40 +943,46 @@ data.views || 0;
 
 
 
+
 postsDiv.innerHTML += `
 
 
-<div class="post">
 
-
-<img 
-src="${data.image || 'https://via.placeholder.com/600x300'}"
-alt="article">
-
-
-<div class="post-content">
-
-
-<h2>
-${escapeHTML(data.title)}
-</h2>
-
-
-<small>
-
-${data.date || ""}
- • 
-${data.author || "VifernelZ"}
-
-</small>
+<div class="blog-card">
 
 
 
-<p>
+<img
 
-${escapeHTML(data.content)}
+src="${data.image || 'images/blog-default.jpg'}"
 
-</p>
+class="blog-card-image"
+
+alt="${escapeHTML(data.title)}"
+
+>
+
+
+
+
+<div class="blog-card-content">
+
+
+
+<div class="blog-meta">
+
+<span>
+
+📅 ${data.date || "2026"}
+
+</span>
+
+
+<span>
+
+✍️ ${data.author || "VifernelZ"}
+
+</span>
 
 
 </div>
@@ -593,26 +990,83 @@ ${escapeHTML(data.content)}
 
 
 
-<div class="post-actions">
+<h2>
+
+${escapeHTML(data.title)}
+
+</h2>
 
 
-<button 
-class="action-btn like-btn"
-data-id="${id}">
 
-❤️ 
+
+<p>
+
+${escapeHTML(
+(data.content || "").substring(0,160)
+)}
+
+...
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+<div class="blog-actions">
+
+
+
+<button
+
+class="blog-btn read-btn"
+
+data-id="${id}"
+
+>
+
+Lire l'article
+
+</button>
+
+
+
+
+
+<button
+
+class="blog-btn like-btn"
+
+data-id="${id}"
+
+>
+
+❤️
+
 <span>${likes}</span>
 
 </button>
 
 
 
-<button 
-class="action-btn view-btn"
-data-id="${id}">
 
-👁️ 
-<span>${views}</span>
+
+<button
+
+class="blog-btn share-btn"
+
+data-id="${id}"
+
+data-title="${escapeHTML(data.title)}"
+
+>
+
+🔗
 
 </button>
 
@@ -622,35 +1076,48 @@ data-id="${id}">
 
 
 
+
+
 </div>
+
 
 
 `;
 
 
-// Ajouter une vue automatiquement
+
+
+// Ajouter une vue
 
 addView(id);
+
 
 
 });
 
 
 
-// Activer les boutons likes
-
 activateLikes();
+
+activateShare();
+
+activateRead();
 
 
 
 }
 
+
+
 catch(error){
 
+
 console.error(
-"Erreur chargement articles:",
+"Erreur Firebase:",
 error
 );
+
+
 
 postsDiv.innerHTML=
 
@@ -658,59 +1125,53 @@ postsDiv.innerHTML=
 <p>
 Impossible de charger les articles.
 </p>
+
 `;
 
-}
-
-
 
 }
 
 
+}
 
 
 
 
-// ================= AJOUTER VUE =================
 
 
-async function addView(articleId){
-
-
-const articleRef =
-doc(
-db,
-"articles",
-articleId
-);
+// ================= VUES =================
 
 
 
-const articleSnap =
-await getDoc(articleRef);
+async function addView(id){
+
+
+const ref =
+doc(db,"articles",id);
 
 
 
-if(articleSnap.exists()){
+const snap =
+await getDoc(ref);
 
 
-await updateDoc(
-articleRef,
-{
+
+if(snap.exists()){
+
+
+await updateDoc(ref,{
 
 views:
 increment(1)
 
-}
-
-);
+});
 
 
 }
 
 
-
 }
+
 
 
 
@@ -721,53 +1182,37 @@ increment(1)
 // ================= LIKES =================
 
 
+
 function activateLikes(){
 
 
-const buttons =
-document.querySelectorAll(".like-btn");
+
+document
+.querySelectorAll(".like-btn")
+.forEach(btn=>{
 
 
-
-buttons.forEach(button=>{
-
-
-button.addEventListener(
-"click",
-async()=>{
+btn.onclick = async()=>{
 
 
 const id =
-button.dataset.id;
+btn.dataset.id;
 
 
 
-const alreadyLiked =
-localStorage.getItem(
+if(localStorage.getItem(
 "liked_"+id
-);
-
-
-
-if(alreadyLiked){
+))
 
 return;
 
-}
-
-
-
-const articleRef =
-doc(
-db,
-"articles",
-id
-);
 
 
 
 await updateDoc(
-articleRef,
+
+doc(db,"articles",id),
+
 {
 
 likes:
@@ -779,6 +1224,7 @@ increment(1)
 
 
 
+
 localStorage.setItem(
 "liked_"+id,
 "true"
@@ -786,19 +1232,290 @@ localStorage.setItem(
 
 
 
-const count =
-button.querySelector("span");
+const span =
+btn.querySelector("span");
 
 
 
-count.textContent =
-Number(count.textContent)+1;
+span.textContent =
+Number(span.textContent)+1;
 
 
 
-button.classList.add(
-"like-active"
+btn.style.color="#ff4d6d";
+
+
+
+};
+
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+// ================= PARTAGE =================
+
+
+
+function activateShare(){
+
+
+
+document
+.querySelectorAll(".share-btn")
+.forEach(btn=>{
+
+
+btn.onclick=()=>{
+
+
+const title =
+btn.dataset.title;
+
+
+
+const url =
+window.location.href;
+
+
+
+shareArticle(title,url);
+
+
+
+};
+
+
+
+});
+
+
+}
+
+
+
+
+
+
+async function shareArticle(title,url){
+
+
+
+if(navigator.share){
+
+
+try{
+
+
+await navigator.share({
+
+title:title,
+
+text:
+"Découvre cet article VifernelZ",
+
+url:url
+
+
+});
+
+return;
+
+
+}
+
+catch(e){}
+
+
+}
+
+
+
+
+const message =
+encodeURIComponent(
+
+title+" "+url
+
 );
+
+
+
+const choice =
+prompt(
+
+"Choisir partage :\n\n1 WhatsApp\n2 Facebook\n3 X\n4 Telegram\n5 Copier lien"
+
+);
+
+
+
+
+
+if(choice==="1"){
+
+
+window.open(
+
+"https://wa.me/?text="+message
+
+);
+
+
+}
+
+
+
+if(choice==="2"){
+
+
+window.open(
+
+"https://www.facebook.com/sharer/sharer.php?u="+url
+
+);
+
+
+}
+
+
+
+if(choice==="3"){
+
+
+window.open(
+
+"https://twitter.com/intent/tweet?text="+message
+
+);
+
+
+}
+
+
+
+
+if(choice==="4"){
+
+
+window.open(
+
+"https://t.me/share/url?url="+url+"&text="+message
+
+);
+
+
+}
+
+
+
+if(choice==="5"){
+
+
+navigator.clipboard.writeText(url);
+
+
+alert(
+"Lien copié ✅"
+);
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+// ================= LECTURE ARTICLE =================
+
+
+
+function activateRead(){
+
+
+document
+.querySelectorAll(".read-btn")
+.forEach(btn=>{
+
+
+btn.onclick=()=>{
+
+
+alert(
+
+"Page article complète bientôt disponible avec URL SEO dédiée."
+
+);
+
+
+};
+
+
+});
+
+
+}
+
+
+
+
+
+
+// ================= RECHERCHE =================
+
+
+
+const search =
+document.getElementById("searchArticles");
+
+
+
+if(search){
+
+
+search.addEventListener(
+"input",
+()=>{
+
+
+const value =
+search.value.toLowerCase();
+
+
+
+document
+.querySelectorAll(".blog-card")
+.forEach(card=>{
+
+
+card.style.display =
+
+card.innerText
+.toLowerCase()
+.includes(value)
+
+?
+
+"block"
+
+:
+
+"none";
 
 
 
@@ -815,7 +1532,9 @@ button.classList.add(
 
 
 
-// ================= SECURITE TEXTE =================
+
+
+// ================= SECURITE =================
 
 
 function escapeHTML(text){
@@ -823,6 +1542,7 @@ function escapeHTML(text){
 
 if(!text)
 return "";
+
 
 
 return text
@@ -838,8 +1558,8 @@ return text
 .replace(/'/g,"&#039;");
 
 
-}
 
+}
 
 
 
@@ -850,6 +1570,202 @@ loadPosts();
 
 
 </script>
+<!-- ================= FOOTER ================= -->
+
+
+<footer class="footer">
+
+
+<div class="footer-line"></div>
+
+
+
+<p>
+
+© 2026 VifernelZ. Tous droits réservés.
+
+</p>
+
+
+
+<p class="made-with">
+
+Plateforme de formation digitale,
+technologie & business en ligne
+
+</p>
+
+
+
+
+<div class="footer-socials">
+
+
+<a href="https://www.facebook.com/share/1HTifc1cJd/"
+target="_blank">
+
+<i class="fab fa-facebook-f"></i>
+
+</a>
+
+
+
+<a href="https://www.instagram.com/vifernelz"
+target="_blank">
+
+<i class="fab fa-instagram"></i>
+
+</a>
+
+
+
+
+<a href="https://www.linkedin.com/in/vifernel-zounma-93a086409"
+target="_blank">
+
+<i class="fab fa-linkedin-in"></i>
+
+</a>
+
+
+
+
+<a href="https://x.com/vifernelz"
+target="_blank">
+
+<i class="fab fa-x-twitter"></i>
+
+</a>
+
+
+
+<a href="https://www.tiktok.com/@vifernelz"
+target="_blank">
+
+<i class="fab fa-tiktok"></i>
+
+</a>
+
+
+
+</div>
+
+
+
+
+
+<a href="#"
+class="scroll-top">
+
+
+<i class="fas fa-arrow-up"></i>
+
+
+</a>
+
+
+
+</footer>
+
+
+
+
+
+<!-- WHATSAPP FLOAT -->
+
+
+<a
+
+href="https://wa.me/message/UKJGIUBGIZ32F1"
+
+class="whatsapp-float"
+
+target="_blank"
+
+>
+
+
+<i class="fab fa-whatsapp"></i>
+
+
+</a>
+
+
+
+
+
+
+<!-- MENU SCRIPT -->
+
+
+<script src="script.js"></script>
+
+
+
+
+
+
+<!-- PERFORMANCE -->
+
+<script>
+
+
+// Lazy loading images
+
+document
+.querySelectorAll("img")
+.forEach(img=>{
+
+
+img.loading="lazy";
+
+
+});
+
+
+
+
+// Animation apparition
+
+const observer =
+new IntersectionObserver(
+(entries)=>{
+
+
+entries.forEach(entry=>{
+
+
+if(entry.isIntersecting){
+
+
+entry.target.classList.add("active");
+
+
+}
+
+
+});
+
+
+});
+
+
+
+document
+.querySelectorAll(".blog-card")
+.forEach(card=>{
+
+
+observer.observe(card);
+
+
+});
+
+
+
+</script>
+
+
 
 
 
