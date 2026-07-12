@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Boost by VifernelZ | Followers, Likes, Vues & Engagement Réseaux Sociaux</title>
+<meta name="description" content="Boost by VifernelZ : développez votre présence sur Facebook, Instagram, TikTok, YouTube, X, LinkedIn et Telegram. Followers, likes, vues, commentaires. Livraison rapide, paiement sécurisé.">
+
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<!-- FedaPay Checkout.js — remplacez la clé publique dans le script en bas de page -->
+<script src="https://cdn.fedapay.com/checkout.js?v=1.1.7"></script>
+
+<style>
+/* ================= BOOST PREMIUM ================= */
+
+.boost-hero{
+  min-height: 92vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 150px 24px 80px;
+  position: relative;
+  overflow: hidden;
+}
+.boost-hero::before{
+  content:"";
+  position:absolute;
+  top:-15%; left:50%;
+  transform:translateX(-50%);
+  width:800px; height:800px;
+  background:radial-gradient(circle, rgba(212,175,55,.16), transparent 65%);
+  filter:blur(70px);
+  z-index:-1;
+}
+.boost-hero-content{ max-width: 900px; }
+
+.boost-hero h1{
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 800;
+  line-height: 1.15;
+  margin: 22px 0 18px;
+  color:#fff;
+}
+.boost-hero h1 span{
+  background: linear-gradient(90deg,#d4af37,#f4e5a1,#d4af37);
+  background-size:200% auto;
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent; color:transparent;
+  animation: gradientShift 4s linear infinite;
+}
+@keyframes gradientShift{ 0%{background-position:0% 50%;} 100%{background-position:200% 50%;} }
+
+.boost-hero p.lead{
+  font-size: 18px;
+  color: rgba(255,255,255,.8);
+  max-width: 680px;
+  margin: 0 auto 26px;
+  line-height: 1.8;
+}
+
+.boost-services-row{
+  display:flex; flex-wrap:wrap; gap:10px;
+  justify-content:center;
+  margin-bottom: 30px;
+}
+.boost-services-row span{
+  padding:8px 16px;
+  border-radius:30px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
+  font-size:13px;
+  color:#d4af37;
+  font-weight:600;
+}
+
+.boost-platforms-row{
+  display:flex; flex-wrap:wrap; gap:16px;
+  justify-content:center;
+  margin-bottom: 40px;
+}
+.boost-platforms-row a{
+  width:54px; height:54px;
+  display:flex; align-items:center; justify-content:center;
+  border-radius:16px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
+  font-size:22px;
+  color:#fff;
+  transition:.35s ease;
+}
+.boost-platforms-row a:hover{
+  transform:translateY(-6px);
+  background:rgba(212,175,55,.15);
+  border-color:rgba(212,175,55,.35);
+  color:#d4af37;
+}
+
+.boost-cta-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:18px 34px;
+  border-radius:20px;
+  background:linear-gradient(135deg,#d4af37,#b8860b);
+  color:#0b0f14;
+  font-weight:700;
+  font-size:16px;
+  box-shadow:0 20px 45px rgba(212,175,55,.28);
+  position:relative;
+  overflow:hidden;
+  transition:transform .35s ease, box-shadow .35s ease;
+}
+.boost-cta-btn::before{
+  content:"";
+  position:absolute; top:0; left:-100%;
+  width:100%; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);
+  transition:.7s;
+}
+.boost-cta-btn:hover{ transform:translateY(-5px); box-shadow:0 26px 55px rgba(212,175,55,.35); }
+.boost-cta-btn:hover::before{ left:100%; }
+
+/* ---------- POURQUOI NOUS ---------- */
+.why-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:22px;
+  margin-top:40px;
+}
+.why-card{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:20px;
+  padding:26px;
+  text-align:center;
+  transition:.35s ease;
+}
+.why-card:hover{
+  transform:translateY(-8px);
+  border-color:rgba(212,175,55,.35);
+  box-shadow:0 20px 40px rgba(0,0,0,.25);
+}
+.why-card i{
+  font-size:26px;
+  color:#d4af37;
+  margin-bottom:14px;
+  display:block;
+}
+.why-card p{ font-size:15px; color:#c9d1de; font-weight:600; }
+
+/* ---------- PLATEFORMES ---------- */
+.platforms-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:26px;
+  margin-top:40px;
+}
+.platform-card{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:24px;
+  padding:30px;
+  transition:.4s ease;
+  display:flex;
+  flex-direction:column;
+}
+.platform-card:hover{
+  transform:translateY(-10px);
+  border-color:rgba(212,175,55,.35);
+  box-shadow:0 25px 55px rgba(0,0,0,.3);
+}
+.platform-card-head{
+  display:flex; align-items:center; gap:14px;
+  margin-bottom:18px;
+}
+.platform-icon{
+  width:54px; height:54px;
+  border-radius:16px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:24px;
+  color:#0b0f14;
+}
+.platform-card h3{ font-size:20px; color:#fff; }
+
+.platform-card ul{
+  list-style:none;
+  margin-bottom:22px;
+  flex:1;
+}
+.platform-card ul li{
+  font-size:14px;
+  color:#b8c0cc;
+  padding:6px 0;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.platform-card ul li i{ color:#d4af37; font-size:12px; }
+
+.platform-order-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:12px 20px;
+  border-radius:16px;
+  background:rgba(212,175,55,.12);
+  border:1px solid rgba(212,175,55,.35);
+  color:#d4af37;
+  font-weight:600;
+  font-size:14px;
+  transition:.3s ease;
+}
+.platform-order-btn:hover{
+  background:#d4af37;
+  color:#0b0f14;
+  transform:translateY(-2px);
+}
+
+/* couleurs par plateforme (juste l'icône) */
+.pf-facebook{ background:#1877F2; }
+.pf-instagram{ background:linear-gradient(135deg,#f58529,#dd2a7b,#8134af); }
+.pf-tiktok{ background:#010101; color:#fff; }
+.pf-youtube{ background:#FF0000; }
+.pf-x{ background:#000; color:#fff; }
+.pf-linkedin{ background:#0A66C2; }
+.pf-telegram{ background:#26A5E4; }
+
+/* ---------- PACKS ---------- */
+.packs-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:26px;
+  margin-top:40px;
+}
+.pack-card{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:24px;
+  padding:34px 28px;
+  text-align:center;
+  position:relative;
+  transition:.4s ease;
+}
+.pack-card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 25px 55px rgba(0,0,0,.3);
+}
+.pack-card.featured{
+  border-color:rgba(212,175,55,.5);
+  background:rgba(212,175,55,.06);
+}
+.pack-badge{
+  position:absolute;
+  top:-14px; left:50%;
+  transform:translateX(-50%);
+  background:#d4af37;
+  color:#0b0f14;
+  font-size:12px;
+  font-weight:700;
+  padding:6px 16px;
+  border-radius:30px;
+}
+.pack-card h3{ font-size:20px; color:#fff; margin-bottom:6px; }
+.pack-price{
+  font-size:40px;
+  font-weight:800;
+  color:#d4af37;
+  margin:14px 0;
+}
+.pack-price span{ font-size:16px; color:#8c94a3; font-weight:500; }
+.pack-card ul{ list-style:none; margin-bottom:26px; text-align:left; }
+.pack-card ul li{
+  font-size:14px;
+  color:#c9d1de;
+  padding:7px 0;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.pack-card ul li i{ color:#d4af37; }
+
+.pack-order-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:16px;
+  background:linear-gradient(135deg,#d4af37,#b8860b);
+  color:#0b0f14;
+  font-weight:700;
+  font-size:15px;
+  cursor:pointer;
+  transition:.3s ease;
+}
+.pack-order-btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 18px 36px rgba(212,175,55,.3);
+}
+
+/* ---------- CONFIANCE ---------- */
+.trust-box{
+  text-align:center;
+  max-width:700px;
+  margin:40px auto 0;
+  padding:40px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:24px;
+}
+.trust-stars{ color:#d4af37; font-size:22px; margin-bottom:16px; letter-spacing:4px; }
+.trust-box p{ color:#c9d1de; line-height:1.8; margin-bottom:8px; }
+
+/* ---------- FAQ ---------- */
+.faq-list{ max-width:760px; margin:40px auto 0; }
+.faq-item{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:16px;
+  margin-bottom:14px;
+  overflow:hidden;
+}
+.faq-question{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 24px;
+  cursor:pointer;
+  font-weight:600;
+  color:#fff;
+  font-size:16px;
+}
+.faq-question i{ color:#d4af37; transition:.3s ease; }
+.faq-item.active .faq-question i{ transform:rotate(45deg); }
+.faq-answer{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .35s ease;
+  padding:0 24px;
+}
+.faq-item.active .faq-answer{ max-height:200px; padding:0 24px 20px; }
+.faq-answer p{ color:#b8c0cc; line-height:1.7; font-size:14px; }
+.faq-payments{
+  display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;
+}
+.faq-payments span{
+  padding:6px 14px; border-radius:20px;
+  background:rgba(212,175,55,.1);
+  border:1px solid rgba(212,175,55,.3);
+  color:#d4af37; font-size:13px; font-weight:600;
+}
+
+/* ---------- CTA FINAL ---------- */
+.final-cta{
+  text-align:center;
+  padding:90px 20px;
+  position:relative;
+}
+.final-cta h2{ font-size:32px; margin-bottom:26px; color:#fff; }
+
+/* ---------- MODAL COMMANDE ---------- */
+.order-modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.8);
+  z-index:9999;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.order-modal.active{ display:flex; }
+.order-modal-content{
+  max-width:520px;
+  width:100%;
+  max-height:90vh;
+  overflow:auto;
+  background:#10151d;
+  border-radius:25px;
+  padding:32px;
+  position:relative;
+  border:1px solid rgba(212,175,55,.2);
+}
+.order-close{
+  position:absolute; right:18px; top:14px;
+  font-size:28px; background:none; border:none;
+  color:#fff; cursor:pointer;
+}
+.order-close:hover{ color:#d4af37; }
+
+.order-modal-content h3{ font-size:22px; color:#fff; margin-bottom:6px; }
+.order-summary{
+  background:rgba(212,175,55,.08);
+  border:1px solid rgba(212,175,55,.25);
+  border-radius:14px;
+  padding:14px 18px;
+  margin:16px 0 22px;
+  font-size:14px;
+  color:#f4e5a1;
+}
+.order-modal-content label{
+  display:block;
+  font-size:13px;
+  color:#aaa;
+  text-transform:uppercase;
+  margin-bottom:6px;
+  margin-top:16px;
+}
+.order-modal-content input,
+.order-modal-content select{
+  width:100%;
+  background:#0b0f14;
+  border:1px solid rgba(255,255,255,.1);
+  padding:14px;
+  border-radius:12px;
+  color:#fff;
+  font-size:15px;
+  outline:none;
+  transition:.3s ease;
+}
+.order-modal-content input:focus,
+.order-modal-content select:focus{
+  border-color:#d4af37;
+  box-shadow:0 0 0 3px rgba(212,175,55,.15);
+}
+
+.order-actions{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-top:26px;
+}
+.order-pay-btn, .order-wa-btn{
+  border:none;
+  padding:15px;
+  border-radius:14px;
+  font-weight:700;
+  font-size:15px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  transition:.3s ease;
+}
+.order-pay-btn{
+  background:linear-gradient(135deg,#d4af37,#b8860b);
+  color:#0b0f14;
+}
+.order-pay-btn:hover{ transform:translateY(-3px); box-shadow:0 16px 34px rgba(212,175,55,.3); }
+
+.order-wa-btn{
+  background:rgba(37,211,102,.12);
+  border:1px solid rgba(37,211,102,.35);
+  color:#25d366;
+}
+.order-wa-btn:hover{ background:#25d366; color:#0b0f14; transform:translateY(-3px); }
+
+@media(max-width:768px){
+  .boost-hero{ padding-top:120px; }
+  .boost-hero h1{ font-size:34px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND PREMIUM -->
+<div class="animated-bg">
+  <div class="gradient-orb orb-1"></div>
+  <div class="gradient-orb orb-2"></div>
+  <div class="gradient-orb orb-3"></div>
+  <div class="grid-overlay"></div>
+  <div class="particles">
+    <span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <nav class="navbar">
+    <a href="index.html" class="logo">
+      <img src="images/2C602103-AE8E-43F3-803B-4034791017D2.png" alt="Logo VZ" class="mini-vz-logo">
+      <img src="images/44D0E6A3-D26B-4797-9088-91885C732E69.png" alt="VifernelZ" class="site-logo">
+    </a>
+
+    <div class="nav-actions">
+      <a href="index.html" class="header-blog-btn"><i class="fas fa-home"></i><span>Accueil</span></a>
+      <a href="login.html" class="header-icon"><i class="fas fa-user"></i></a>
+      <button class="menu-toggle"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+</header>
+
+<!-- MENU RESPONSIVE -->
+<div class="nav-menu">
+  <div class="menu-links">
+    <div class="menu-profile">
+      <img src="images/profile1.jpg" alt="Vifernel Zounma" class="menu-profile-img">
+      <h3>Vifernel Zounma</h3>
+      <p>Entrepreneur Digital<br>Ghana 🇬🇭 • Bénin 🇧🇯 • International 🌍</p>
+      <div class="menu-status"><span class="status-dot"></span> Disponible pour projets</div>
+      <a href="https://wa.me/message/UKJGIUBGIZ32F1" target="_blank" class="menu-whatsapp-btn">
+        <i class="fab fa-whatsapp"></i> Discuter maintenant
+      </a>
+    </div>
+
+    <span class="menu-label">Navigation</span>
+    <a href="index.html#home">Accueil</a>
+    <a href="index.html#about">À propos</a>
+    <a href="index.html#expertise">Expertise</a>
+    <a href="index.html#services">Services</a>
+    <a href="blog.html">Blog</a>
+    <a href="boost.html">Boost Social</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+</div>
+<div class="menu-overlay"></div>
+
+<!-- ================= HERO ================= -->
+<section class="boost-hero" id="home">
+  <div class="boost-hero-content">
+    <span class="premium-badge"><span class="dot-live"></span> BOOST BY VIFERNELZ</span>
+
+    <h1>Développez votre <span>présence sur les réseaux sociaux</span></h1>
+
+    <p class="lead">
+      Followers, likes, vues, commentaires et partages — livrés rapidement,
+      en toute sécurité, sur les plateformes qui comptent pour votre visibilité.
+    </p>
+
+    <div class="boost-services-row">
+      <span>Followers</span>
+      <span>Likes</span>
+      <span>Vues</span>
+      <span>Commentaires</span>
+      <span>Partages</span>
+    </div>
+
+    <div class="boost-platforms-row">
+      <a href="boost-platform.html?platform=facebook" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="boost-platform.html?platform=instagram" title="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="boost-platform.html?platform=tiktok" title="TikTok"><i class="fab fa-tiktok"></i></a>
+      <a href="boost-platform.html?platform=youtube" title="YouTube"><i class="fab fa-youtube"></i></a>
+      <a href="boost-platform.html?platform=x" title="X"><i class="fab fa-x-twitter"></i></a>
+      <a href="boost-platform.html?platform=linkedin" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      <a href="boost-platform.html?platform=telegram" title="Telegram"><i class="fab fa-telegram"></i></a>
+    </div>
+
+    <a href="#platforms" class="boost-cta-btn">
+      <i class="fas fa-rocket"></i> Commander maintenant
+    </a>
+  </div>
+</section>
+
+<!-- ================= POURQUOI VIFERNELZ ================= -->
+<section class="section" id="why">
+  <div class="section-title">
+    <span>POURQUOI NOUS CHOISIR</span>
+    <h2>Un service pensé pour la performance</h2>
+  </div>
+
+  <div class="why-grid">
+    <div class="why-card"><i class="fas fa-bolt"></i><p>Livraison rapide</p></div>
+    <div class="why-card"><i class="fas fa-shield-halved"></i><p>Service sécurisé</p></div>
+    <div class="why-card"><i class="fas fa-tags"></i><p>Prix compétitifs</p></div>
+    <div class="why-card"><i class="fab fa-whatsapp"></i><p>Assistance WhatsApp</p></div>
+    <div class="why-card"><i class="fas fa-lock"></i><p>Paiement sécurisé</p></div>
+    <div class="why-card"><i class="fas fa-clock"></i><p>Disponible 24h/7j</p></div>
+  </div>
+</section>
+
+<!-- ================= NOS PLATEFORMES ================= -->
+<section class="section" id="platforms">
+  <div class="section-title">
+    <span>NOS PLATEFORMES</span>
+    <h2>Choisissez votre réseau</h2>
+    <p class="project-subtitle">Chaque plateforme dispose de sa propre boutique de services, avec tarifs détaillés.</p>
+  </div>
+
+  <div class="platforms-grid">
+
+    <div class="platform-card">
+      <div class="platform-card-head">
+        <div class="platform-icon pf-facebook"><i class="fab fa-facebook-f"></i></div>
+        <h3>Facebook</h3>
+      </div>
+      <ul>
+        <li><i class="fas fa-check"></i> Followers</li>
+        <li><i class="fas fa-check"></i> Likes</li>
+        <li><i class="fas fa-check"></i> Réactions</li>
+        <li><i class="fas fa-check"></i> Commentaires</li>
+        <li><i class="fas fa-check"></i> Vues</li>
+        <li><i class="fas fa-check"></i> Partages</li>
+      </ul>
+      <a href="boost-platform.html?platform=facebook" class="platform-order-btn">Voir les offres <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="platform-card">
+      <div class="platform-card-head">
+        <div class="platform-icon pf-instagram"><i class="fab fa-instagram"></i></div>
+        <h3>Instagram</h3>
+      </div>
+      <ul>
+        <li><i class="fas fa-check"></i> Followers</li>
+        <li><i class="fas fa-check"></i> Likes</li>
+        <li><i class="fas fa-check"></i> Commentaires</li>
+        <li><i class="fas fa-check"></i> Vues Reels</li>
+        <li><i class="fas fa-check"></i> Vues Stories</li>
+      </ul>
+      <a href="boost-platform.html?platform=instagram" class="platform-order-btn">Voir les offres <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="platform-card">
+      <div class="platform-card-head">
+        <div class="platform-icon pf-tiktok"><i class="fab fa-tiktok"></i></div>
+        <h3>TikTok</h3>
+      </div>
+      <ul>
+        <li><i class="fas fa-check"></i> Followers</li>
+        <li><i class="fas fa-check"></i> Likes</li>
+        <li><i class="fas fa-check"></i> Vues</li>
+        <li><i class="fas fa-check"></i> Commentaires</li>
+        <li><i class="fas fa-check"></i> Favoris</li>
+      </ul>
+      <a href="boost-platform.html?platform=tiktok" class="platform-order-btn">Voir les offres <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="platform-card">
+      <div class="platform-card-head">
+        <div class="platform-icon pf-youtube"><i class="fab fa-youtube"></i></div>
+        <h3>YouTube</h3>
+      </div>
+      <ul>
+        <li><i class="fas fa-check"></i> Abonnés</li>
+        <li><i class="fas fa-check"></i> Vues</li>
+        <li><i class="fas fa-check"></i> Likes</li>
+        <li><i class="fas fa-check"></i> Heures de visionnage</li>
+        <li><i class="fas fa-check"></i> Commentaires</li>
+      </ul>
+      <a href="boost-platform.html?platform=youtube" class="platform-order-btn">Voir les offres <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="platform-card">
+      <div class="platform-card-head">
+        <div class="platform-icon pf-x"><i class="fab fa-x-twitter"></i></div>
+        <h3>X (Twitter)</h3>
+      </div>
+      <ul>
+        <li><i class="fas fa-check"></i> Followers</li>
+        <li><i class="fas fa-check"></i> Likes</li>
+        <li><i class="fas fa-check"></i> Reposts</li>
+        <li><i class="fas fa-check"></i> Vues</li>
+      </ul>
+      <a href="boost-platform.html?platform=x" class="platform-order-btn">Voir les offres <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="platform-card">
+      <div class="platform-card-head">
+        <div class="platform-icon pf-linkedin"><i class="fab fa-linkedin-in"></i></div>
+        <h3>LinkedIn</h3>
+      </div>
+      <ul>
+        <li><i class="fas fa-check"></i> Followers</li>
+        <li><i class="fas fa-check"></i> Likes</li>
+        <li><i class="fas fa-check"></i> Engagement</li>
+      </ul>
+      <a href="boost-platform.html?platform=linkedin" class="platform-order-btn">Voir les offres <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="platform-card">
+      <div class="platform-card-head">
+        <div class="platform-icon pf-telegram"><i class="fab fa-telegram"></i></div>
+        <h3>Telegram</h3>
+      </div>
+      <ul>
+        <li><i class="fas fa-check"></i> Membres</li>
+        <li><i class="fas fa-check"></i> Vues</li>
+        <li><i class="fas fa-check"></i> Réactions</li>
+      </ul>
+      <a href="boost-platform.html?platform=telegram" class="platform-order-btn">Voir les offres <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= PACKS ================= -->
+<section class="section" id="packs">
+  <div class="section-title">
+    <span>PACKS POPULAIRES</span>
+    <h2>Des offres simples pour démarrer</h2>
+    <p class="project-subtitle">Idéal pour un premier boost rapide. Précisez la plateforme lors de la commande.</p>
+  </div>
+
+  <div class="packs-grid">
+
+    <div class="pack-card">
+      <h3>Starter</h3>
+      <div class="pack-price">$10</div>
+      <ul>
+        <li><i class="fas fa-check"></i> 1000 Followers</li>
+        <li><i class="fas fa-check"></i> Livraison rapide</li>
+      </ul>
+      <button class="pack-order-btn" onclick="openOrderModal('Pack Starter — 1000 Followers', 10)">Commander</button>
+    </div>
+
+    <div class="pack-card featured">
+      <span class="pack-badge">POPULAIRE</span>
+      <h3>Premium</h3>
+      <div class="pack-price">$35</div>
+      <ul>
+        <li><i class="fas fa-check"></i> 5000 Followers</li>
+        <li><i class="fas fa-check"></i> Haute qualité</li>
+        <li><i class="fas fa-check"></i> Garantie</li>
+      </ul>
+      <button class="pack-order-btn" onclick="openOrderModal('Pack Premium — 5000 Followers', 35)">Commander</button>
+    </div>
+
+    <div class="pack-card">
+      <h3>Business</h3>
+      <div class="pack-price">$75</div>
+      <ul>
+        <li><i class="fas fa-check"></i> 10 000+ Followers</li>
+        <li><i class="fas fa-check"></i> Livraison prioritaire</li>
+        <li><i class="fas fa-check"></i> Assistance VIP</li>
+      </ul>
+      <button class="pack-order-btn" onclick="openOrderModal('Pack Business — 10 000+ Followers', 75)">Commander</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= CONFIANCE ================= -->
+<section class="section" id="trust">
+  <div class="trust-box">
+    <div class="trust-stars">★★★★★</div>
+    <p>Des milliers d'interactions livrées.</p>
+    <p>Service fiable, suivi par WhatsApp.</p>
+    <p>Paiement sécurisé via FedaPay, Mobile Money ou carte bancaire.</p>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="section" id="faq">
+  <div class="section-title">
+    <span>QUESTIONS FRÉQUENTES</span>
+    <h2>Tout ce qu'il faut savoir</h2>
+  </div>
+
+  <div class="faq-list">
+
+    <div class="faq-item">
+      <div class="faq-question">Est-ce sécurisé ? <i class="fas fa-plus"></i></div>
+      <div class="faq-answer"><p>Oui. Aucune information sensible n'est requise, uniquement le lien ou le nom d'utilisateur de votre profil.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">Vais-je donner mon mot de passe ? <i class="fas fa-plus"></i></div>
+      <div class="faq-answer"><p>Jamais. Nous ne demandons ni mot de passe, ni accès à votre compte.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">En combien de temps est livrée ma commande ? <i class="fas fa-plus"></i></div>
+      <div class="faq-answer"><p>Quelques minutes à quelques heures selon le service et la quantité choisie.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">Quels moyens de paiement acceptez-vous ? <i class="fas fa-plus"></i></div>
+      <div class="faq-answer">
+        <p>Paiement sécurisé via FedaPay :</p>
+        <div class="faq-payments">
+          <span>Mobile Money</span>
+          <span>Carte bancaire</span>
+          <span>FedaPay</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= CTA FINAL ================= -->
+<section class="final-cta">
+  <h2>Prêt à développer votre visibilité ?</h2>
+  <a href="#platforms" class="boost-cta-btn"><i class="fas fa-rocket"></i> Commander maintenant</a>
+</section>
+
+<!-- ================= MODAL COMMANDE ================= -->
+<div id="orderModal" class="order-modal">
+  <div class="order-modal-content">
+    <button class="order-close" onclick="closeOrderModal()">&times;</button>
+
+    <h3>Finaliser votre commande</h3>
+    <div class="order-summary" id="orderSummary"></div>
+
+    <form id="orderForm">
+      <label>Plateforme concernée</label>
+      <select id="orderPlatform" required>
+        <option value="Facebook">Facebook</option>
+        <option value="Instagram">Instagram</option>
+        <option value="TikTok">TikTok</option>
+        <option value="YouTube">YouTube</option>
+        <option value="X (Twitter)">X (Twitter)</option>
+        <option value="LinkedIn">LinkedIn</option>
+        <option value="Telegram">Telegram</option>
+      </select>
+
+      <label>Lien ou nom d'utilisateur du profil</label>
+      <input type="text" id="orderProfile" placeholder="https://... ou @votrecompte" required>
+
+      <label>Nom complet</label>
+      <input type="text" id="orderName" placeholder="Votre nom" required>
+
+      <label>Numéro WhatsApp</label>
+      <input type="tel" id="orderPhone" placeholder="+229 / +233 ..." required>
+
+      <label>Email</label>
+      <input type="email" id="orderEmail" placeholder="votre@email.com" required>
+    </form>
+
+    <div class="order-actions">
+      <button type="button" class="order-pay-btn" onclick="payWithFedapay()">
+        <i class="fas fa-lock"></i> Payer avec FedaPay
+      </button>
+      <button type="button" class="order-wa-btn" onclick="orderViaWhatsapp()">
+        <i class="fab fa-whatsapp"></i> Commander via WhatsApp
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="footer-line"></div>
+  <p>© 2026 VifernelZ. Tous droits réservés.</p>
+  <p class="made-with">Boost by VifernelZ — Solutions de croissance digitale</p>
+
+  <div class="footer-socials">
+    <a href="https://www.facebook.com/share/1HTifc1cJd/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://www.instagram.com/vifernelz" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.linkedin.com/in/vifernel-zounma-93a086409" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+    <a href="https://x.com/vifernelz" target="_blank"><i class="fab fa-x-twitter"></i></a>
+    <a href="https://www.tiktok.com/@vifernelz" target="_blank"><i class="fab fa-tiktok"></i></a>
+  </div>
+
+  <a href="#home" class="scroll-top"><i class="fas fa-arrow-up"></i></a>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/message/UKJGIUBGIZ32F1" class="whatsapp-float" target="_blank">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<script src="script.js"></script>
+
+<script>
+/* ============================================================
+   CONFIGURATION — à personnaliser
+============================================================ */
+const FEDAPAY_PUBLIC_KEY = "VOTRE_CLE_PUBLIQUE_FEDAPAY"; // pk_live_xxx ou pk_sandbox_xxx
+const FEDAPAY_ENV = "sandbox"; // "live" en production
+const CURRENCY_ISO = "USD";   // adaptez selon la devise activée sur votre compte FedaPay (XOF, XAF, USD...)
+const WHATSAPP_NUMBER = "22900000000"; // format international sans "+", à remplacer par le vrai numéro
+
+let currentOrder = { label: "", amount: 0 };
+
+// ================= MODAL =================
+function openOrderModal(label, amount){
+  currentOrder = { label, amount };
+  document.getElementById("orderSummary").innerHTML =
+    `<strong>${label}</strong><br>Montant : $${amount}`;
+  document.getElementById("orderModal").classList.add("active");
+}
+
+function closeOrderModal(){
+  document.getElementById("orderModal").classList.remove("active");
+}
+
+document.getElementById("orderModal").addEventListener("click", (e)=>{
+  if(e.target.id === "orderModal") closeOrderModal();
+});
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "Escape") closeOrderModal();
+});
+
+// ================= VALIDATION FORMULAIRE =================
+function getOrderFormData(){
+  const platform = document.getElementById("orderPlatform").value;
+  const profile = document.getElementById("orderProfile").value.trim();
+  const name = document.getElementById("orderName").value.trim();
+  const phone = document.getElementById("orderPhone").value.trim();
+  const email = document.getElementById("orderEmail").value.trim();
+
+  if(!profile || !name || !phone || !email){
+    alert("Merci de remplir tous les champs avant de continuer.");
+    return null;
+  }
+  return { platform, profile, name, phone, email };
+}
+
+// ================= PAIEMENT FEDAPAY =================
+function payWithFedapay(){
+  const data = getOrderFormData();
+  if(!data) return;
+
+  if(typeof FedaPay === "undefined"){
+    alert("Le module de paiement n'a pas pu se charger. Réessayez ou commandez via WhatsApp.");
+    return;
+  }
+
+  const widget = FedaPay.init({
+    public_key: FEDAPAY_PUBLIC_KEY,
+    environment: FEDAPAY_ENV,
+    transaction: {
+      amount: currentOrder.amount,
+      description: `${currentOrder.label} — ${data.platform} — ${data.profile}`
+    },
+    currency: { iso: CURRENCY_ISO },
+    customer: {
+      email: data.email,
+      firstname: data.name,
+      phone_number: { number: data.phone, country: "bj" }
+    },
+    onComplete: function(resp){
+      if(resp.reason === FedaPay.CHECKOUT_COMPLETE){
+        alert("Paiement reçu ✅ Votre commande sera traitée sous peu. Un reçu vous a été envoyé par email.");
+        closeOrderModal();
+      } else {
+        alert("Le paiement n'a pas été finalisé. Vous pouvez réessayer ou commander via WhatsApp.");
+      }
+    }
+  });
+
+  widget.open();
+}
+
+// ================= COMMANDE VIA WHATSAPP =================
+function orderViaWhatsapp(){
+  const data = getOrderFormData();
+  if(!data) return;
+
+  const message = encodeURIComponent(
+    `Bonjour VifernelZ, je souhaite commander :\n\n` +
+    `Service : ${currentOrder.label}\n` +
+    `Montant : $${currentOrder.amount}\n` +
+    `Plateforme : ${data.platform}\n` +
+    `Profil : ${data.profile}\n` +
+    `Nom : ${data.name}\n` +
+    `Email : ${data.email}`
+  );
+
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, "_blank");
+  closeOrderModal();
+}
+
+// ================= FAQ ACCORDÉON =================
+document.querySelectorAll(".faq-question").forEach(q=>{
+  q.addEventListener("click", ()=>{
+    const item = q.parentElement;
+    const wasActive = item.classList.contains("active");
+
+    document.querySelectorAll(".faq-item").forEach(i=> i.classList.remove("active"));
+
+    if(!wasActive) item.classList.add("active");
+  });
+});
+
+// ================= REVEAL AU SCROLL =================
+const boostObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting) entry.target.classList.add("active");
+  });
+});
+document.querySelectorAll(".why-card, .platform-card, .pack-card").forEach(el=>{
+  el.classList.add("reveal");
+  boostObserver.observe(el);
+});
+</script>
+
+</body>
+</html>
