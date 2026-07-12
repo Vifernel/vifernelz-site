@@ -180,6 +180,26 @@
 .modal-body{ color:#cbd5e1; line-height:1.85; font-size:16px; }
 .modal-body p{ margin-bottom:16px; }
 
+/* Bouton "Accueil" du header : forcé compact (au cas où l'ancien style.css
+   serait encore en place — ces règles gagnent car plus spécifiques) */
+.header .header-blog-btn{
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:6px !important;
+  padding:8px 16px !important;
+  font-size:13px !important;
+  font-weight:600 !important;
+  line-height:1 !important;
+  border-radius:30px !important;
+  white-space:nowrap;
+}
+.header .header-blog-btn i{ font-size:12px !important; }
+
+@media(max-width:600px){
+  .header .header-blog-btn span{ display:none; }
+  .header .header-blog-btn{ padding:8px 12px !important; }
+}
+
 @media(max-width:768px){
   .blog-section{ margin-top:40px; }
   .blog-card h2{ font-size:19px; }
@@ -211,7 +231,7 @@
     </a>
 
     <div class="nav-actions">
-      <a href="index.html" class="header-blog-btn"><i class="fas fa-home"></i> Accueil</a>
+      <a href="index.html" class="header-blog-btn"><i class="fas fa-home"></i><span>Accueil</span></a>
       <a href="login.html" class="header-icon"><i class="fas fa-user"></i></a>
       <button class="menu-toggle"><span></span><span></span><span></span></button>
     </div>
