@@ -3,14 +3,151 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Abonnements - Vifernel Academy</title>
+<title>Abonnements | Vifernel Academy</title>
 
-<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+.pricing-hero{
+  padding:150px 20px 40px; text-align:center;
+}
+.pricing-hero h1{ font-size: clamp(2rem, 5vw, 2.8rem); color:#fff; margin-bottom:12px; }
+.pricing-hero p{ color:#8c94a3; max-width:560px; margin:0 auto; }
+
+.pricing-grid{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+  gap:26px; max-width:1100px; margin:40px auto; padding:0 20px;
+}
+.pricing-card{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:24px; padding:34px 28px; text-align:center;
+  transition:.4s ease; position:relative;
+}
+.pricing-card:hover{ transform:translateY(-10px); box-shadow:0 25px 55px rgba(0,0,0,.3); }
+.pricing-card.featured{ border-color:rgba(212,175,55,.5); background:rgba(212,175,55,.06); }
+.pricing-card.elite{ border-color:rgba(255,80,80,.4); }
+
+.pricing-badge{
+  position:absolute; top:-14px; left:50%; transform:translateX(-50%);
+  background:#d4af37; color:#0b0f14; font-size:12px; font-weight:700;
+  padding:6px 16px; border-radius:30px;
+}
+.pricing-card h2{ font-size:20px; color:#fff; margin-bottom:8px; }
+.pricing-card.elite h2{ color:#ff5c5c; }
+.pricing-card p.desc{ color:#8c94a3; font-size:14px; margin-bottom:18px; }
+.pricing-card .amount{ font-size:32px; font-weight:800; color:#d4af37; margin-bottom:22px; }
+.pricing-card.elite .amount{ color:#ff5c5c; }
+
+.pricing-btn{
+  display:block; width:100%; padding:14px; border-radius:14px;
+  font-weight:700; font-size:15px; text-decoration:none;
+  background:linear-gradient(135deg,#d4af37,#b8860b); color:#0b0f14;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.pricing-card.elite .pricing-btn{ background:linear-gradient(135deg,#ff5c5c,#c62828); color:#fff; }
+.pricing-btn:hover{ transform:translateY(-3px); box-shadow:0 16px 34px rgba(212,175,55,.3); }
+</style>
 </head>
 
-<body class="bg-black text-white">
+<body>
 
-<!-- 🔐 PROTECTION LOGIN -->
+<div class="animated-bg">
+  <div class="gradient-orb orb-1"></div>
+  <div class="gradient-orb orb-2"></div>
+  <div class="gradient-orb orb-3"></div>
+  <div class="grid-overlay"></div>
+  <div class="particles">
+    <span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span>
+  </div>
+</div>
+
+<header class="header">
+  <nav class="navbar">
+    <a href="index.html" class="logo">
+      <img src="images/2C602103-AE8E-43F3-803B-4034791017D2.png" alt="Logo VZ" class="mini-vz-logo">
+      <img src="images/44D0E6A3-D26B-4797-9088-91885C732E69.png" alt="VifernelZ" class="site-logo">
+    </a>
+    <div class="nav-actions">
+      <div class="nav-pill-group">
+        <a href="index.html" class="header-blog-btn"><i class="fas fa-home"></i><span>Accueil</span></a>
+        <a href="academy.html" class="header-icon"><i class="fas fa-graduation-cap"></i></a>
+      </div>
+      <button class="menu-toggle"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+</header>
+
+<div class="nav-menu">
+  <div class="menu-links">
+    <div class="menu-profile">
+      <img src="images/profile1.jpg" alt="Vifernel Zounma" class="menu-profile-img">
+      <h3>Vifernel Zounma</h3>
+      <p>Entrepreneur Digital<br>Ghana 🇬🇭 • Bénin 🇧🇯 • International 🌍</p>
+      <div class="menu-status"><span class="status-dot"></span> Disponible pour projets</div>
+      <a href="https://wa.me/message/UKJGIUBGIZ32F1" target="_blank" class="menu-whatsapp-btn">
+        <i class="fab fa-whatsapp"></i> Discuter maintenant
+      </a>
+    </div>
+    <span class="menu-label">Navigation</span>
+    <a href="index.html#home">Accueil</a>
+    <a href="academy.html">Académie</a>
+    <a href="blog.html">Blog</a>
+    <a href="boost.html">Boost Social</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+</div>
+<div class="menu-overlay"></div>
+
+<section class="pricing-hero">
+  <span class="premium-badge"><span class="dot-live"></span> ABONNEMENTS</span>
+  <h1>Choisis ton accès à l'Académie</h1>
+  <p>Trois niveaux pour progresser à ton rythme dans le trading, du débutant au mentorat privé.</p>
+</section>
+
+<section class="pricing-grid">
+
+  <div class="pricing-card">
+    <h2>VIP</h2>
+    <p class="desc">Débutant Forex & Crypto</p>
+    <div class="amount">50 000 FCFA</div>
+    <a href="https://me.fedapay.com/vipacademy" onclick="selectPlan('VIP')" class="pricing-btn">Choisir VIP</a>
+  </div>
+
+  <div class="pricing-card featured">
+    <span class="pricing-badge">POPULAIRE</span>
+    <h2>VVIP</h2>
+    <p class="desc">Niveau avancé + stratégie</p>
+    <div class="amount">100 000 FCFA</div>
+    <a href="https://me.fedapay.com/vvipacademy" onclick="selectPlan('VVIP')" class="pricing-btn">Choisir VVIP</a>
+  </div>
+
+  <div class="pricing-card elite">
+    <h2>VVVIP</h2>
+    <p class="desc">Mentorat privé + signaux</p>
+    <div class="amount">300 000 FCFA</div>
+    <a href="https://me.fedapay.com/vvvipacademy" onclick="selectPlan('VVVIP')" class="pricing-btn">Choisir VVVIP</a>
+  </div>
+
+</section>
+
+<footer class="footer">
+  <div class="footer-line"></div>
+  <p>© 2026 VifernelZ. Tous droits réservés.</p>
+  <p class="made-with">Vifernel Academy — Formation Trading</p>
+  <a href="#" class="scroll-top"><i class="fas fa-arrow-up"></i></a>
+</footer>
+
+<a href="https://wa.me/message/UKJGIUBGIZ32F1" class="whatsapp-float" target="_blank">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<script src="script.js"></script>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -28,78 +165,14 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// 🔐 protection login
 onAuthStateChanged(auth, (user) => {
-  if (!user) {
-    window.location.href = "login.html";
-  }
+  if (!user) window.location.href = "login.html";
 });
 
-
-// 💎 PLAN TRACKING GLOBAL
-window.selectPlan = function(plan) {
+window.selectPlan = function(plan){
   localStorage.setItem("selectedPlan", plan);
 };
 </script>
-
-<!-- HEADER -->
-<div class="text-center py-10">
-  <h1 class="text-3xl text-yellow-400 font-bold">
-    Choisis ton abonnement
-  </h1>
-  <p class="text-gray-400 mt-2">
-    Accès à l’Académie Trading Vifernel
-  </p>
-</div>
-
-<!-- PRICING BOX -->
-<div class="max-w-5xl mx-auto grid md:grid-cols-3 gap-6 px-6">
-
-<!-- VIP -->
-<div class="bg-gray-900 p-6 rounded-xl border border-gray-700 text-center">
-  <h2 class="text-xl font-bold text-yellow-400">VIP</h2>
-  <p class="text-gray-400 mt-2">Débutant Forex & Crypto</p>
-  <h3 class="text-2xl mt-4 font-bold">50 000 FCFA</h3>
-
-  <a href="https://me.fedapay.com/vipacademy"
-     onclick="selectPlan('VIP')"
-     class="mt-6 block bg-yellow-500 text-black py-2 rounded-lg font-bold">
-     Choisir VIP
-  </a>
-</div>
-
-<!-- VVIP -->
-<div class="bg-gray-900 p-6 rounded-xl border border-yellow-500 text-center">
-  <h2 class="text-xl font-bold text-yellow-400">VVIP</h2>
-  <p class="text-gray-400 mt-2">Niveau avancé + stratégie</p>
-  <h3 class="text-2xl mt-4 font-bold">100 000 FCFA</h3>
-
-  <a href="https://me.fedapay.com/vvipacademy"
-     onclick="selectPlan('VVIP')"
-     class="mt-6 block bg-yellow-500 text-black py-2 rounded-lg font-bold">
-     Choisir VVIP
-  </a>
-</div>
-
-<!-- VVVIP -->
-<div class="bg-gray-900 p-6 rounded-xl border border-red-500 text-center">
-  <h2 class="text-xl font-bold text-red-400">VVVIP</h2>
-  <p class="text-gray-400 mt-2">Mentorat privé + signaux</p>
-  <h3 class="text-2xl mt-4 font-bold">300 000 FCFA</h3>
-
-  <a href="https://me.fedapay.com/vvvipacademy"
-     onclick="selectPlan('VVVIP')"
-     class="mt-6 block bg-red-500 text-white py-2 rounded-lg font-bold">
-     Choisir VVVIP
-  </a>
-</div>
-
-</div>
-
-<!-- FOOTER -->
-<div class="text-center text-gray-500 mt-10 pb-10">
-  © 2026 Vifernel Academy
-</div>
 
 </body>
 </html>
