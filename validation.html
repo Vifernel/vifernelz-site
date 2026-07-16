@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Validation | Vifernel Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  body{
+    margin:0; background:#0b0f14; color:#fff; font-family:"Poppins",sans-serif;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    height:100vh; text-align:center;
+  }
+  .spinner{
+    width:48px; height:48px; border-radius:50%;
+    border:3px solid rgba(212,175,55,.2); border-top-color:#d4af37;
+    animation: spin 1s linear infinite; margin-bottom:22px;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  h2{ font-weight:600; font-size:18px; color:#f4e5a1; }
+</style>
+</head>
+
+<body>
+
+<div class="spinner"></div>
+<h2>Validation en cours...</h2>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCDzr8uruU4UMNjCMa50zs4erHGXkN_fyQ",
+  authDomain: "vifernel-trading-academy.firebaseapp.com",
+  projectId: "vifernel-trading-academy",
+  storageBucket: "vifernel-trading-academy.firebasestorage.app",
+  messagingSenderId: "1000145148349",
+  appId: "1:1000145148349:web:f0688610a67859a6999ad4",
+  measurementId: "G-FR882HDS3K"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let done = false;
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user || done) {
+    if (!user) window.location.href = "login.html";
+    return;
+  }
+  done = true;
+
+  const snap = await getDoc(doc(db, "users", user.uid));
+
+  if (!snap.exists()) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  const data = snap.data();
+
+  // Un seul dashboard désormais : il affiche/masque les sections selon le plan.
+  if (data.plan && data.paid === true) {
+    window.location.href = "dashboard.html";
+  } else {
+    window.location.href = "pricing.html";
+  }
+});
+</script>
+
+</body>
+</html>
