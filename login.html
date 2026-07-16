@@ -1,55 +1,150 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Connexion - Vifernel Academy</title>
-<script src="https://cdn.tailwindcss.com"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connexion | Vifernel Academy</title>
+
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+.auth-section{
+  min-height: 100vh;
+  display:flex; align-items:center; justify-content:center;
+  padding: 140px 20px 60px;
+}
+.auth-card{
+  width:100%; max-width:420px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(212,175,55,.25);
+  border-radius:26px;
+  padding:36px 32px;
+  backdrop-filter: blur(16px);
+}
+.auth-card h2{
+  text-align:center; color:#fff; font-size:24px; margin-bottom:6px;
+}
+.auth-card p.sub{
+  text-align:center; color:#8c94a3; font-size:14px; margin-bottom:26px;
+}
+.auth-card label{
+  display:block; font-size:12px; color:#aaa; text-transform:uppercase;
+  margin:16px 0 6px;
+}
+.auth-card input{
+  width:100%; background:#0b0f14; border:1px solid rgba(255,255,255,.1);
+  padding:14px; border-radius:12px; color:#fff; font-size:15px; outline:none;
+  transition:.3s ease;
+}
+.auth-card input:focus{ border-color:#d4af37; box-shadow:0 0 0 3px rgba(212,175,55,.15); }
+
+.auth-btn{
+  width:100%; padding:14px; border:none; border-radius:14px;
+  font-weight:700; font-size:15px; cursor:pointer; margin-top:22px;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.auth-btn.primary{ background:linear-gradient(135deg,#d4af37,#b8860b); color:#0b0f14; }
+.auth-btn.primary:hover{ transform:translateY(-3px); box-shadow:0 16px 34px rgba(212,175,55,.3); }
+.auth-btn.secondary{
+  background:rgba(255,255,255,.05); color:#fff; border:1px solid rgba(255,255,255,.1);
+  margin-top:12px;
+}
+.auth-btn.secondary:hover{ border-color:rgba(212,175,55,.4); color:#d4af37; }
+
+.auth-msg{ text-align:center; margin-top:16px; font-size:14px; color:#f4e5a1; min-height:20px; }
+</style>
 </head>
 
-<body style="background:#000;color:white;">
+<body>
 
-<div style="max-width:400px;margin:100px auto;padding:25px;background:#111;border-radius:15px;">
-
-  <h2 style="text-align:center;color:#d4af37;margin-bottom:20px;">
-    Vifernel Academy
-  </h2>
-
-  <input id="email" type="email" placeholder="Email"
-  style="width:100%;padding:12px;margin:10px 0;border-radius:8px;color:black;background:white;">
-
-<input id="password" type="password" placeholder="Mot de passe"
-  style="width:100%;padding:12px;margin:10px 0;border-radius:8px;color:black;background:white;">
-
-  <button onclick="loginUser()"
-    style="width:100%;padding:12px;background:#d4af37;color:black;font-weight:bold;border:none;border-radius:8px;">
-    Se connecter
-  </button>
-
-  <button onclick="registerUser()"
-    style="width:100%;padding:12px;margin-top:10px;background:#444;color:white;border:none;border-radius:8px;">
-    Créer un compte
-  </button>
-
-  <p id="msg" style="text-align:center;margin-top:10px;"></p>
-
+<div class="animated-bg">
+  <div class="gradient-orb orb-1"></div>
+  <div class="gradient-orb orb-2"></div>
+  <div class="gradient-orb orb-3"></div>
+  <div class="grid-overlay"></div>
+  <div class="particles">
+    <span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span>
+  </div>
 </div>
 
+<header class="header">
+  <nav class="navbar">
+    <a href="index.html" class="logo">
+      <img src="images/2C602103-AE8E-43F3-803B-4034791017D2.png" alt="Logo VZ" class="mini-vz-logo">
+      <img src="images/44D0E6A3-D26B-4797-9088-91885C732E69.png" alt="VifernelZ" class="site-logo">
+    </a>
+    <div class="nav-actions">
+      <div class="nav-pill-group">
+        <a href="index.html" class="header-blog-btn"><i class="fas fa-home"></i><span>Accueil</span></a>
+        <a href="academy.html" class="header-icon"><i class="fas fa-graduation-cap"></i></a>
+      </div>
+      <button class="menu-toggle"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+</header>
+
+<div class="nav-menu">
+  <div class="menu-links">
+    <div class="menu-profile">
+      <img src="images/profile1.jpg" alt="Vifernel Zounma" class="menu-profile-img">
+      <h3>Vifernel Zounma</h3>
+      <p>Entrepreneur Digital<br>Ghana 🇬🇭 • Bénin 🇧🇯 • International 🌍</p>
+      <div class="menu-status"><span class="status-dot"></span> Disponible pour projets</div>
+      <a href="https://wa.me/message/UKJGIUBGIZ32F1" target="_blank" class="menu-whatsapp-btn">
+        <i class="fab fa-whatsapp"></i> Discuter maintenant
+      </a>
+    </div>
+    <span class="menu-label">Navigation</span>
+    <a href="index.html#home">Accueil</a>
+    <a href="academy.html">Académie</a>
+    <a href="blog.html">Blog</a>
+    <a href="boost.html">Boost Social</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+</div>
+<div class="menu-overlay"></div>
+
+<section class="auth-section">
+  <div class="auth-card">
+    <h2>Vifernel Academy</h2>
+    <p class="sub">Connectez-vous pour accéder à vos formations</p>
+
+    <label>Email</label>
+    <input id="email" type="email" placeholder="votre@email.com">
+
+    <label>Mot de passe</label>
+    <input id="password" type="password" placeholder="••••••••">
+
+    <button class="auth-btn primary" onclick="loginUser()">Se connecter</button>
+    <button class="auth-btn secondary" onclick="registerUser()">Créer un compte</button>
+
+    <p class="auth-msg" id="msg"></p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-line"></div>
+  <p>© 2026 VifernelZ. Tous droits réservés.</p>
+  <p class="made-with">Vifernel Academy — Formation Trading</p>
+  <a href="#" class="scroll-top"><i class="fas fa-arrow-up"></i></a>
+</footer>
+
+<a href="https://wa.me/message/UKJGIUBGIZ32F1" class="whatsapp-float" target="_blank">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<script src="script.js"></script>
+
 <script type="module">
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
 import {
-  getAuth,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword
+  getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-import {
-  getFirestore,
-  doc,
-  setDoc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCDzr8uruU4UMNjCMa50zs4erHGXkN_fyQ",
@@ -64,64 +159,33 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-
 const msg = document.getElementById("msg");
 
-/* =========================
-   LOGIN PRO
-========================= */
-
 window.loginUser = function () {
-
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  if (!email || !password) {
-    msg.innerHTML = "❌ Veuillez remplir tous les champs";
-    return;
-  }
-
+  if (!email || !password) { msg.innerHTML = "❌ Veuillez remplir tous les champs"; return; }
   msg.innerHTML = "⏳ Connexion...";
 
   signInWithEmailAndPassword(auth, email, password)
-
     .then(() => {
-
       msg.innerHTML = "Connexion réussie 🔥";
-
-      setTimeout(() => {
-        window.location.replace("academy.html");
-      }, 1000);
-
+      setTimeout(() => window.location.replace("validation.html"), 800);
     })
-
-    .catch((error) => {
-      msg.innerHTML = error.message;
-    });
+    .catch((error) => { msg.innerHTML = "❌ " + error.message; });
 };
 
-/* =========================
-   REGISTER PRO
-========================= */
-
 window.registerUser = function () {
-
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  if (!email || !password) {
-    msg.innerHTML = "❌ Veuillez remplir tous les champs";
-    return;
-  }
-
+  if (!email || !password) { msg.innerHTML = "❌ Veuillez remplir tous les champs"; return; }
   msg.innerHTML = "⏳ Création du compte...";
 
   createUserWithEmailAndPassword(auth, email, password)
-
     .then(async (userCredential) => {
-
       const user = userCredential.user;
-
       await setDoc(doc(db, "users", user.uid), {
         uid: user.uid,
         email: user.email,
@@ -129,20 +193,11 @@ window.registerUser = function () {
         plan: null,
         createdAt: new Date().toISOString()
       });
-
       msg.innerHTML = "Compte créé 🎉";
-
-      setTimeout(() => {
-        window.location.replace("academy.html");
-      }, 1000);
-
+      setTimeout(() => window.location.replace("validation.html"), 800);
     })
-
-    .catch((error) => {
-      msg.innerHTML = error.message;
-    });
+    .catch((error) => { msg.innerHTML = "❌ " + error.message; });
 };
-
 </script>
 
 </body>
