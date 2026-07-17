@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.fedapay.com/checkout.js?v=1.1.7"></script>
 
 <style>
 .pricing-hero{
@@ -46,6 +47,7 @@
   display:block; width:100%; padding:14px; border-radius:14px;
   font-weight:700; font-size:15px; text-decoration:none;
   background:linear-gradient(135deg,#d4af37,#b8860b); color:#0b0f14;
+  border:none; cursor:pointer; font-family:inherit;
   transition: transform .3s ease, box-shadow .3s ease;
 }
 .pricing-card.elite .pricing-btn{ background:linear-gradient(135deg,#ff5c5c,#c62828); color:#fff; }
@@ -115,7 +117,7 @@
     <h2>VIP</h2>
     <p class="desc">Débutant Forex & Crypto</p>
     <div class="amount">50 000 FCFA</div>
-    <a href="https://me.fedapay.com/vipacademy" onclick="selectPlan('VIP')" class="pricing-btn">Choisir VIP</a>
+    <button type="button" class="pricing-btn" onclick="payForPlan('VIP', 50000)">Choisir VIP</button>
   </div>
 
   <div class="pricing-card featured">
@@ -123,14 +125,14 @@
     <h2>VVIP</h2>
     <p class="desc">Niveau avancé + stratégie</p>
     <div class="amount">100 000 FCFA</div>
-    <a href="https://me.fedapay.com/vvipacademy" onclick="selectPlan('VVIP')" class="pricing-btn">Choisir VVIP</a>
+    <button type="button" class="pricing-btn" onclick="payForPlan('VVIP', 100000)">Choisir VVIP</button>
   </div>
 
   <div class="pricing-card elite">
     <h2>VVVIP</h2>
     <p class="desc">Mentorat privé + signaux</p>
     <div class="amount">300 000 FCFA</div>
-    <a href="https://me.fedapay.com/vvvipacademy" onclick="selectPlan('VVVIP')" class="pricing-btn">Choisir VVVIP</a>
+    <button type="button" class="pricing-btn" onclick="payForPlan('VVVIP', 300000)">Choisir VVVIP</button>
   </div>
 
 </section>
@@ -150,7 +152,7 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getAuth, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCDzr8uruU4UMNjCMa50zs4erHGXkN_fyQ",
@@ -164,13 +166,61 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+setPersistence(auth, browserLocalPersistence).catch((e) => console.warn("Persistance:", e));
+
+let currentUser = null;
 
 onAuthStateChanged(auth, (user) => {
-  if (!user) window.location.href = "login.html";
+  if (!user) {
+    window.location.href = "login.html";
+  } else {
+    currentUser = user;
+  }
 });
 
-window.selectPlan = function(plan){
-  localStorage.setItem("selectedPlan", plan);
+// ⚠️ Remplacez par votre vraie clé publique FedaPay (déjà utilisée sur boost.html)
+const FEDAPAY_PUBLIC_KEY = "pk_live_KoY04CFZy25auP3ybnuPMU2V";
+const FEDAPAY_ENV = "live";
+
+window.payForPlan = function (plan, amount) {
+  if (!currentUser) {
+    alert("Veuillez patienter, connexion en cours...");
+    return;
+  }
+
+  if (typeof FedaPay === "undefined") {
+    alert("Le module de paiement n'a pas pu se charger. Réessayez.");
+    return;
+  }
+
+  const widget = FedaPay.init({
+    public_key: FEDAPAY_PUBLIC_KEY,
+    environment: FEDAPAY_ENV,
+    transaction: {
+      amount: amount,
+      description: `Vifernel Academy — Formation ${plan}`,
+      custom_metadata: {
+        uid: currentUser.uid,   // ← c'est cet identifiant que le webhook utilisera
+        plan: plan
+      }
+    },
+    currency: { iso: "XOF" },
+    customer: {
+      email: currentUser.email,
+      firstname: currentUser.email.split("@")[0]
+    },
+    onComplete: function (resp) {
+      if (resp.reason === FedaPay.CHECKOUT_COMPLETE) {
+        localStorage.setItem("justPaid", "1");
+        alert("Paiement reçu ✅ Activation de votre accès en cours...");
+        window.location.replace("validation.html");
+      } else {
+        alert("Le paiement n'a pas été finalisé. Vous pouvez réessayer.");
+      }
+    }
+  });
+
+  widget.open();
 };
 </script>
 
