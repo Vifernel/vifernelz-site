@@ -142,7 +142,8 @@
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
-  getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword
+  getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
+  setPersistence, browserLocalPersistence, onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -160,6 +161,16 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const msg = document.getElementById("msg");
+
+// Persistance explicite : garantit que la session survit à la redirection
+// vers validation.html, même si le navigateur est capricieux (Safari, mode privé...).
+setPersistence(auth, browserLocalPersistence).catch((e) => console.warn("Persistance:", e));
+
+// Si l'utilisateur arrive sur login.html alors qu'il est déjà connecté
+// (session existante), on ne le laisse pas bloqué sur le formulaire.
+onAuthStateChanged(auth, (user) => {
+  if (user) window.location.replace("validation.html");
+});
 
 window.loginUser = function () {
   const email = document.getElementById("email").value;
