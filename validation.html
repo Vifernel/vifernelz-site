@@ -29,8 +29,8 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, setPersistence, browserLocalPersistence, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCDzr8uruU4UMNjCMa50zs4erHGXkN_fyQ",
@@ -53,8 +53,12 @@ setPersistence(auth, browserLocalPersistence).catch((e) => console.warn("Persist
 // bloqué indéfiniment.
 const safetyTimer = setTimeout(() => {
   document.querySelector("h2").innerHTML =
-    'Ça prend plus de temps que prévu… <a href="login.html" style="color:#d4af37;">Se reconnecter</a>';
+    'Ça prend plus de temps que prévu… <a href="#" onclick="forceRelogin(); return false;" style="color:#d4af37;">Se reconnecter</a>';
 }, 5000);
+
+window.forceRelogin = function(){
+  signOut(auth).finally(() => window.location.href = "login.html");
+};
 
 let done = false;
 
@@ -66,11 +70,22 @@ onAuthStateChanged(auth, async (user) => {
   done = true;
   clearTimeout(safetyTimer);
 
-  const snap = await getDoc(doc(db, "users", user.uid));
+  let snap = await getDoc(doc(db, "users", user.uid));
 
   if (!snap.exists()) {
-    window.location.href = "login.html";
-    return;
+    // Compte authentifié mais document Firestore manquant (supprimé,
+    // ou créé avant la mise en place de cette logique) : on le recrée
+    // au lieu de renvoyer vers login.html, ce qui créait une boucle
+    // infinie (login → validation → login → ...) puisque l'utilisateur
+    // était déjà connecté.
+    await setDoc(doc(db, "users", user.uid), {
+      uid: user.uid,
+      email: user.email,
+      paid: false,
+      plan: null,
+      createdAt: new Date().toISOString()
+    });
+    snap = await getDoc(doc(db, "users", user.uid));
   }
 
   const data = snap.data();
