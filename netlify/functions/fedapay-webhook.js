@@ -1,4 +1,5 @@
 const admin = require("firebase-admin");
+const { Webhook } = require("fedapay"); // npm install fedapay (si pas déjà fait)
 
 // 🔐 INIT FIREBASE (safe)
 if (!admin.apps.length) {
@@ -9,8 +10,44 @@ if (!admin.apps.length) {
   });
 }
 
+// 🔐 Secret du endpoint webhook — à récupérer dans
+// FedaPay → Workbench → Webhooks → votre endpoint → "Cliquer pour révéler"
+const ENDPOINT_SECRET = process.env.FEDAPAY_WEBHOOK_SECRET;
+
 exports.handler = async (event) => {
   try {
+    // =========================
+    // 0. VERIFY SIGNATURE (NOUVEAU — sécurité)
+    // =========================
+    // Sans cette étape, n'importe qui connaissant l'URL du webhook
+    // pourrait s'auto-attribuer un accès VIP/VVIP/VVVIP gratuitement
+    // en envoyant une fausse requête. Cette vérification garantit que
+    // la requête vient authentiquement de FedaPay.
+    const signature =
+      event.headers["x-fedapay-signature"] || event.headers["X-FEDAPAY-SIGNATURE"];
+
+    if (!signature) {
+      console.log("❌ Requête sans signature — rejetée");
+      return { statusCode: 400, body: "missing signature" };
+    }
+
+    if (!ENDPOINT_SECRET) {
+      console.error("❌ FEDAPAY_WEBHOOK_SECRET non configuré côté serveur");
+      return { statusCode: 500, body: "server misconfigured" };
+    }
+
+    try {
+      // On utilise event.body BRUT (pas encore parsé) pour la vérification,
+      // comme l'exige le calcul de signature.
+      Webhook.constructEvent(event.body, signature, ENDPOINT_SECRET);
+    } catch (sigErr) {
+      console.error("❌ Signature FedaPay invalide :", sigErr.message);
+      return { statusCode: 400, body: `invalid signature: ${sigErr.message}` };
+    }
+
+    // =========================
+    // À partir d'ici, la requête est authentifiée — logique inchangée
+    // =========================
     const body = JSON.parse(event.body);
 
     console.log("🔥 WEBHOOK RECEIVED:", JSON.stringify(body, null, 2));
