@@ -29,7 +29,7 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getAuth, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -46,6 +46,16 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+setPersistence(auth, browserLocalPersistence).catch((e) => console.warn("Persistance:", e));
+
+// Filet de sécurité : si rien ne s'est passé après 5s (session lente à
+// se rétablir, erreur réseau...), on propose un lien plutôt qu'un spinner
+// bloqué indéfiniment.
+const safetyTimer = setTimeout(() => {
+  document.querySelector("h2").innerHTML =
+    'Ça prend plus de temps que prévu… <a href="login.html" style="color:#d4af37;">Se reconnecter</a>';
+}, 5000);
+
 let done = false;
 
 onAuthStateChanged(auth, async (user) => {
@@ -54,6 +64,7 @@ onAuthStateChanged(auth, async (user) => {
     return;
   }
   done = true;
+  clearTimeout(safetyTimer);
 
   const snap = await getDoc(doc(db, "users", user.uid));
 
@@ -63,6 +74,34 @@ onAuthStateChanged(auth, async (user) => {
   }
 
   const data = snap.data();
+
+  // Si l'utilisateur vient de payer, le webhook FedaPay peut prendre
+  // 1 à 2 secondes pour mettre à jour Firestore : on retente avant
+  // d'abandonner, plutôt que de renvoyer trop vite vers pricing.html.
+  const justPaid = localStorage.getItem("justPaid") === "1";
+
+  if (!(data.plan && data.paid === true) && justPaid) {
+    let attempts = 0;
+    const retry = setInterval(async () => {
+      attempts++;
+      const freshSnap = await getDoc(doc(db, "users", user.uid));
+      const freshData = freshSnap.data();
+
+      if (freshData.plan && freshData.paid === true) {
+        clearInterval(retry);
+        localStorage.removeItem("justPaid");
+        window.location.href = "dashboard.html";
+      } else if (attempts >= 5) {
+        clearInterval(retry);
+        localStorage.removeItem("justPaid");
+        document.querySelector("h2").innerHTML =
+          'Activation en cours de traitement… <a href="validation.html" style="color:#d4af37;">Réessayer</a>';
+      }
+    }, 2000);
+    return;
+  }
+
+  localStorage.removeItem("justPaid");
 
   // Un seul dashboard désormais : il affiche/masque les sections selon le plan.
   if (data.plan && data.paid === true) {
