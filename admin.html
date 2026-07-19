@@ -200,7 +200,7 @@ import {
   setPersistence, browserLocalPersistence
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
-  getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc
+  getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -287,6 +287,7 @@ window.addPost = async function () {
   await addDoc(collection(db, "articles"), {
     title, image, author, content,
     date: new Date().toLocaleDateString("fr-FR"),
+    createdAt: serverTimestamp(), // ← utilisé pour le tri, insensible au format texte
     likes: 0, views: 0
   });
 
