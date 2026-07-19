@@ -328,7 +328,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
   getFirestore, collection, getDocs, doc, updateDoc,
-  increment, getDoc, query, orderBy
+  increment, getDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // ================= FIREBASE =================
@@ -351,15 +351,39 @@ const modalContent = document.getElementById("modalContent");
 const EXCERPT_LENGTH = 160;
 const articlesData = {}; // cache local des articles chargés
 
+// Détermine une valeur temporelle triable pour un article, en gérant
+// à la fois les nouveaux articles (createdAt = vrai horodatage Firestore)
+// et les anciens articles (seulement un texte "jj/mm/aaaa" dans "date").
+function getSortTime(data){
+  if(data.createdAt && typeof data.createdAt.toMillis === "function"){
+    return data.createdAt.toMillis();
+  }
+  if(data.date){
+    const parts = data.date.split("/");
+    if(parts.length === 3){
+      const [day, month, year] = parts;
+      const parsed = new Date(`${year}-${month}-${day}`);
+      if(!isNaN(parsed.getTime())) return parsed.getTime();
+    }
+  }
+  return 0; // articles sans aucune date connue : relégués en dernier
+}
+
 // ================= CHARGEMENT ARTICLES =================
 async function loadPosts(){
   try{
-    const articlesQuery = query(collection(db,"articles"), orderBy("date","desc"));
-    const snapshot = await getDocs(articlesQuery);
+    // On récupère tous les articles sans tri Firestore (le champ "date" est
+    // un texte type "17/07/2026", trié alphabétiquement ça donne un ordre
+    // faux). On trie nous-mêmes ci-dessous avec une vraie valeur temporelle.
+    const snapshot = await getDocs(collection(db,"articles"));
 
     postsDiv.innerHTML = "";
 
-    snapshot.forEach(article=>{
+    const sortedDocs = snapshot.docs.slice().sort((a, b) => {
+      return getSortTime(b.data()) - getSortTime(a.data()); // plus récent en premier
+    });
+
+    sortedDocs.forEach(article=>{
       const data = article.data();
       const id = article.id;
       articlesData[id] = data;
