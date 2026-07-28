@@ -27,7 +27,7 @@
 .boost-hero::before{
   content:""; position:absolute; top:-15%; left:50%; transform:translateX(-50%);
   width:800px; height:800px;
-  background:radial-gradient(circle, rgba(212,175,55,.16), transparent 65%);
+  background:radial-gradient(circle, rgba(61,125,255,.16), transparent 65%);
   filter:blur(70px); z-index:-1;
 }
 .boost-hero-content{ max-width:900px; }
@@ -36,7 +36,7 @@
   font-weight:800; line-height:1.15; margin:22px 0 16px; color:#fff;
 }
 .boost-hero h1 span{
-  background: linear-gradient(90deg,#d4af37,#f4e5a1,#d4af37);
+  background: linear-gradient(90deg,#3d7dff,#9fc4ff,#3d7dff);
   background-size:200% auto;
   -webkit-background-clip:text; background-clip:text;
   -webkit-text-fill-color:transparent; color:transparent;
@@ -50,9 +50,9 @@
 .boost-cta-btn{
   display:inline-flex; align-items:center; gap:10px;
   padding:17px 32px; border-radius:20px;
-  background:linear-gradient(135deg,#d4af37,#b8860b);
+  background:linear-gradient(135deg,#3d7dff,#0040c9);
   color:#0b0f14; font-weight:700; font-size:15px;
-  box-shadow:0 20px 45px rgba(212,175,55,.28);
+  box-shadow:0 20px 45px rgba(61,125,255,.28);
   position:relative; overflow:hidden;
   transition:transform .35s ease, box-shadow .35s ease;
 }
@@ -61,7 +61,7 @@
   background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);
   transition:.7s;
 }
-.boost-cta-btn:hover{ transform:translateY(-5px); box-shadow:0 26px 55px rgba(212,175,55,.35); }
+.boost-cta-btn:hover{ transform:translateY(-5px); box-shadow:0 26px 55px rgba(61,125,255,.35); }
 .boost-cta-btn:hover::before{ left:100%; }
 
 /* ---------- POURQUOI NOUS ---------- */
@@ -73,8 +73,8 @@
   background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.07);
   border-radius:20px; padding:26px; text-align:center; transition:.35s ease;
 }
-.why-card:hover{ transform:translateY(-8px); border-color:rgba(212,175,55,.35); box-shadow:0 20px 40px rgba(0,0,0,.25); }
-.why-card i{ font-size:26px; color:#d4af37; margin-bottom:14px; display:block; }
+.why-card:hover{ transform:translateY(-8px); border-color:rgba(61,125,255,.35); box-shadow:0 20px 40px rgba(0,0,0,.25); }
+.why-card i{ font-size:26px; color:#3d7dff; margin-bottom:14px; display:block; }
 .why-card p{ font-size:15px; color:#c9d1de; font-weight:600; }
 
 /* ============================================================
@@ -101,11 +101,11 @@
   font-size:11px; color:#fff;
 }
 .wizard-step-dot.active{
-  background:rgba(212,175,55,.12);
-  border-color:rgba(212,175,55,.4);
-  color:#d4af37;
+  background:rgba(61,125,255,.12);
+  border-color:rgba(61,125,255,.4);
+  color:#3d7dff;
 }
-.wizard-step-dot.active .num{ background:#d4af37; color:#0b0f14; }
+.wizard-step-dot.active .num{ background:#3d7dff; color:#0b0f14; }
 .wizard-step-dot.done{ color:#4ade80; }
 .wizard-step-dot.done .num{ background:#4ade80; color:#0b0f14; }
 
@@ -120,18 +120,18 @@
 .summary-card .label{ font-size:12px; color:#8c94a3; text-transform:uppercase; letter-spacing:1px; }
 .summary-card .value{ font-size:15px; color:#fff; font-weight:600; margin-top:2px; }
 .summary-card button{
-  border:1px solid rgba(212,175,55,.4);
-  background:transparent; color:#d4af37;
+  border:1px solid rgba(61,125,255,.4);
+  background:transparent; color:#3d7dff;
   padding:8px 16px; border-radius:20px; font-size:13px; font-weight:600;
   cursor:pointer; transition:.3s ease;
 }
-.summary-card button:hover{ background:#d4af37; color:#0b0f14; }
+.summary-card button:hover{ background:#3d7dff; color:#0b0f14; }
 
 /* panneau générique d'étape */
 .wizard-panel{
   max-width:760px; margin:0 auto;
   background:rgba(255,255,255,.03);
-  border:1px solid rgba(212,175,55,.25);
+  border:1px solid rgba(61,125,255,.25);
   border-radius:24px;
   padding:30px;
   display:none;
@@ -145,7 +145,7 @@
   padding:14px 18px; border-radius:14px; color:#fff; font-size:15px;
   outline:none; margin-bottom:20px; transition:.3s ease;
 }
-.wizard-search:focus{ border-color:#d4af37; box-shadow:0 0 0 3px rgba(212,175,55,.15); }
+.wizard-search:focus{ border-color:#3d7dff; box-shadow:0 0 0 3px rgba(61,125,255,.15); }
 
 /* STEP 1 — grille de plateformes */
 .platform-grid{
@@ -163,8 +163,8 @@
 }
 .platform-tile i{ font-size:20px; }
 .platform-tile span{ font-size:12px; color:#c9d1de; font-weight:600; line-height:1.2; }
-.platform-tile:hover{ transform:translateY(-4px); border-color:rgba(212,175,55,.4); }
-.platform-tile.selected{ background:rgba(212,175,55,.12); border-color:#d4af37; }
+.platform-tile:hover{ transform:translateY(-4px); border-color:rgba(61,125,255,.4); }
+.platform-tile.selected{ background:rgba(61,125,255,.12); border-color:#3d7dff; }
 
 /* STEP 2 — liste de catégories */
 .category-list{ display:flex; flex-direction:column; gap:10px; max-height:420px; overflow-y:auto; }
@@ -175,9 +175,9 @@
   border-radius:14px; padding:16px 18px;
   cursor:pointer; transition:.25s ease;
 }
-.category-item:hover{ border-color:rgba(212,175,55,.35); background:rgba(212,175,55,.05); }
+.category-item:hover{ border-color:rgba(61,125,255,.35); background:rgba(61,125,255,.05); }
 .category-item span{ font-size:14px; color:#e5e9f0; font-weight:600; }
-.category-item i.arrow{ color:#d4af37; font-size:13px; }
+.category-item i.arrow{ color:#3d7dff; font-size:13px; }
 .category-empty{ text-align:center; color:#8c94a3; font-size:14px; padding:20px 0; }
 
 /* STEP 3 — services / paliers */
@@ -189,10 +189,10 @@
   cursor:pointer; transition:.3s ease;
   text-align:center;
 }
-.service-card:hover{ transform:translateY(-6px); border-color:rgba(212,175,55,.4); box-shadow:0 18px 36px rgba(0,0,0,.25); }
+.service-card:hover{ transform:translateY(-6px); border-color:rgba(61,125,255,.4); box-shadow:0 18px 36px rgba(0,0,0,.25); }
 .service-card .qty{ font-size:22px; font-weight:800; color:#fff; margin-bottom:4px; }
 .service-card .unit{ font-size:12px; color:#8c94a3; margin-bottom:14px; }
-.service-card .price{ font-size:18px; font-weight:700; color:#d4af37; }
+.service-card .price{ font-size:18px; font-weight:700; color:#3d7dff; }
 
 /* STEP 4 — formulaire final */
 .wizard-panel label{
@@ -204,13 +204,13 @@
   padding:14px; border-radius:12px; color:#fff; font-size:15px; outline:none;
   transition:.3s ease;
 }
-.wizard-panel input:focus{ border-color:#d4af37; box-shadow:0 0 0 3px rgba(212,175,55,.15); }
+.wizard-panel input:focus{ border-color:#3d7dff; box-shadow:0 0 0 3px rgba(61,125,255,.15); }
 
 .order-recap{
-  background:rgba(212,175,55,.08);
-  border:1px solid rgba(212,175,55,.25);
+  background:rgba(61,125,255,.08);
+  border:1px solid rgba(61,125,255,.25);
   border-radius:14px; padding:16px 20px; margin-top:22px;
-  font-size:14px; color:#f4e5a1; line-height:1.8;
+  font-size:14px; color:#9fc4ff; line-height:1.8;
 }
 
 .order-actions{ display:flex; flex-direction:column; gap:12px; margin-top:26px; }
@@ -219,8 +219,8 @@
   cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;
   transition:.3s ease;
 }
-.order-pay-btn{ background:linear-gradient(135deg,#d4af37,#b8860b); color:#0b0f14; }
-.order-pay-btn:hover{ transform:translateY(-3px); box-shadow:0 16px 34px rgba(212,175,55,.3); }
+.order-pay-btn{ background:linear-gradient(135deg,#3d7dff,#0040c9); color:#0b0f14; }
+.order-pay-btn:hover{ transform:translateY(-3px); box-shadow:0 16px 34px rgba(61,125,255,.3); }
 .order-wa-btn{ background:rgba(37,211,102,.12); border:1px solid rgba(37,211,102,.35); color:#25d366; }
 .order-wa-btn:hover{ background:#25d366; color:#0b0f14; transform:translateY(-3px); }
 
@@ -229,12 +229,12 @@
   color:#8c94a3; font-size:13px; margin-bottom:18px; cursor:pointer;
   transition:.3s ease;
 }
-.wizard-back:hover{ color:#d4af37; }
+.wizard-back:hover{ color:#3d7dff; }
 
 /* demande sur devis (plateformes non détaillées) */
 .quote-box{
   background:rgba(255,255,255,.03);
-  border:1px dashed rgba(212,175,55,.35);
+  border:1px dashed rgba(61,125,255,.35);
   border-radius:16px; padding:20px; margin-bottom:10px;
   font-size:14px; color:#c9d1de; line-height:1.7;
 }
@@ -244,7 +244,7 @@
   text-align:center; max-width:700px; margin:40px auto 0; padding:40px;
   background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); border-radius:24px;
 }
-.trust-stars{ color:#d4af37; font-size:22px; margin-bottom:16px; letter-spacing:4px; }
+.trust-stars{ color:#3d7dff; font-size:22px; margin-bottom:16px; letter-spacing:4px; }
 .trust-box p{ color:#c9d1de; line-height:1.8; margin-bottom:8px; }
 
 /* ---------- FAQ ---------- */
@@ -257,7 +257,7 @@
   display:flex; justify-content:space-between; align-items:center;
   padding:20px 24px; cursor:pointer; font-weight:600; color:#fff; font-size:16px;
 }
-.faq-question i{ color:#d4af37; transition:.3s ease; }
+.faq-question i{ color:#3d7dff; transition:.3s ease; }
 .faq-item.active .faq-question i{ transform:rotate(45deg); }
 .faq-answer{ max-height:0; overflow:hidden; transition:max-height .35s ease; padding:0 24px; }
 .faq-item.active .faq-answer{ max-height:200px; padding:0 24px 20px; }
@@ -265,8 +265,8 @@
 .faq-payments{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
 .faq-payments span{
   padding:6px 14px; border-radius:20px;
-  background:rgba(212,175,55,.1); border:1px solid rgba(212,175,55,.3);
-  color:#d4af37; font-size:13px; font-weight:600;
+  background:rgba(61,125,255,.1); border:1px solid rgba(61,125,255,.3);
+  color:#3d7dff; font-size:13px; font-weight:600;
 }
 
 @media(max-width:768px){
