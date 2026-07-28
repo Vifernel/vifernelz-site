@@ -17,6 +17,8 @@
 
 <body>
 
+<div class="scroll-progress"></div>
+
 <div class="animated-bg">
 
 <div class="gradient-orb orb-1"></div>
@@ -228,22 +230,22 @@ Découvrir mon univers
 
 <div class="hero-stats">
 
-<div class="hero-stat-card">
+<div class="hero-stat-card tilt-card">
 <h3>2020+</h3>
 <p>Parcours digital</p>
 </div>
 
-<div class="hero-stat-card">
+<div class="hero-stat-card tilt-card">
 <h3>6+</h3>
 <p>Domaines d’expertise</p>
 </div>
 
-<div class="hero-stat-card">
+<div class="hero-stat-card tilt-card">
 <h3>2+</h3>
 <p>Pays d’activité</p>
 </div>
 
-<div class="hero-stat-card">
+<div class="hero-stat-card tilt-card">
 <h3>24h</h3>
 <p>Temps de réponse</p>
 </div>
@@ -320,14 +322,14 @@ class="hero-image">
 
 <div class="about-grid">
 
-<div class="about-image reveal">
+<div class="about-image reveal-left">
 
 <img src="images/profile2.jpg" 
 alt="Vifernel Zounma">
 
 </div>
 
-<div class="about-content reveal">
+<div class="about-content reveal-right">
 
 <p>
 
@@ -446,7 +448,7 @@ des solutions modernes adaptées au monde actuel.
 
 <!-- WEB -->
 
-<div class="expertise-card reveal">
+<div class="expertise-card reveal-zoom tilt-card">
 
 <video class="expertise-video" autoplay muted loop playsinline>
 
@@ -469,7 +471,7 @@ adaptés aux besoins des entrepreneurs et entreprises.
 
 <!-- E-COMMERCE -->
 
-<div class="expertise-card reveal">
+<div class="expertise-card reveal-zoom tilt-card">
 
 <video class="expertise-video" autoplay muted loop playsinline>
 
@@ -492,7 +494,7 @@ des activités commerciales en ligne.
 
 <!-- TRADING -->
 
-<div class="expertise-card reveal">
+<div class="expertise-card reveal-zoom tilt-card">
 
 <video class="expertise-video" autoplay muted loop playsinline>
 
@@ -552,7 +554,7 @@ style="display:inline-block;margin-top:15px;padding:12px 18px;background:#d4af37
 
 <!-- IA -->
 
-<div class="expertise-card reveal">
+<div class="expertise-card reveal-zoom tilt-card">
 
 <video class="expertise-video" autoplay muted loop playsinline>
 
@@ -594,13 +596,13 @@ et renforcer votre présence professionnelle.
 
 <div class="services-showcase">
 
-<div class="services-image reveal">
+<div class="services-image reveal-left">
 <img src="images/vifb.PNG" alt="Services VifernelZ">
 </div>
 
 <div class="services-grid">
 
-<div class="service-card reveal">
+<div class="service-card reveal-up tilt-card">
 <i class="fas fa-globe"></i>
 <h3>Création de sites web professionnels</h3>
 <p>
@@ -608,7 +610,7 @@ Sites modernes, rapides, sécurisés et optimisés pour la conversion.
 </p>
 </div>
 
-<div class="service-card reveal">
+<div class="service-card reveal-up tilt-card">
 <i class="fas fa-store"></i>
 <h3>Business e-commerce</h3>
 <p>
@@ -616,7 +618,7 @@ Création et optimisation de boutiques en ligne performantes.
 </p>
 </div>
 
-<div class="service-card reveal">
+<div class="service-card reveal-up tilt-card">
 <i class="fas fa-lightbulb"></i>
 <h3>Consulting digital</h3>
 <p>
@@ -624,7 +626,7 @@ Stratégies digitales adaptées aux entrepreneurs et entreprises.
 </p>
 </div>
 
-<div class="service-card reveal">
+<div class="service-card reveal-up tilt-card">
 <i class="fas fa-gem"></i>
 <h3>Branding & identité visuelle</h3>
 <p>
@@ -632,7 +634,7 @@ Création d'une image de marque professionnelle et mémorable.
 </p>
 </div>
 
-<div class="service-card reveal">
+<div class="service-card reveal-up tilt-card">
 <i class="fas fa-robot"></i>
 <h3>Automatisation & IA</h3>
 <p>
@@ -640,7 +642,7 @@ Automatisation intelligente pour gagner du temps et améliorer la productivité.
 </p>
 </div>
 
-<div class="service-card reveal">
+<div class="service-card reveal-up tilt-card">
 <i class="fas fa-graduation-cap"></i>
 <h3>Formation & accompagnement</h3>
 <p>
@@ -673,7 +675,7 @@ Je suis disponible pour échanger sur vos projets, formations ou collaborations.
 
 <div class="contact-info">
 
-<div class="contact-card reveal">
+<div class="contact-card reveal-left">
 
 <h4>💬 WhatsApp</h4>
 
@@ -685,7 +687,7 @@ Discuter
 
 </div>
 
-<div class="contact-card reveal">
+<div class="contact-card reveal-left">
 
 <h4>📧 Email</h4>
 
@@ -697,7 +699,7 @@ Envoyer un email
 
 </div>
 
-<div class="contact-card reveal">
+<div class="contact-card reveal-left">
 
 <h4>🌍 Réseaux sociaux</h4>
 
@@ -721,7 +723,7 @@ Envoyer un email
 
 <!-- RIGHT -->
 
-<div class="contact-form-box reveal">
+<div class="contact-form-box reveal-right">
 
 <form action="/.netlify/functions/send-email" method="POST">
 
@@ -774,8 +776,9 @@ if (window.location.search.includes("success=true")) {
 
 <script src="script.js"></script>
 
-<!-- ANIMATIONS AU SCROLL (reveal) -->
+<!-- ANIMATIONS AU SCROLL + INTERACTIONS PREMIUM -->
 <script>
+/* ================= REVEAL MULTI-DIRECTIONNEL ================= */
 const revealObserver = new IntersectionObserver((entries)=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){
@@ -785,7 +788,92 @@ const revealObserver = new IntersectionObserver((entries)=>{
   });
 }, { threshold: 0.15 });
 
-document.querySelectorAll(".reveal").forEach(el=> revealObserver.observe(el));
+document.querySelectorAll(
+  ".reveal, .reveal-up, .reveal-left, .reveal-right, .reveal-zoom, .reveal-blur, .section-title"
+).forEach(el=> revealObserver.observe(el));
+
+/* ================= BARRE DE PROGRESSION DE SCROLL ================= */
+const progressBar = document.querySelector(".scroll-progress");
+function updateProgress(){
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  if(progressBar) progressBar.style.width = pct + "%";
+}
+window.addEventListener("scroll", updateProgress, { passive:true });
+updateProgress();
+
+/* ================= HEADER RÉACTIF AU SCROLL ================= */
+const headerEl = document.querySelector(".header");
+function updateHeaderScroll(){
+  if(!headerEl) return;
+  if(window.scrollY > 40) headerEl.classList.add("scrolled");
+  else headerEl.classList.remove("scrolled");
+}
+window.addEventListener("scroll", updateHeaderScroll, { passive:true });
+updateHeaderScroll();
+
+/* ================= PARALLAX LÉGER DU FOND ANIMÉ ================= */
+const bgLayer = document.querySelector(".animated-bg");
+window.addEventListener("scroll", ()=>{
+  if(bgLayer) bgLayer.style.transform = `translateY(${window.scrollY * 0.06}px)`;
+}, { passive:true });
+
+/* ================= COMPTEURS ANIMÉS (stats du hero) ================= */
+function animateCounter(el){
+  const raw = el.textContent.trim();
+  const match = raw.match(/^(\d+)(.*)$/);
+  if(!match) return;
+
+  const target = parseInt(match[1], 10);
+  const suffix = match[2];
+  const duration = 1400;
+  const start = performance.now();
+
+  function tick(now){
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.floor(eased * target) + suffix;
+    if(progress < 1) requestAnimationFrame(tick);
+    else el.textContent = target + suffix;
+  }
+  requestAnimationFrame(tick);
+}
+
+const counterObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      animateCounter(entry.target);
+      counterObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.6 });
+
+document.querySelectorAll(".hero-stat-card h3").forEach(el=> counterObserver.observe(el));
+
+/* ================= TILT 3D AU SURVOL (cartes premium) ================= */
+document.querySelectorAll(".tilt-card").forEach(card=>{
+  card.addEventListener("mousemove", (e)=>{
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const rotateX = ((y - rect.height/2) / (rect.height/2)) * -6;
+    const rotateY = ((x - rect.width/2) / (rect.width/2)) * 6;
+    card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+  });
+  card.addEventListener("mouseleave", ()=>{ card.style.transform = ""; });
+});
+
+/* ================= EFFET MAGNÉTIQUE (boutons héro) ================= */
+document.querySelectorAll(".hero-btn").forEach(btn=>{
+  btn.addEventListener("mousemove", (e)=>{
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    btn.style.transform = `translate(${x * 0.15}px, ${y * 0.3 - 5}px)`;
+  });
+  btn.addEventListener("mouseleave", ()=>{ btn.style.transform = ""; });
+});
 </script>
 
 </body>
