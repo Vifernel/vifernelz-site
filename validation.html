@@ -14,11 +14,11 @@
   }
   .spinner{
     width:48px; height:48px; border-radius:50%;
-    border:3px solid rgba(212,175,55,.2); border-top-color:#d4af37;
+    border:3px solid rgba(61,125,255,.2); border-top-color:#3d7dff;
     animation: spin 1s linear infinite; margin-bottom:22px;
   }
   @keyframes spin{ to{ transform:rotate(360deg); } }
-  h2{ font-weight:600; font-size:18px; color:#f4e5a1; }
+  h2{ font-weight:600; font-size:18px; color:#9fc4ff; }
 </style>
 </head>
 
@@ -53,7 +53,7 @@ setPersistence(auth, browserLocalPersistence).catch((e) => console.warn("Persist
 // bloqué indéfiniment.
 const safetyTimer = setTimeout(() => {
   document.querySelector("h2").innerHTML =
-    'Ça prend plus de temps que prévu… <a href="#" onclick="forceRelogin(); return false;" style="color:#d4af37;">Se reconnecter</a>';
+    'Ça prend plus de temps que prévu… <a href="#" onclick="forceRelogin(); return false;" style="color:#3d7dff;">Se reconnecter</a>';
 }, 5000);
 
 window.forceRelogin = function(){
@@ -110,7 +110,7 @@ onAuthStateChanged(auth, async (user) => {
         clearInterval(retry);
         localStorage.removeItem("justPaid");
         document.querySelector("h2").innerHTML =
-          'Activation en cours de traitement… <a href="validation.html" style="color:#d4af37;">Réessayer</a>';
+          'Activation en cours de traitement… <a href="validation.html" style="color:#3d7dff;">Réessayer</a>';
       }
     }, 2000);
     return;
