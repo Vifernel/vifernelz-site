@@ -24,10 +24,28 @@
   border:1px solid rgba(255,255,255,.08);
   border-radius:22px; padding:30px; text-align:center;
   transition:.35s ease;
+  position:relative;
 }
 .academy-card:hover{ transform:translateY(-8px); border-color:rgba(61,125,255,.4); box-shadow:0 20px 40px rgba(0,0,0,.25); }
+.academy-card.featured{
+  border-color:rgba(61,125,255,.5);
+  background:rgba(61,125,255,.06);
+}
+.academy-badge{
+  position:absolute; top:-14px; left:50%; transform:translateX(-50%);
+  background:#3d7dff; color:#fff; font-size:12px; font-weight:700;
+  padding:6px 16px; border-radius:30px;
+}
 .academy-card h2{ color:#fff; font-size:19px; margin-bottom:8px; }
-.academy-card p{ color:#8c94a3; font-size:14px; margin-bottom:20px; }
+.academy-card p{ color:#8c94a3; font-size:14px; margin-bottom:18px; }
+.academy-includes{
+  list-style:none; text-align:left; margin-bottom:22px;
+}
+.academy-includes li{
+  font-size:13px; color:#c9d1de; padding:6px 0;
+  display:flex; align-items:center; gap:8px;
+}
+.academy-includes li i{ color:#3d7dff; font-size:11px; }
 .academy-card a{
   display:inline-block; padding:12px 22px; border-radius:14px;
   background:linear-gradient(135deg,#3d7dff,#0040c9); color:#0b0f14;
@@ -99,29 +117,56 @@
 <section class="academy-hero">
   <span class="premium-badge"><span class="dot-live"></span> VIFERNEL ACADEMY</span>
   <h1>🎓 Choisissez votre formation</h1>
-  <p>Des parcours structurés pour apprendre le trading, du débutant à l'accompagnement privé.</p>
+  <p>Des parcours structurés pour apprendre le trading, du débutant à l'accompagnement privé — analyse technique, gestion du risque, stratégies concrètes, à ton rythme.</p>
 </section>
 
 <section class="academy-grid">
 
-  <div class="academy-card">
-    <h2>VIP Trading</h2>
-    <p>Accès aux modules essentiels.</p>
+  <div class="academy-card reveal-zoom tilt-card">
+    <h2>📘 VIP Trading</h2>
+    <p>Les bases solides pour démarrer sereinement.</p>
+    <ul class="academy-includes">
+      <li><i class="fas fa-check"></i> 19 modules vidéo</li>
+      <li><i class="fas fa-check"></i> Analyse technique de base</li>
+      <li><i class="fas fa-check"></i> Gestion du risque</li>
+    </ul>
     <a href="pricing.html">Voir les tarifs</a>
   </div>
 
-  <div class="academy-card">
-    <h2>VVIP Trading</h2>
-    <p>Modules avancés et analyses.</p>
+  <div class="academy-card featured reveal-zoom tilt-card">
+    <span class="academy-badge">POPULAIRE</span>
+    <h2>📗 VVIP Trading</h2>
+    <p>Pour approfondir stratégie et analyse de marché.</p>
+    <ul class="academy-includes">
+      <li><i class="fas fa-check"></i> Tout le contenu VIP</li>
+      <li><i class="fas fa-check"></i> 14 modules avancés</li>
+      <li><i class="fas fa-check"></i> Stratégies de trading concrètes</li>
+    </ul>
     <a href="pricing.html">Voir les tarifs</a>
   </div>
 
-  <div class="academy-card">
-    <h2>VVVIP Trading</h2>
-    <p>Accès total à l'académie.</p>
+  <div class="academy-card reveal-zoom tilt-card">
+    <h2>📕 VVVIP Trading</h2>
+    <p>L'accompagnement complet, sans limite.</p>
+    <ul class="academy-includes">
+      <li><i class="fas fa-check"></i> Tout le contenu VIP + VVIP</li>
+      <li><i class="fas fa-check"></i> 30+ modules exclusifs</li>
+      <li><i class="fas fa-check"></i> Mentorat privé</li>
+    </ul>
     <a href="pricing.html">Voir les tarifs</a>
   </div>
 
+</section>
+
+<!-- CTA PLEIN ÉCRAN -->
+<section class="full-cta-banner">
+  <div class="full-cta-banner-content">
+    <h2>Prêt à passer au niveau supérieur ?</h2>
+    <p>Des dizaines d'apprenants progressent déjà avec Vifernel Academy. Choisis ta formation et commence dès aujourd'hui.</p>
+    <a href="pricing.html" class="full-cta-banner-btn">
+      🚀 Commencer maintenant
+    </a>
+  </div>
 </section>
 
 <section class="academy-soon">
@@ -143,6 +188,133 @@
 <a href="https://wa.me/message/UKJGIUBGIZ32F1" class="whatsapp-float" target="_blank">
   <i class="fab fa-whatsapp"></i>
 </a>
+
+<!-- BANDEAU DE COOKIES -->
+<div class="cookie-banner" id="cookieBanner">
+  <div class="cookie-banner-inner">
+    <div class="cookie-icon">🍪</div>
+    <div class="cookie-text">
+      <h4>Nous utilisons des cookies</h4>
+      <p>
+        Ce site utilise des cookies essentiels au bon fonctionnement, et des cookies
+        optionnels pour mesurer l'audience. <a href="#" onclick="toggleCookiePrefs(); return false;">En savoir plus</a>
+      </p>
+    </div>
+
+    <div class="cookie-prefs" id="cookiePrefs">
+      <div class="cookie-pref-row">
+        <span>Cookies essentiels <span class="locked">(toujours actifs)</span></span>
+        <label class="cookie-toggle">
+          <input type="checkbox" checked disabled>
+          <span class="track"></span>
+        </label>
+      </div>
+      <div class="cookie-pref-row">
+        <span>Cookies de mesure d'audience</span>
+        <label class="cookie-toggle">
+          <input type="checkbox" id="analyticsToggle">
+          <span class="track"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="cookie-actions">
+      <button class="cookie-btn customize" onclick="toggleCookiePrefs()">Personnaliser</button>
+      <button class="cookie-btn reject" onclick="setCookieChoice(false)">Tout refuser</button>
+      <button class="cookie-btn accept" onclick="setCookieChoice(true)">Tout accepter</button>
+    </div>
+  </div>
+</div>
+
+<!-- NOTIFICATION DE MOTIVATION -->
+<div class="motivation-toast" id="motivationToast">
+  <div class="icon">📈</div>
+  <div class="text">
+    <strong id="toastTitle">Vifernel Academy</strong>
+    <span id="toastMessage">Choisis ta formation et commence dès aujourd'hui.</span>
+  </div>
+  <button class="close-toast" onclick="hideToast()"><i class="fas fa-times"></i></button>
+</div>
+
+<script>
+/* ================= BANDEAU DE COOKIES ================= */
+const cookieBanner = document.getElementById("cookieBanner");
+
+function toggleCookiePrefs(){
+  document.getElementById("cookiePrefs").classList.toggle("open");
+}
+
+function setCookieChoice(acceptAll){
+  const analytics = acceptAll || document.getElementById("analyticsToggle").checked;
+  localStorage.setItem("cookieConsent", JSON.stringify({
+    essential: true,
+    analytics: analytics,
+    date: new Date().toISOString()
+  }));
+  cookieBanner.classList.remove("show");
+}
+
+if(!localStorage.getItem("cookieConsent")){
+  setTimeout(()=> cookieBanner.classList.add("show"), 1200);
+}
+
+/* ================= NOTIFICATIONS DE MOTIVATION ================= */
+const motivationMessages = [
+  { icon:"📈", title:"Vifernel Academy", text:"Choisis ta formation et commence dès aujourd'hui." },
+  { icon:"⏰", title:"Places limitées", text:"L'accompagnement VVVIP est réservé à un petit nombre d'apprenants." },
+  { icon:"🎯", title:"Un doute sur ton niveau ?", text:"Contacte-nous sur WhatsApp, on t'oriente vers la bonne formation." }
+];
+
+const toastEl = document.getElementById("motivationToast");
+const toastTitle = document.getElementById("toastTitle");
+const toastMessage = document.getElementById("toastMessage");
+let toastIndex = 0;
+let toastDismissed = false;
+
+function showToast(){
+  if(toastDismissed) return;
+  const msg = motivationMessages[toastIndex % motivationMessages.length];
+  toastEl.querySelector(".icon").textContent = msg.icon;
+  toastTitle.textContent = msg.title;
+  toastMessage.textContent = msg.text;
+  toastEl.classList.add("show");
+  toastIndex++;
+
+  setTimeout(()=> toastEl.classList.remove("show"), 7000);
+}
+
+function hideToast(){
+  toastEl.classList.remove("show");
+  toastDismissed = true;
+}
+
+setTimeout(showToast, 6000);
+setInterval(showToast, 35000);
+
+/* ================= REVEAL AU SCROLL ================= */
+const revealObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add("in-view");
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold:0.15 });
+document.querySelectorAll(".reveal-zoom, .reveal-up, .reveal-left, .reveal-right").forEach(el=> revealObserver.observe(el));
+
+/* ================= TILT 3D ================= */
+document.querySelectorAll(".tilt-card").forEach(card=>{
+  card.addEventListener("mousemove",(e)=>{
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const rotateX = ((y - rect.height/2)/(rect.height/2)) * -5;
+    const rotateY = ((x - rect.width/2)/(rect.width/2)) * 5;
+    card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+  });
+  card.addEventListener("mouseleave",()=>{ card.style.transform = ""; });
+});
+</script>
 
 <script src="script.js"></script>
 
