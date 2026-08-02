@@ -525,29 +525,9 @@ et ne garantissent aucun résultat financier.
 
 </p>
 
-<a href="login.html?plan=VIP"
-style="display:inline-block;margin-top:15px;padding:12px 18px;background:#3d7dff;color:black;font-weight:bold;border-radius:8px;text-align:center;text-decoration:none;">
-
-💰 Formation VIP
-
-</a>
-
-<br><br>
-
-<a href="login.html?plan=VVIP"
-style="display:inline-block;margin-top:15px;padding:12px 18px;background:#3d7dff;color:black;font-weight:bold;border-radius:8px;text-align:center;text-decoration:none;">
-
-💰 Formation VVIP
-
-</a>
-
-<br><br>
-
-<a href="login.html?plan=VVVIP"
-style="display:inline-block;margin-top:15px;padding:12px 18px;background:#3d7dff;color:black;font-weight:bold;border-radius:8px;text-align:center;text-decoration:none;">
-
-💰 Formation VVVIP
-
+<a href="academy.html" class="trading-cta-btn">
+<span>🎓 Découvrir la Formation Trading</span>
+<i class="fas fa-arrow-right"></i>
 </a>
 
 </div>
@@ -582,6 +562,18 @@ pour améliorer la productivité des entreprises.
 </div>
 
 </section>
+
+<!-- CTA FORMATION TRADING -->
+<section class="full-cta-banner">
+  <div class="full-cta-banner-content">
+    <h2>Prêt à maîtriser le Trading ?</h2>
+    <p>Rejoins les apprenants qui progressent chaque semaine grâce aux formations VIP, VVIP et VVVIP de Vifernel Academy — analyse technique, gestion du risque, stratégies concrètes.</p>
+    <a href="academy.html" class="full-cta-banner-btn">
+      🚀 Commencer maintenant
+    </a>
+  </div>
+</section>
+
 <!-- SERVICES -->
 <section id="services" class="section services-premium">
 
@@ -768,10 +760,118 @@ Envoyer un email
 <i class="fab fa-whatsapp"></i>
 </a>
 
+<!-- BANDEAU DE COOKIES -->
+<div class="cookie-banner" id="cookieBanner">
+  <div class="cookie-banner-inner">
+    <div class="cookie-icon">🍪</div>
+    <div class="cookie-text">
+      <h4>Nous utilisons des cookies</h4>
+      <p>
+        Ce site utilise des cookies essentiels au bon fonctionnement, et des cookies
+        optionnels pour mesurer l'audience. Vous pouvez accepter, refuser, ou
+        personnaliser votre choix. <a href="#" onclick="toggleCookiePrefs(); return false;">En savoir plus</a>
+      </p>
+    </div>
+
+    <div class="cookie-prefs" id="cookiePrefs">
+      <div class="cookie-pref-row">
+        <span>Cookies essentiels <span class="locked">(toujours actifs)</span></span>
+        <label class="cookie-toggle">
+          <input type="checkbox" checked disabled>
+          <span class="track"></span>
+        </label>
+      </div>
+      <div class="cookie-pref-row">
+        <span>Cookies de mesure d'audience</span>
+        <label class="cookie-toggle">
+          <input type="checkbox" id="analyticsToggle">
+          <span class="track"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="cookie-actions">
+      <button class="cookie-btn customize" onclick="toggleCookiePrefs()">Personnaliser</button>
+      <button class="cookie-btn reject" onclick="setCookieChoice(false)">Tout refuser</button>
+      <button class="cookie-btn accept" onclick="setCookieChoice(true)">Tout accepter</button>
+    </div>
+  </div>
+</div>
+
+<!-- NOTIFICATION DE MOTIVATION -->
+<div class="motivation-toast" id="motivationToast">
+  <div class="icon">🎓</div>
+  <div class="text">
+    <strong id="toastTitle">Formation Trading</strong>
+    <span id="toastMessage">Rejoins les apprenants de Vifernel Academy dès aujourd'hui.</span>
+  </div>
+  <button class="close-toast" onclick="hideToast()"><i class="fas fa-times"></i></button>
+</div>
+
 <script>
 if (window.location.search.includes("success=true")) {
   alert("Message envoyé avec succès ✅");
 }
+</script>
+
+<script>
+/* ================= BANDEAU DE COOKIES ================= */
+const cookieBanner = document.getElementById("cookieBanner");
+
+function toggleCookiePrefs(){
+  document.getElementById("cookiePrefs").classList.toggle("open");
+}
+
+function setCookieChoice(acceptAll){
+  const analytics = acceptAll || document.getElementById("analyticsToggle").checked;
+  localStorage.setItem("cookieConsent", JSON.stringify({
+    essential: true,
+    analytics: analytics,
+    date: new Date().toISOString()
+  }));
+  cookieBanner.classList.remove("show");
+}
+
+// Affiche le bandeau seulement si aucun choix n'a encore été fait
+if(!localStorage.getItem("cookieConsent")){
+  setTimeout(()=> cookieBanner.classList.add("show"), 1200);
+}
+
+/* ================= NOTIFICATIONS DE MOTIVATION ================= */
+const motivationMessages = [
+  { icon:"🎓", title:"Formation Trading", text:"Rejoins les apprenants de Vifernel Academy dès aujourd'hui." },
+  { icon:"⏰", title:"Places limitées", text:"L'accompagnement VVVIP est limité à un petit nombre d'apprenants." },
+  { icon:"📈", title:"Passe à l'action", text:"Analyse technique, gestion du risque, stratégies concrètes t'attendent." },
+  { icon:"💬", title:"Une question ?", text:"Discute directement avec VifernelZ sur WhatsApp." },
+  { icon:"🚀", title:"Boost Social", text:"Développe aussi ta présence sur les réseaux avec Boost by VifernelZ." }
+];
+
+const toastEl = document.getElementById("motivationToast");
+const toastTitle = document.getElementById("toastTitle");
+const toastMessage = document.getElementById("toastMessage");
+let toastIndex = 0;
+let toastDismissed = false;
+
+function showToast(){
+  if(toastDismissed) return;
+  const msg = motivationMessages[toastIndex % motivationMessages.length];
+  toastEl.querySelector(".icon").textContent = msg.icon;
+  toastTitle.textContent = msg.title;
+  toastMessage.textContent = msg.text;
+  toastEl.classList.add("show");
+  toastIndex++;
+
+  setTimeout(()=> toastEl.classList.remove("show"), 7000);
+}
+
+function hideToast(){
+  toastEl.classList.remove("show");
+  toastDismissed = true; // ne redérange plus pour cette visite une fois fermé manuellement
+}
+
+// Première notification après 8s, puis une nouvelle toutes les 35s
+setTimeout(showToast, 8000);
+setInterval(showToast, 35000);
 </script>
 
 <script src="script.js"></script>
