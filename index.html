@@ -17,6 +17,18 @@
 
 <body>
 
+<!-- ÉCRAN DE CHARGEMENT -->
+<div class="site-preloader" id="sitePreloader">
+  <div class="preloader-logo"></div>
+  <div class="preloader-text">VifernelZ</div>
+</div>
+
+<!-- CURSEUR PERSONNALISÉ -->
+<div class="custom-cursor" id="customCursor"></div>
+
+<!-- TRANSITION DE PAGE -->
+<div class="page-transition" id="pageTransition"></div>
+
 <div class="scroll-progress"></div>
 
 <div class="animated-bg">
@@ -75,6 +87,10 @@ class="site-logo">
 <a href="login.html" class="header-icon" data-note="2">
 <i class="fas fa-user"></i>
 </a>
+
+<button class="theme-toggle-btn" id="themeToggleBtn" title="Changer de thème">
+<i class="fas fa-moon"></i>
+</button>
 
 </div>
 
@@ -436,6 +452,47 @@ des solutions modernes adaptées au monde actuel.
 </div>
 
 </section>
+
+<!-- PARCOURS -->
+<section id="journey" class="section">
+  <div class="section-title">
+    <span>PARCOURS</span>
+    <h2>Les grandes étapes du chemin VifernelZ</h2>
+  </div>
+
+  <div class="timeline">
+
+    <div class="timeline-item reveal-left">
+      <div class="timeline-dot"></div>
+      <span class="timeline-year">2020</span>
+      <h3>Les débuts à l'université</h3>
+      <p>Entrée à l'UPI-ONM de Fidjrossè à Cotonou en Systèmes Informatiques et Logiciels — le point de départ d'une passion pour la technologie et la création numérique.</p>
+    </div>
+
+    <div class="timeline-item reveal-left">
+      <div class="timeline-dot"></div>
+      <span class="timeline-year">2021 — 2022</span>
+      <h3>Découverte des marchés financiers</h3>
+      <p>Exploration du Forex, des indices synthétiques et des cryptomonnaies : analyse des marchés, discipline et gestion du risque.</p>
+    </div>
+
+    <div class="timeline-item reveal-left">
+      <div class="timeline-dot"></div>
+      <span class="timeline-year">2023</span>
+      <h3>Élargissement vers le digital</h3>
+      <p>Développement web, e-commerce et premiers projets business en ligne — conception de plateformes et de ressources pour entrepreneurs.</p>
+    </div>
+
+    <div class="timeline-item reveal-left">
+      <div class="timeline-dot"></div>
+      <span class="timeline-year">Aujourd'hui</span>
+      <h3>VifernelZ</h3>
+      <p>Formations, accompagnement et solutions digitales réunis sous une seule vision : combiner technologie, éducation et stratégie business.</p>
+    </div>
+
+  </div>
+</section>
+
 <!-- EXPERTISE -->
 <section id="expertise" class="section">
 
@@ -646,6 +703,125 @@ Développez des compétences concrètes dans le digital et le business.
 
 </div>
 
+</section>
+
+<!-- PROJETS -->
+<section id="projects" class="section">
+  <div class="section-title">
+    <span>PROJETS</span>
+    <h2>Quelques réalisations VifernelZ</h2>
+    <p class="project-subtitle">Des plateformes conçues et développées de bout en bout.</p>
+  </div>
+
+  <div class="premium-project-grid">
+
+    <div class="premium-project-card reveal-zoom">
+      <div class="project-image-wrap">
+        <img src="images/vifb.PNG" alt="Vifernel Academy" class="project-image">
+      </div>
+      <div class="project-overlay">
+        <span>Formation en ligne</span>
+        <h3>Vifernel Academy</h3>
+        <p>Plateforme de formation trading avec authentification, gestion d'abonnements et paiement intégré.</p>
+      </div>
+    </div>
+
+    <div class="premium-project-card reveal-zoom">
+      <div class="project-image-wrap">
+        <img src="images/vifb.PNG" alt="Boost by VifernelZ" class="project-image">
+      </div>
+      <div class="project-overlay">
+        <span>Services digitaux</span>
+        <h3>Boost by VifernelZ</h3>
+        <p>Assistant de commande guidé pour développer sa présence sur les réseaux sociaux, paiement FedaPay inclus.</p>
+      </div>
+    </div>
+
+    <div class="premium-project-card reveal-zoom">
+      <div class="project-image-wrap">
+        <img src="images/vifb.PNG" alt="Blog VifernelZ" class="project-image">
+      </div>
+      <div class="project-overlay">
+        <span>Contenu & édition</span>
+        <h3>Blog VifernelZ</h3>
+        <p>Blog dynamique avec back-office de publication, likes, vues et gestion complète des articles.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TÉMOIGNAGES -->
+<section id="testimonials" class="section">
+  <div class="section-title">
+    <span>TÉMOIGNAGES</span>
+    <h2>Ce qu'en disent les clients</h2>
+    <p class="project-subtitle">
+      <!-- ⚠️ Exemples à remplacer par de vrais avis clients avant publication -->
+      Quelques retours d'apprenants et de clients accompagnés par VifernelZ.
+    </p>
+  </div>
+
+  <div class="testimonials-wrap">
+    <div class="testimonials-track" id="testimonialsTrack">
+
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="quote">"Formation claire et très bien structurée. J'ai enfin compris comment lire un graphique sans me sentir perdu."</p>
+        <div class="testimonial-author">
+          <div style="width:46px;height:46px;border-radius:50%;background:#3d7dff;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;">S</div>
+          <div><strong>Apprenant</strong><span>Formation VIP Trading</span></div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="quote">"Site livré rapidement, propre, et VifernelZ a été disponible à chaque question. Exactement ce qu'il fallait pour lancer mon activité."</p>
+        <div class="testimonial-author">
+          <div style="width:46px;height:46px;border-radius:50%;background:#8b5cf6;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;">M</div>
+          <div><strong>Client</strong><span>Création de site web</span></div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="quote">"Le service Boost a donné un vrai coup de pouce à ma page. Livraison rapide et suivi sérieux."</p>
+        <div class="testimonial-author">
+          <div style="width:46px;height:46px;border-radius:50%;background:#22d3ee;display:flex;align-items:center;justify-content:center;color:#0b0f14;font-weight:700;">A</div>
+          <div><strong>Client</strong><span>Boost by VifernelZ</span></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="testimonial-dots" id="testimonialDots"></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="section">
+  <div class="section-title">
+    <span>QUESTIONS FRÉQUENTES</span>
+    <h2>Tout ce qu'il faut savoir</h2>
+  </div>
+
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-question">Quels services proposez-vous exactement ? <i class="fas fa-plus"></i></div>
+      <div class="faq-answer"><p>Développement web, e-commerce, formation trading (Vifernel Academy), et croissance sur les réseaux sociaux (Boost by VifernelZ).</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">Combien de temps pour un site web ? <i class="fas fa-plus"></i></div>
+      <div class="faq-answer"><p>Selon la complexité du projet, généralement entre quelques jours et quelques semaines. Contactez-moi pour un délai précis.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">Les formations trading garantissent-elles des gains ? <i class="fas fa-plus"></i></div>
+      <div class="faq-answer"><p>Non. Elles sont uniquement éducatives et visent à transmettre des compétences d'analyse et de gestion du risque, sans garantie de résultat financier.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">Comment vous contacter ? <i class="fas fa-plus"></i></div>
+      <div class="faq-answer"><p>Le plus rapide est WhatsApp (bouton flottant en bas de l'écran), sinon par email à contact@vifernelz.com.</p></div>
+    </div>
+  </div>
 </section>
 
 <!-- CONTACT -->
@@ -902,6 +1078,118 @@ document.querySelectorAll("#headerPillGroup a, #menuToggleBtn").forEach(btn=>{
   btn.addEventListener("click", ()=>{
     playHeaderTick(parseInt(btn.dataset.note || "0", 10));
   });
+});
+</script>
+
+<!-- ÉCRAN DE CHARGEMENT -->
+<script>
+window.addEventListener("load", ()=>{
+  setTimeout(()=>{
+    document.getElementById("sitePreloader").classList.add("hidden");
+  }, 500);
+});
+// Filet de sécurité : si "load" tarde, on masque quand même après 3s max
+setTimeout(()=>{
+  document.getElementById("sitePreloader").classList.add("hidden");
+}, 3000);
+</script>
+
+<!-- CURSEUR PERSONNALISÉ -->
+<script>
+const customCursor = document.getElementById("customCursor");
+if(window.matchMedia("(pointer: fine)").matches){
+  document.addEventListener("mousemove",(e)=>{
+    customCursor.style.left = e.clientX + "px";
+    customCursor.style.top = e.clientY + "px";
+  });
+  document.querySelectorAll("a, button, .tilt-card, input, textarea").forEach(el=>{
+    el.addEventListener("mouseenter", ()=> customCursor.classList.add("hover"));
+    el.addEventListener("mouseleave", ()=> customCursor.classList.remove("hover"));
+  });
+}
+</script>
+
+<!-- MODE CLAIR / SOMBRE -->
+<script>
+const themeToggleBtn = document.getElementById("themeToggleBtn");
+const themeIcon = themeToggleBtn.querySelector("i");
+
+function applyTheme(theme){
+  if(theme === "light"){
+    document.body.classList.add("light-theme");
+    themeIcon.classList.remove("fa-moon");
+    themeIcon.classList.add("fa-sun");
+  } else {
+    document.body.classList.remove("light-theme");
+    themeIcon.classList.remove("fa-sun");
+    themeIcon.classList.add("fa-moon");
+  }
+}
+
+const savedTheme = localStorage.getItem("siteTheme") || "dark";
+applyTheme(savedTheme);
+
+themeToggleBtn.addEventListener("click", ()=>{
+  const current = localStorage.getItem("siteTheme") || "dark";
+  const next = current === "dark" ? "light" : "dark";
+  localStorage.setItem("siteTheme", next);
+  applyTheme(next);
+});
+</script>
+
+<!-- CARROUSEL TÉMOIGNAGES -->
+<script>
+const track = document.getElementById("testimonialsTrack");
+const dotsContainer = document.getElementById("testimonialDots");
+const slides = track.children;
+let currentSlide = 0;
+
+for(let i=0; i<slides.length; i++){
+  const dot = document.createElement("button");
+  if(i === 0) dot.classList.add("active");
+  dot.addEventListener("click", ()=> goToSlide(i));
+  dotsContainer.appendChild(dot);
+}
+
+function goToSlide(index){
+  currentSlide = index;
+  track.style.transform = `translateX(-${index * 100}%)`;
+  Array.from(dotsContainer.children).forEach((d,i)=> d.classList.toggle("active", i === index));
+}
+
+setInterval(()=>{
+  goToSlide((currentSlide + 1) % slides.length);
+}, 5000);
+</script>
+
+<!-- FAQ ACCORDÉON -->
+<script>
+document.querySelectorAll(".faq-question").forEach(q=>{
+  q.addEventListener("click", ()=>{
+    const item = q.parentElement;
+    const wasActive = item.classList.contains("active");
+    document.querySelectorAll(".faq-item").forEach(i=> i.classList.remove("active"));
+    if(!wasActive) item.classList.add("active");
+  });
+});
+</script>
+
+<!-- TRANSITIONS DE PAGE (liens internes du site) -->
+<script>
+const pageTransition = document.getElementById("pageTransition");
+const internalPages = ["index.html","blog.html","boost.html","academy.html","pricing.html","login.html"];
+
+document.querySelectorAll("a[href]").forEach(link=>{
+  const href = link.getAttribute("href");
+  const isInternalPage = internalPages.some(p => href === p || href.startsWith(p + "#"));
+
+  if(isInternalPage){
+    link.addEventListener("click",(e)=>{
+      e.preventDefault();
+      pageTransition.classList.add("active");
+      setTimeout(()=>{ window.location.href = href; }, 450);
+    });
+  }
 });
 </script>
 
