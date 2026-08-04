@@ -60,25 +60,25 @@ class="site-logo">
 
 <div class="nav-actions">
 
-<div class="nav-pill-group">
+<div class="nav-pill-group" id="headerPillGroup">
 
-<a href="blog.html" class="header-blog-btn">
+<a href="blog.html" class="header-blog-btn" data-note="0">
 <i class="fas fa-newspaper"></i>
 <span>Blog</span>
 </a>
 
-<a href="boost.html" class="header-blog-btn">
+<a href="boost.html" class="header-blog-btn" data-note="1">
 <i class="fas fa-rocket"></i>
 <span>Boost</span>
 </a>
 
-<a href="login.html" class="header-icon">
+<a href="login.html" class="header-icon" data-note="2">
 <i class="fas fa-user"></i>
 </a>
 
 </div>
 
-<button class="menu-toggle">
+<button class="menu-toggle" id="menuToggleBtn" data-note="3">
 <span></span>
 <span></span>
 <span></span>
@@ -875,6 +875,35 @@ setInterval(showToast, 35000);
 </script>
 
 <script src="script.js"></script>
+
+<script>
+/* ================= SON DISCRET AU TAP (header) =================
+   Ne se joue JAMAIS automatiquement — uniquement au clic/tap,
+   ce qui respecte les politiques des navigateurs sur l'audio
+   et n'agresse personne. Une note différente par bouton. */
+const HEADER_NOTES = [523.25, 659.25, 783.99, 880.00]; // Do, Mi, Sol, La — accord agréable
+
+function playHeaderTick(noteIndex){
+  try{
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = "sine";
+    osc.frequency.value = HEADER_NOTES[noteIndex % HEADER_NOTES.length];
+    gain.gain.setValueAtTime(0.05, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.15);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.15);
+  }catch(e){ /* audio indisponible : on ignore silencieusement */ }
+}
+
+document.querySelectorAll("#headerPillGroup a, #menuToggleBtn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    playHeaderTick(parseInt(btn.dataset.note || "0", 10));
+  });
+});
+</script>
 
 <!-- ANIMATIONS AU SCROLL + INTERACTIONS PREMIUM -->
 <script>
