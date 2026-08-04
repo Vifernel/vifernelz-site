@@ -24,7 +24,7 @@
 </div>
 
 <!-- CURSEUR PERSONNALISÉ -->
-<div class="custom-cursor" id="customCursor"></div>
+<!-- Le curseur personnalisé est injecté automatiquement par le script en bas de page -->
 
 <!-- TRANSITION DE PAGE -->
 <div class="page-transition" id="pageTransition"></div>
@@ -1096,15 +1096,35 @@ setTimeout(()=>{
 
 <!-- CURSEUR PERSONNALISÉ -->
 <script>
-const customCursor = document.getElementById("customCursor");
 if(window.matchMedia("(pointer: fine)").matches){
+  document.body.classList.add("custom-cursor-active");
+
+  const cursorDot = document.createElement("div");
+  cursorDot.className = "cursor-dot";
+  const cursorRing = document.createElement("div");
+  cursorRing.className = "cursor-ring";
+  document.body.appendChild(cursorDot);
+  document.body.appendChild(cursorRing);
+
   document.addEventListener("mousemove",(e)=>{
-    customCursor.style.left = e.clientX + "px";
-    customCursor.style.top = e.clientY + "px";
+    cursorDot.style.left = e.clientX + "px";
+    cursorDot.style.top = e.clientY + "px";
+    cursorRing.style.left = e.clientX + "px";
+    cursorRing.style.top = e.clientY + "px";
   });
-  document.querySelectorAll("a, button, .tilt-card, input, textarea").forEach(el=>{
-    el.addEventListener("mouseenter", ()=> customCursor.classList.add("hover"));
-    el.addEventListener("mouseleave", ()=> customCursor.classList.remove("hover"));
+
+  const hoverSelector = "a, button, .tilt-card, input, textarea, [onclick]";
+  document.addEventListener("mouseover",(e)=>{
+    if(e.target.closest(hoverSelector)){
+      cursorDot.classList.add("hover");
+      cursorRing.classList.add("hover");
+    }
+  });
+  document.addEventListener("mouseout",(e)=>{
+    if(e.target.closest(hoverSelector)){
+      cursorDot.classList.remove("hover");
+      cursorRing.classList.remove("hover");
+    }
   });
 }
 </script>
