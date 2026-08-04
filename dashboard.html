@@ -166,6 +166,41 @@
   <i class="fab fa-whatsapp"></i>
 </a>
 
+<!-- CURSEUR PERSONNALISÉ -->
+<script>
+if(window.matchMedia("(pointer: fine)").matches){
+  document.body.classList.add("custom-cursor-active");
+
+  const cursorDot = document.createElement("div");
+  cursorDot.className = "cursor-dot";
+  const cursorRing = document.createElement("div");
+  cursorRing.className = "cursor-ring";
+  document.body.appendChild(cursorDot);
+  document.body.appendChild(cursorRing);
+
+  document.addEventListener("mousemove",(e)=>{
+    cursorDot.style.left = e.clientX + "px";
+    cursorDot.style.top = e.clientY + "px";
+    cursorRing.style.left = e.clientX + "px";
+    cursorRing.style.top = e.clientY + "px";
+  });
+
+  const hoverSelector = "a, button, .tilt-card, input, textarea, [onclick]";
+  document.addEventListener("mouseover",(e)=>{
+    if(e.target.closest(hoverSelector)){
+      cursorDot.classList.add("hover");
+      cursorRing.classList.add("hover");
+    }
+  });
+  document.addEventListener("mouseout",(e)=>{
+    if(e.target.closest(hoverSelector)){
+      cursorDot.classList.remove("hover");
+      cursorRing.classList.remove("hover");
+    }
+  });
+}
+</script>
+
 <script src="script.js"></script>
 
 <script type="module">
