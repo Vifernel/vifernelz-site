@@ -183,6 +183,53 @@ if(window.matchMedia("(pointer: fine)").matches){
 }
 </script>
 
+<!-- CANVAS CONFETTIS -->
+<canvas id="confettiCanvas"></canvas>
+
+<script>
+function fireConfetti(originX, originY){
+  const canvas = document.getElementById("confettiCanvas");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const ctx = canvas.getContext("2d");
+  const colors = ["#3d7dff","#8b5cf6","#22d3ee","#ec4899","#9fc4ff"];
+  const originXPx = originX ?? canvas.width / 2;
+  const originYPx = originY ?? canvas.height / 3;
+
+  const particles = Array.from({length: 70}, ()=> ({
+    x: originXPx, y: originYPx,
+    vx: (Math.random() - 0.5) * 10,
+    vy: (Math.random() - 1.6) * 10,
+    size: Math.random() * 5 + 3,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    rotation: Math.random() * 360,
+    rotSpeed: (Math.random() - 0.5) * 12,
+    life: 1
+  }));
+
+  function tick(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let alive = false;
+    particles.forEach(p=>{
+      if(p.life <= 0) return;
+      alive = true;
+      p.vy += 0.28; p.x += p.vx; p.y += p.vy;
+      p.rotation += p.rotSpeed; p.life -= 0.013;
+      ctx.save();
+      ctx.globalAlpha = Math.max(p.life, 0);
+      ctx.translate(p.x, p.y);
+      ctx.rotate((p.rotation * Math.PI) / 180);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
+      ctx.restore();
+    });
+    if(alive) requestAnimationFrame(tick);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  tick();
+}
+</script>
+
 <script src="script.js"></script>
 
 <script type="module">
@@ -246,6 +293,7 @@ window.payForPlan = function (plan, amount) {
     },
     onComplete: function (resp) {
       if (resp.reason === FedaPay.CHECKOUT_COMPLETE) {
+        fireConfetti();
         localStorage.setItem("justPaid", "1");
         alert("Paiement reçu ✅ Activation de votre accès en cours...");
         window.location.replace("validation.html");
