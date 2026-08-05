@@ -23,6 +23,15 @@
   <div class="preloader-text">VifernelZ</div>
 </div>
 
+<!-- EASTER EGG -->
+<div class="easter-egg-toast" id="easterEggToast">
+  <h3>🎉 Bravo, curieux(se) !</h3>
+  <p>Tu as trouvé le secret caché de VifernelZ.</p>
+</div>
+
+<!-- CANVAS CONFETTIS -->
+<canvas id="confettiCanvas"></canvas>
+
 <!-- CURSEUR PERSONNALISÉ -->
 <!-- Le curseur personnalisé est injecté automatiquement par le script en bas de page -->
 
@@ -56,7 +65,7 @@
 <header class="header">
 <nav class="navbar">
 
-<a href="#home" class="logo">
+<a href="#home" class="logo" id="siteLogo">
 
 <img
 src="images/2C602103-AE8E-43F3-803B-4034791017D2.png"
@@ -163,14 +172,21 @@ Navigation
 <section id="home" class="hero hero-v5 elite-hero">
 
 <div class="hero-background-glow"></div>
+<canvas id="particleCanvas"></canvas>
 
 <div class="hero-content">
 
 <div class="hero-left">
 
+<div class="hero-spotlight" id="heroSpotlight"></div>
+
 <div class="premium-badge">
 <span class="dot-live"></span>
 ENTREPRENEUR DIGITAL • GHANA 🇬🇭 • BÉNIN 🇧🇯 • GLOBAL 🌍
+</div>
+
+<div class="hero-typing">
+<span id="typingText"></span><span class="cursor-blink"></span>
 </div>
 
 <h1 class="hero-title">
@@ -985,9 +1001,9 @@ Envoyer un email
 </div>
 
 <script>
-if (window.location.search.includes("success=true")) {
-  alert("Message envoyé avec succès ✅");
-}
+/* Le message de succès (confettis + toast) est géré plus bas,
+   après le chargement complet des scripts, pour ne pas bloquer
+   l'affichage avec un alert() qui gèlerait toute la page. */
 </script>
 
 <script>
@@ -1129,6 +1145,261 @@ if(window.matchMedia("(pointer: fine)").matches){
 }
 </script>
 
+<!-- ================= CONFETTIS (fonction réutilisable) ================= -->
+<script>
+function fireConfetti(originX, originY){
+  const canvas = document.getElementById("confettiCanvas");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const ctx = canvas.getContext("2d");
+  const colors = ["#3d7dff","#8b5cf6","#22d3ee","#ec4899","#9fc4ff"];
+  const originXPx = originX ?? canvas.width / 2;
+  const originYPx = originY ?? canvas.height / 3;
+
+  const particles = Array.from({length: 90}, ()=> ({
+    x: originXPx, y: originYPx,
+    vx: (Math.random() - 0.5) * 12,
+    vy: (Math.random() - 1.6) * 12,
+    size: Math.random() * 6 + 3,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    rotation: Math.random() * 360,
+    rotSpeed: (Math.random() - 0.5) * 12,
+    life: 1
+  }));
+
+  function tick(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let alive = false;
+
+    particles.forEach(p=>{
+      if(p.life <= 0) return;
+      alive = true;
+      p.vy += 0.28;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rotation += p.rotSpeed;
+      p.life -= 0.012;
+
+      ctx.save();
+      ctx.globalAlpha = Math.max(p.life, 0);
+      ctx.translate(p.x, p.y);
+      ctx.rotate((p.rotation * Math.PI) / 180);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
+      ctx.restore();
+    });
+
+    if(alive) requestAnimationFrame(tick);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  tick();
+}
+</script>
+
+<!-- ================= EASTER EGG (5 taps sur le logo) ================= -->
+<script>
+let logoTapCount = 0;
+let logoTapTimer = null;
+
+document.getElementById("siteLogo").addEventListener("click", (e)=>{
+  logoTapCount++;
+  clearTimeout(logoTapTimer);
+  logoTapTimer = setTimeout(()=> logoTapCount = 0, 2500);
+
+  if(logoTapCount >= 5){
+    logoTapCount = 0;
+    e.preventDefault();
+    const toast = document.getElementById("easterEggToast");
+    toast.classList.add("show");
+    fireConfetti(window.innerWidth/2, window.innerHeight/2);
+    setTimeout(()=> toast.classList.remove("show"), 3200);
+  }
+});
+</script>
+
+<!-- ================= HALO QUI SUIT LE CURSEUR (titre du hero) ================= -->
+<script>
+const heroSpotlight = document.getElementById("heroSpotlight");
+const heroLeft = document.querySelector(".hero-left");
+if(heroSpotlight && heroLeft){
+  heroLeft.addEventListener("mousemove",(e)=>{
+    const rect = heroLeft.getBoundingClientRect();
+    heroSpotlight.style.left = (e.clientX - rect.left) + "px";
+    heroSpotlight.style.top = (e.clientY - rect.top) + "px";
+  });
+}
+</script>
+
+<!-- ================= ACCROCHE QUI S'ÉCRIT TOUTE SEULE ================= -->
+<script>
+const typingPhrases = [
+  "Développeur Web",
+  "Formateur Trading",
+  "Créateur de solutions digitales",
+  "Expert Boost Réseaux Sociaux"
+];
+const typingEl = document.getElementById("typingText");
+let typingPhraseIndex = 0, typingCharIndex = 0, typingDeleting = false;
+
+function typeLoop(){
+  const phrase = typingPhrases[typingPhraseIndex];
+
+  if(!typingDeleting){
+    typingCharIndex++;
+    typingEl.textContent = phrase.substring(0, typingCharIndex);
+    if(typingCharIndex === phrase.length){
+      typingDeleting = true;
+      setTimeout(typeLoop, 1500);
+      return;
+    }
+  } else {
+    typingCharIndex--;
+    typingEl.textContent = phrase.substring(0, typingCharIndex);
+    if(typingCharIndex === 0){
+      typingDeleting = false;
+      typingPhraseIndex = (typingPhraseIndex + 1) % typingPhrases.length;
+    }
+  }
+  setTimeout(typeLoop, typingDeleting ? 35 : 65);
+}
+typeLoop();
+</script>
+
+<!-- ================= PARALLAX PAR INCLINAISON (mobile) ================= -->
+<script>
+function applyTiltParallax(beta, gamma){
+  const x = Math.max(-20, Math.min(20, gamma || 0));
+  const y = Math.max(-20, Math.min(20, (beta || 0) - 45));
+  const heroImg = document.querySelector(".hero-image-container");
+  if(heroImg) heroImg.style.transform = `translate(${x * 0.8}px, ${y * 0.5}px)`;
+
+  document.querySelectorAll(".gradient-orb").forEach((orb, i)=>{
+    const factor = 0.4 + i * 0.2;
+    orb.style.marginLeft = (x * factor) + "px";
+    orb.style.marginTop = (y * factor) + "px";
+  });
+}
+
+function enableTiltParallax(){
+  window.addEventListener("deviceorientation", (e)=>{
+    applyTiltParallax(e.beta, e.gamma);
+  });
+}
+
+if(window.matchMedia("(pointer: coarse)").matches){
+  if(typeof DeviceOrientationEvent !== "undefined" && typeof DeviceOrientationEvent.requestPermission === "function"){
+    // iOS : la permission doit être demandée après un geste utilisateur
+    document.body.addEventListener("touchstart", function requestTiltOnce(){
+      DeviceOrientationEvent.requestPermission().then(state=>{
+        if(state === "granted") enableTiltParallax();
+      }).catch(()=>{});
+      document.body.removeEventListener("touchstart", requestTiltOnce);
+    }, { once:true });
+  } else {
+    enableTiltParallax();
+  }
+}
+</script>
+
+<!-- ================= FOND EN PARTICULES CONNECTÉES (desktop) ================= -->
+<script>
+if(window.matchMedia("(pointer: fine)").matches){
+  const pCanvas = document.getElementById("particleCanvas");
+  const pCtx = pCanvas.getContext("2d");
+  const heroSection = document.getElementById("home");
+  let particles = [];
+  let mouseX = null, mouseY = null;
+
+  function resizeParticleCanvas(){
+    pCanvas.width = heroSection.offsetWidth;
+    pCanvas.height = heroSection.offsetHeight;
+  }
+  resizeParticleCanvas();
+  window.addEventListener("resize", resizeParticleCanvas);
+
+  const PARTICLE_COUNT = 45;
+  for(let i=0; i<PARTICLE_COUNT; i++){
+    particles.push({
+      x: Math.random() * pCanvas.width,
+      y: Math.random() * pCanvas.height,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4
+    });
+  }
+
+  heroSection.addEventListener("mousemove",(e)=>{
+    const rect = heroSection.getBoundingClientRect();
+    mouseX = e.clientX - rect.left;
+    mouseY = e.clientY - rect.top;
+  });
+  heroSection.addEventListener("mouseleave", ()=>{ mouseX = null; mouseY = null; });
+
+  function drawParticles(){
+    pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+
+    particles.forEach(p=>{
+      p.x += p.vx; p.y += p.vy;
+      if(p.x < 0 || p.x > pCanvas.width) p.vx *= -1;
+      if(p.y < 0 || p.y > pCanvas.height) p.vy *= -1;
+    });
+
+    for(let i=0; i<particles.length; i++){
+      for(let j=i+1; j<particles.length; j++){
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if(dist < 130){
+          pCtx.strokeStyle = `rgba(61,125,255,${1 - dist/130})`;
+          pCtx.lineWidth = 1;
+          pCtx.beginPath();
+          pCtx.moveTo(particles[i].x, particles[i].y);
+          pCtx.lineTo(particles[j].x, particles[j].y);
+          pCtx.stroke();
+        }
+      }
+      if(mouseX !== null){
+        const dx = particles[i].x - mouseX;
+        const dy = particles[i].y - mouseY;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if(dist < 150){
+          pCtx.strokeStyle = `rgba(139,92,246,${1 - dist/150})`;
+          pCtx.beginPath();
+          pCtx.moveTo(particles[i].x, particles[i].y);
+          pCtx.lineTo(mouseX, mouseY);
+          pCtx.stroke();
+        }
+      }
+      pCtx.fillStyle = "#3d7dff";
+      pCtx.beginPath();
+      pCtx.arc(particles[i].x, particles[i].y, 2, 0, Math.PI*2);
+      pCtx.fill();
+    }
+
+    requestAnimationFrame(drawParticles);
+  }
+  drawParticles();
+}
+</script>
+
+<!-- ================= CONFETTIS SUR ACTIONS RÉUSSIES ================= -->
+<script>
+// Formulaire de contact envoyé avec succès
+if (window.location.search.includes("success=true")) {
+  const btn = document.querySelector(".send-btn");
+  const rect = btn ? btn.getBoundingClientRect() : null;
+  fireConfetti(rect ? rect.left + rect.width/2 : undefined, rect ? rect.top : undefined);
+
+  const successToast = document.getElementById("motivationToast");
+  if(successToast){
+    successToast.querySelector(".icon").textContent = "✅";
+    document.getElementById("toastTitle").textContent = "Message envoyé !";
+    document.getElementById("toastMessage").textContent = "Merci, je reviens vers vous rapidement.";
+    successToast.classList.add("show");
+    setTimeout(()=> successToast.classList.remove("show"), 6000);
+  }
+}
+</script>
+
 <!-- MODE CLAIR / SOMBRE -->
 <script>
 const themeToggleBtn = document.getElementById("themeToggleBtn");
@@ -1226,7 +1497,7 @@ const revealObserver = new IntersectionObserver((entries)=>{
 }, { threshold: 0.15 });
 
 document.querySelectorAll(
-  ".reveal, .reveal-up, .reveal-left, .reveal-right, .reveal-zoom, .reveal-blur, .section-title"
+  ".reveal, .reveal-up, .reveal-left, .reveal-right, .reveal-zoom, .reveal-blur, .section-title, .icon-box"
 ).forEach(el=> revealObserver.observe(el));
 
 /* ================= BARRE DE PROGRESSION DE SCROLL ================= */
