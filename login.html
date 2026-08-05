@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Connexion | Vifernel Academy</title>
+<title>Connexion | VifernelZ Academy</title>
 
 <link rel="stylesheet" href="style.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,31 +30,91 @@
 .auth-card p.sub{
   text-align:center; color:#8c94a3; font-size:14px; margin-bottom:26px;
 }
-.auth-card label{
+
+.auth-tabs{
+  display:flex; background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:14px; padding:4px; margin-bottom:24px;
+}
+.auth-tab{
+  flex:1; text-align:center; padding:11px; border:none; background:transparent;
+  color:#8c94a3; font-weight:600; font-size:13px; border-radius:10px;
+  cursor:pointer; transition:.3s ease; font-family:inherit;
+}
+.auth-tab.active{
+  background: linear-gradient(135deg,#3d7dff,#0040c9); color:#fff;
+}
+
+label{
   display:block; font-size:12px; color:#aaa; text-transform:uppercase;
   margin:16px 0 6px;
 }
-.auth-card input{
+input{
   width:100%; background:#0b0f14; border:1px solid rgba(255,255,255,.1);
   padding:14px; border-radius:12px; color:#fff; font-size:15px; outline:none;
   transition:.3s ease;
 }
-.auth-card input:focus{ border-color:#3d7dff; box-shadow:0 0 0 3px rgba(61,125,255,.15); }
+input:focus{ border-color:#3d7dff; box-shadow:0 0 0 3px rgba(61,125,255,.15); }
+
+.password-wrap{ position:relative; }
+.password-wrap input{ padding-right:46px; }
+.toggle-password{
+  position:absolute; right:14px; top:50%; transform:translateY(-50%);
+  background:none; border:none; color:#8c94a3; cursor:pointer; font-size:15px;
+  padding:0;
+}
+.toggle-password:hover{ color:#3d7dff; }
+
+.forgot-link{
+  display:block; text-align:right; font-size:12px; color:#3d7dff;
+  margin-top:10px; cursor:pointer;
+}
+.forgot-link:hover{ text-decoration:underline; }
 
 .auth-btn{
   width:100%; padding:14px; border:none; border-radius:14px;
   font-weight:700; font-size:15px; cursor:pointer; margin-top:22px;
-  transition: transform .3s ease, box-shadow .3s ease;
+  transition: transform .3s ease, box-shadow .3s ease, opacity .3s ease;
+  display:flex; align-items:center; justify-content:center; gap:8px;
 }
-.auth-btn.primary{ background:linear-gradient(135deg,#3d7dff,#0040c9); color:#0b0f14; }
-.auth-btn.primary:hover{ transform:translateY(-3px); box-shadow:0 16px 34px rgba(61,125,255,.3); }
-.auth-btn.secondary{
-  background:rgba(255,255,255,.05); color:#fff; border:1px solid rgba(255,255,255,.1);
-  margin-top:12px;
-}
-.auth-btn.secondary:hover{ border-color:rgba(61,125,255,.4); color:#3d7dff; }
+.auth-btn:disabled{ opacity:.6; cursor:not-allowed; transform:none !important; }
+.auth-btn.primary{ background:linear-gradient(135deg,#3d7dff,#0040c9); color:#fff; }
+.auth-btn.primary:hover:not(:disabled){ transform:translateY(-3px); box-shadow:0 16px 34px rgba(61,125,255,.3); }
 
-.auth-msg{ text-align:center; margin-top:16px; font-size:14px; color:#9fc4ff; min-height:20px; }
+.auth-divider{
+  display:flex; align-items:center; gap:12px; margin:22px 0 4px;
+  color:#8c94a3; font-size:12px;
+}
+.auth-divider::before, .auth-divider::after{
+  content:""; flex:1; height:1px; background:rgba(255,255,255,.1);
+}
+
+.auth-btn.google{
+  background:#fff; color:#1f1f1f; margin-top:14px;
+}
+.auth-btn.google:hover:not(:disabled){ transform:translateY(-2px); box-shadow:0 14px 28px rgba(255,255,255,.15); }
+.auth-btn.google img{ width:18px; height:18px; }
+
+.spinner-inline{
+  width:15px; height:15px; border-radius:50%;
+  border:2px solid rgba(255,255,255,.4); border-top-color:#fff;
+  animation: spinInline .7s linear infinite;
+}
+@keyframes spinInline{ to{ transform:rotate(360deg); } }
+
+.auth-msg{
+  text-align:center; margin-top:16px; font-size:13px; min-height:18px;
+  color:#f4e5a1;
+}
+.auth-msg.error{ color:#ff8080; }
+.auth-msg.success{ color:#4ade80; }
+
+.forgot-box{
+  display:none; margin-top:16px; padding-top:16px;
+  border-top:1px solid rgba(255,255,255,.08);
+}
+.forgot-box.open{ display:block; }
+.forgot-box p{ font-size:12px; color:#8c94a3; margin-bottom:10px; }
 </style>
 </head>
 
@@ -110,17 +170,42 @@
 
 <section class="auth-section">
   <div class="auth-card">
-    <h2>Vifernel Academy</h2>
+    <h2>VifernelZ Academy</h2>
     <p class="sub">Connectez-vous pour accéder à vos formations</p>
 
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tabLogin" onclick="switchTab('login')">Connexion</button>
+      <button class="auth-tab" id="tabRegister" onclick="switchTab('register')">Inscription</button>
+    </div>
+
     <label>Email</label>
-    <input id="email" type="email" placeholder="votre@email.com">
+    <input id="email" type="email" placeholder="votre@email.com" autocomplete="email">
 
     <label>Mot de passe</label>
-    <input id="password" type="password" placeholder="••••••••">
+    <div class="password-wrap">
+      <input id="password" type="password" placeholder="••••••••" autocomplete="current-password">
+      <button type="button" class="toggle-password" id="togglePassword"><i class="fas fa-eye"></i></button>
+    </div>
 
-    <button class="auth-btn primary" onclick="loginUser()">Se connecter</button>
-    <button class="auth-btn secondary" onclick="registerUser()">Créer un compte</button>
+    <span class="forgot-link" id="forgotLink" onclick="toggleForgotBox()">Mot de passe oublié ?</span>
+
+    <div class="forgot-box" id="forgotBox">
+      <p>On vous envoie un lien de réinitialisation à l'adresse ci-dessus.</p>
+      <button class="auth-btn primary" id="resetBtn" onclick="doPasswordReset()" style="margin-top:0;">
+        Envoyer le lien
+      </button>
+    </div>
+
+    <button class="auth-btn primary" id="submitBtn" onclick="handleSubmit()">
+      <span id="submitBtnText">Se connecter</span>
+    </button>
+
+    <div class="auth-divider">ou</div>
+
+    <button class="auth-btn google" id="googleBtn" onclick="loginWithGoogle()">
+      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="">
+      <span>Continuer avec Google</span>
+    </button>
 
     <p class="auth-msg" id="msg"></p>
   </div>
@@ -129,7 +214,7 @@
 <footer class="footer">
   <div class="footer-line"></div>
   <p>© 2026 VifernelZ. Tous droits réservés.</p>
-  <p class="made-with">Vifernel Academy — Formation Trading</p>
+  <p class="made-with">VifernelZ Academy — Formation Trading</p>
   <a href="#" class="scroll-top"><i class="fas fa-arrow-up"></i></a>
 </footer>
 
@@ -137,50 +222,89 @@
   <i class="fab fa-whatsapp"></i>
 </a>
 
+<!-- CANVAS CONFETTIS -->
+<canvas id="confettiCanvas"></canvas>
+
+<script>
+function fireConfetti(originX, originY){
+  const canvas = document.getElementById("confettiCanvas");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const ctx = canvas.getContext("2d");
+  const colors = ["#3d7dff","#8b5cf6","#22d3ee","#ec4899","#9fc4ff"];
+  const originXPx = originX ?? canvas.width / 2;
+  const originYPx = originY ?? canvas.height / 3;
+
+  const particles = Array.from({length: 70}, ()=> ({
+    x: originXPx, y: originYPx,
+    vx: (Math.random() - 0.5) * 10,
+    vy: (Math.random() - 1.6) * 10,
+    size: Math.random() * 5 + 3,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    rotation: Math.random() * 360,
+    rotSpeed: (Math.random() - 0.5) * 12,
+    life: 1
+  }));
+
+  function tick(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let alive = false;
+    particles.forEach(p=>{
+      if(p.life <= 0) return;
+      alive = true;
+      p.vy += 0.28; p.x += p.vx; p.y += p.vy;
+      p.rotation += p.rotSpeed; p.life -= 0.013;
+      ctx.save();
+      ctx.globalAlpha = Math.max(p.life, 0);
+      ctx.translate(p.x, p.y);
+      ctx.rotate((p.rotation * Math.PI) / 180);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
+      ctx.restore();
+    });
+    if(alive) requestAnimationFrame(tick);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  tick();
+}
+</script>
+
+<script src="script.js"></script>
+
 <!-- CURSEUR PERSONNALISÉ -->
 <script>
 if(window.matchMedia("(pointer: fine)").matches){
   document.body.classList.add("custom-cursor-active");
-
   const cursorDot = document.createElement("div");
   cursorDot.className = "cursor-dot";
   const cursorRing = document.createElement("div");
   cursorRing.className = "cursor-ring";
   document.body.appendChild(cursorDot);
   document.body.appendChild(cursorRing);
-
   document.addEventListener("mousemove",(e)=>{
     cursorDot.style.left = e.clientX + "px";
     cursorDot.style.top = e.clientY + "px";
     cursorRing.style.left = e.clientX + "px";
     cursorRing.style.top = e.clientY + "px";
   });
-
   const hoverSelector = "a, button, .tilt-card, input, textarea, [onclick]";
   document.addEventListener("mouseover",(e)=>{
-    if(e.target.closest(hoverSelector)){
-      cursorDot.classList.add("hover");
-      cursorRing.classList.add("hover");
-    }
+    if(e.target.closest(hoverSelector)){ cursorDot.classList.add("hover"); cursorRing.classList.add("hover"); }
   });
   document.addEventListener("mouseout",(e)=>{
-    if(e.target.closest(hoverSelector)){
-      cursorDot.classList.remove("hover");
-      cursorRing.classList.remove("hover");
-    }
+    if(e.target.closest(hoverSelector)){ cursorDot.classList.remove("hover"); cursorRing.classList.remove("hover"); }
   });
 }
 </script>
-
-<script src="script.js"></script>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
   getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
+  signInWithPopup, GoogleAuthProvider, sendPasswordResetEmail,
   setPersistence, browserLocalPersistence, onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCDzr8uruU4UMNjCMa50zs4erHGXkN_fyQ",
@@ -195,55 +319,138 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-const msg = document.getElementById("msg");
+const googleProvider = new GoogleAuthProvider();
 
-// Persistance explicite : garantit que la session survit à la redirection
-// vers validation.html, même si le navigateur est capricieux (Safari, mode privé...).
 setPersistence(auth, browserLocalPersistence).catch((e) => console.warn("Persistance:", e));
 
-// Si l'utilisateur arrive sur login.html alors qu'il est déjà connecté
-// (session existante), on ne le laisse pas bloqué sur le formulaire.
+const msg = document.getElementById("msg");
+const submitBtn = document.getElementById("submitBtn");
+const submitBtnText = document.getElementById("submitBtnText");
+const googleBtn = document.getElementById("googleBtn");
+let currentTab = "login";
+
 onAuthStateChanged(auth, (user) => {
   if (user) window.location.replace("validation.html");
 });
 
-window.loginUser = function () {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  if (!email || !password) { msg.innerHTML = "❌ Veuillez remplir tous les champs"; return; }
-  msg.innerHTML = "⏳ Connexion...";
-
-  signInWithEmailAndPassword(auth, email, password)
-    .then(() => {
-      msg.innerHTML = "Connexion réussie 🔥";
-      setTimeout(() => window.location.replace("validation.html"), 800);
-    })
-    .catch((error) => { msg.innerHTML = "❌ " + error.message; });
+window.switchTab = function(tab){
+  currentTab = tab;
+  document.getElementById("tabLogin").classList.toggle("active", tab === "login");
+  document.getElementById("tabRegister").classList.toggle("active", tab === "register");
+  submitBtnText.textContent = tab === "login" ? "Se connecter" : "Créer mon compte";
+  document.getElementById("forgotLink").style.display = tab === "login" ? "block" : "none";
+  document.getElementById("forgotBox").classList.remove("open");
+  msg.textContent = "";
 };
 
-window.registerUser = function () {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+const passwordInput = document.getElementById("password");
+const togglePasswordBtn = document.getElementById("togglePassword");
+togglePasswordBtn.addEventListener("click", ()=>{
+  const isHidden = passwordInput.type === "password";
+  passwordInput.type = isHidden ? "text" : "password";
+  togglePasswordBtn.innerHTML = isHidden ? '<i class="fas fa-eye-slash"></i>' : '<i class="fas fa-eye"></i>';
+});
 
-  if (!email || !password) { msg.innerHTML = "❌ Veuillez remplir tous les champs"; return; }
-  msg.innerHTML = "⏳ Création du compte...";
-
-  createUserWithEmailAndPassword(auth, email, password)
-    .then(async (userCredential) => {
-      const user = userCredential.user;
-      await setDoc(doc(db, "users", user.uid), {
-        uid: user.uid,
-        email: user.email,
-        paid: false,
-        plan: null,
-        createdAt: new Date().toISOString()
-      });
-      msg.innerHTML = "Compte créé 🎉";
-      setTimeout(() => window.location.replace("validation.html"), 800);
-    })
-    .catch((error) => { msg.innerHTML = "❌ " + error.message; });
+window.toggleForgotBox = function(){
+  document.getElementById("forgotBox").classList.toggle("open");
 };
+
+window.doPasswordReset = function(){
+  const email = document.getElementById("email").value.trim();
+  if(!email){
+    showMsg("Renseignez votre email ci-dessus d'abord.", "error");
+    return;
+  }
+  sendPasswordResetEmail(auth, email)
+    .then(()=> showMsg("Email envoyé ✅ Vérifiez votre boîte de réception.", "success"))
+    .catch((err)=> showMsg(friendlyError(err.code), "error"));
+};
+
+function friendlyError(code){
+  const messages = {
+    "auth/invalid-email": "Adresse email invalide.",
+    "auth/user-not-found": "Aucun compte ne correspond à cet email.",
+    "auth/wrong-password": "Mot de passe incorrect.",
+    "auth/invalid-credential": "Email ou mot de passe incorrect.",
+    "auth/email-already-in-use": "Un compte existe déjà avec cet email.",
+    "auth/weak-password": "Le mot de passe doit contenir au moins 6 caractères.",
+    "auth/too-many-requests": "Trop de tentatives. Réessayez dans quelques minutes.",
+    "auth/network-request-failed": "Problème de connexion réseau. Réessayez.",
+    "auth/popup-closed-by-user": "Fenêtre Google fermée avant la fin de la connexion."
+  };
+  return messages[code] || "Une erreur est survenue. Réessayez.";
+}
+
+function showMsg(text, type){
+  msg.textContent = text;
+  msg.className = "auth-msg" + (type ? " " + type : "");
+}
+
+function setLoading(isLoading, label){
+  submitBtn.disabled = isLoading;
+  googleBtn.disabled = isLoading;
+  submitBtnText.innerHTML = isLoading
+    ? `<span class="spinner-inline"></span> ${label}`
+    : (currentTab === "login" ? "Se connecter" : "Créer mon compte");
+}
+
+async function ensureUserDoc(user){
+  const ref = doc(db, "users", user.uid);
+  const snap = await getDoc(ref);
+  if(!snap.exists()){
+    await setDoc(ref, {
+      uid: user.uid,
+      email: user.email,
+      paid: false,
+      plan: null,
+      createdAt: new Date().toISOString()
+    });
+  }
+}
+
+function goToValidation(){
+  fireConfetti();
+  showMsg("Connexion réussie 🎉", "success");
+  setTimeout(()=> window.location.replace("validation.html"), 900);
+}
+
+window.handleSubmit = function(){
+  const email = document.getElementById("email").value.trim();
+  const password = passwordInput.value;
+
+  if(!email || !password){
+    showMsg("Merci de remplir tous les champs.", "error");
+    return;
+  }
+
+  if(currentTab === "login"){
+    setLoading(true, "Connexion...");
+    signInWithEmailAndPassword(auth, email, password)
+      .then(()=> goToValidation())
+      .catch((err)=>{ setLoading(false); showMsg(friendlyError(err.code), "error"); });
+  } else {
+    setLoading(true, "Création...");
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(async (cred)=>{
+        await ensureUserDoc(cred.user);
+        goToValidation();
+      })
+      .catch((err)=>{ setLoading(false); showMsg(friendlyError(err.code), "error"); });
+  }
+};
+
+window.loginWithGoogle = function(){
+  setLoading(true, "Connexion Google...");
+  signInWithPopup(auth, googleProvider)
+    .then(async (result)=>{
+      await ensureUserDoc(result.user);
+      goToValidation();
+    })
+    .catch((err)=>{ setLoading(false); showMsg(friendlyError(err.code), "error"); });
+};
+
+document.getElementById("email").addEventListener("keydown", (e)=>{ if(e.key === "Enter") handleSubmit(); });
+passwordInput.addEventListener("keydown", (e)=>{ if(e.key === "Enter") handleSubmit(); });
 </script>
 
 </body>
