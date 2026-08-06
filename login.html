@@ -376,12 +376,18 @@ function friendlyError(code){
     "auth/weak-password": "Le mot de passe doit contenir au moins 6 caractères.",
     "auth/too-many-requests": "Trop de tentatives. Réessayez dans quelques minutes.",
     "auth/network-request-failed": "Problème de connexion réseau. Réessayez.",
-    "auth/popup-closed-by-user": "Fenêtre Google fermée avant la fin de la connexion."
+    "auth/popup-closed-by-user": "Fenêtre Google fermée avant la fin de la connexion.",
+    "auth/unauthorized-domain": "Ce domaine n'est pas autorisé pour la connexion Google (à ajouter dans Firebase Console → Authentication → Settings → Authorized domains).",
+    "auth/operation-not-allowed": "Cette méthode de connexion n'est pas activée sur le projet Firebase."
   };
-  return messages[code] || "Une erreur est survenue. Réessayez.";
+  // Si le code n'est pas dans la liste, on l'affiche quand même
+  // (entre parenthèses) au lieu de rester vague — ça permet de
+  // diagnostiquer immédiatement sans devoir ouvrir la console.
+  return messages[code] || `Une erreur est survenue (${code || "inconnue"}). Réessayez.`;
 }
 
 function showMsg(text, type){
+  if(type === "error") console.error("Auth error:", text);
   msg.textContent = text;
   msg.className = "auth-msg" + (type ? " " + type : "");
 }
