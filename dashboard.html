@@ -206,7 +206,9 @@ if(window.matchMedia("(pointer: fine)").matches){
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+// Firestore n'est plus interrogé directement depuis le navigateur pour
+// les vidéos — cette lecture se fait désormais côté serveur, dans
+// netlify/functions/get-videos.js (voir plus bas).
 
 const firebaseConfig = {
   apiKey: "AIzaSyCDzr8uruU4UMNjCMa50zs4erHGXkN_fyQ",
@@ -220,51 +222,14 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getFirestore(app);
 setPersistence(auth, browserLocalPersistence).catch((e) => console.warn("Persistance:", e));
 
 /* ============================================================
-   CATALOGUE DES VIDÉOS — 3 niveaux, du plus bas au plus élevé.
-   💡 Pour ajouter une vidéo, ajoutez simplement son ID YouTube
-   (la partie après "v=" ou "/embed/") dans le tableau du bon niveau.
+   Le catalogue des vidéos n'est PLUS présent ici. Il vit
+   uniquement côté serveur, dans netlify/functions/get-videos.js,
+   qui ne renvoie que les vidéos correspondant au plan réellement
+   payé (vérifié via Firestore, infalsifiable depuis le navigateur).
 ============================================================ */
-const TIERS = {
-  VIP: {
-    level: 1,
-    icon: "📘",
-    label: "Formation Trading VIP",
-    videos: [
-      "7EQC5n0mVYk","sXyYPjuCo20","hE-J-rlPdjk","ECpmx1agKto","0IFb-dUK0-o",
-      "r7grkqzHH54","ZUeOO15zH5o","CmNR5EssrH8","Ml_rDRv-BYg","vhjQ5-V9msI",
-      "jdQbfNWbOpg","5VH0BAI4Zo0","zNYwV-UTOyU","p-Ag-UURGxM","-a1A321DDD4",
-      "NtHp3UZowMw","18BRgaDmDqw","MBhVskb9lPo","lwVI0QIiQnw"
-    ]
-  },
-  VVIP: {
-    level: 2,
-    icon: "📗",
-    label: "Formation Trading VVIP",
-    videos: [
-      "36y7iGNb3Fk","8ZTYPkQA2m8","2ZswvhrncnQ","SOYE007iHoM","HAmXyGjmYs0",
-      "qu-eYJp7CB8","2JOae7AYVXE","TO5MqmNMYVI","uhPvZw2Ob5w","aPDH0VFDOXE",
-      "DThUmWfqk04","-rvBTY6t53E","WYOLLQzF-4w","UDZRYwXFAwE"
-    ]
-  },
-  VVVIP: {
-    level: 3,
-    icon: "📕",
-    label: "Formation VVVIP (Accès complet)",
-    videos: [
-      "Hab15xXkW0Q","ZUzimoTe9Mw","c1Qm4kRoOrA","zQv-zmWKISU","AaMKrQp9Jb4",
-      "379RGr5h-Kg","VOW2QL_Sw2I","fScHHN_U94Y","jjmuUKjgdhs","4AA-xX_5y6g",
-      "SMP1Kk200aA","GEOh-zCOaRU","AdIvQIw33b0","guUTCQGWtuw","BtbRMccMH2Q",
-      "vltP3zNx1-Y","-MWNfmM0ibY","SKQCklzHKdw","08BpAG8sicY","35oeApGVnDU",
-      "X7LthnKAMh8","EhsyEa_nMa8","f3OB7161mPM","PpxDa-3p3qo","k7x-V-VmEfo",
-      "plWXM9M6n_Q","exjPUYwNYAQ","ljPAw9fZw2M","GOoKVAGG_xM","5-a97FPQWvc",
-      "JjDCjVCg0AU"
-    ]
-  }
-};
 
 function renderVideoCard(videoId, index, tierKey){
   return `
@@ -277,8 +242,7 @@ function renderVideoCard(videoId, index, tierKey){
   `;
 }
 
-function renderTierSection(tierKey){
-  const tier = TIERS[tierKey];
+function renderTierSection(tierKey, tier){
   return `
     <section class="tier-section">
       <div class="tier-title">
@@ -307,36 +271,43 @@ onAuthStateChanged(auth, async (user) => {
     return;
   }
 
-  const snap = await getDoc(doc(db, "users", user.uid));
-
-  if (!snap.exists()) {
-    window.location.href = "login.html";
-    return;
-  }
-
-  const data = snap.data();
-  const plan = data.plan;
-  const userLevel = TIERS[plan]?.level || 0;
-
   document.getElementById("loadingState").style.display = "none";
 
-  if (!data.paid || userLevel === 0) {
+  try {
+    // On récupère un jeton d'identité Firebase et on l'envoie à la
+    // fonction serveur — c'est elle, et elle seule, qui décide quelles
+    // vidéos renvoyer, après avoir vérifié le plan dans Firestore.
+    const idToken = await user.getIdToken();
+
+    const response = await fetch("/.netlify/functions/get-videos", {
+      headers: { Authorization: `Bearer ${idToken}` }
+    });
+
+    if (!response.ok) throw new Error("Réponse serveur invalide");
+
+    const result = await response.json();
+
+    if (!result.paid || Object.keys(result.tiers).length === 0) {
+      document.getElementById("accessDenied").style.display = "block";
+      return;
+    }
+
+    document.getElementById("planBadge").innerHTML = `<i class="fas fa-star"></i> Plan actif : ${result.plan}`;
+
+    const container = document.getElementById("tiersContainer");
+    container.innerHTML = Object.keys(result.tiers)
+      .map(key => renderTierSection(key, result.tiers[key]))
+      .join("");
+
+    activateVideoThumbs();
+    document.getElementById("dashboardContent").style.display = "block";
+
+  } catch (err) {
+    console.error("Erreur de chargement des vidéos:", err);
     document.getElementById("accessDenied").style.display = "block";
-    return;
+    document.querySelector("#accessDenied p").textContent =
+      "Impossible de charger vos formations pour le moment. Réessayez dans un instant.";
   }
-
-  document.getElementById("planBadge").innerHTML = `<i class="fas fa-star"></i> Plan actif : ${plan}`;
-
-  // On ne génère QUE les sections auxquelles l'utilisateur a droit
-  // (les niveaux supérieurs ne sont même pas présents dans le HTML).
-  const container = document.getElementById("tiersContainer");
-  container.innerHTML = Object.keys(TIERS)
-    .filter(key => TIERS[key].level <= userLevel)
-    .map(key => renderTierSection(key))
-    .join("");
-
-  activateVideoThumbs();
-  document.getElementById("dashboardContent").style.display = "block";
 });
 
 window.logout = function () {
