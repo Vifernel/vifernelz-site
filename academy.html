@@ -86,7 +86,8 @@
     <div class="nav-actions">
       <div class="nav-pill-group">
         <a href="index.html" class="header-blog-btn"><i class="fas fa-home"></i><span>Accueil</span></a>
-        <a href="login.html" class="header-icon"><i class="fas fa-user"></i></a>
+        <a href="login.html" class="header-icon" id="loginIconBtn"><i class="fas fa-user"></i></a>
+        <button class="header-icon" id="logoutBtn" title="Déconnexion" style="display:none;"><i class="fas fa-right-from-bracket"></i></button>
       </div>
       <button class="menu-toggle"><span></span><span></span><span></span></button>
     </div>
@@ -349,6 +350,38 @@ if(window.matchMedia("(pointer: fine)").matches){
     }
   });
 }
+</script>
+
+<!-- Affiche le bouton "Déconnexion" seulement si un compte est connecté
+     (cette page reste publique, accessible sans compte). -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCDzr8uruU4UMNjCMa50zs4erHGXkN_fyQ",
+  authDomain: "vifernel-trading-academy.firebaseapp.com",
+  projectId: "vifernel-trading-academy",
+  storageBucket: "vifernel-trading-academy.firebasestorage.app",
+  messagingSenderId: "1000145148349",
+  appId: "1:1000145148349:web:f0688610a67859a6999ad4",
+  measurementId: "G-FR882HDS3K"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+const loginIconBtn = document.getElementById("loginIconBtn");
+const logoutBtn = document.getElementById("logoutBtn");
+
+onAuthStateChanged(auth, (user) => {
+  loginIconBtn.style.display = user ? "none" : "flex";
+  logoutBtn.style.display = user ? "flex" : "none";
+});
+
+logoutBtn.addEventListener("click", ()=>{
+  signOut(auth).then(()=> window.location.href = "login.html");
+});
 </script>
 
 <script src="script.js"></script>
