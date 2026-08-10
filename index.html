@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 
 <body>
@@ -922,6 +922,14 @@ Envoyer un email
 
 <label>Message</label>
 <textarea name="message" required></textarea>
+
+<!-- PROTECTION ANTI-SPAM CLOUDFLARE TURNSTILE -->
+<div class="cf-turnstile"
+     data-sitekey="0x4AAAAAAEMYQEHBH9PNgVbt"
+     data-theme="auto">
+</div>
+
+<button type="submit" class="send-btn">Envoyer</button>
 
 
 
