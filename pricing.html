@@ -232,6 +232,16 @@ function fireConfetti(originX, originY){
 
 <script src="script.js"></script>
 
+<!-- MODALE DE CHOIX DU MOYEN DE PAIEMENT -->
+<div id="payModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:9999; align-items:center; justify-content:center;">
+  <div style="background:#10141c; border:1px solid rgba(255,255,255,.1); border-radius:20px; padding:30px; max-width:340px; width:90%; text-align:center;">
+    <h3 style="color:#fff; margin-bottom:18px;">Choisissez votre moyen de paiement</h3>
+    <button id="payFedaBtn" style="display:block; width:100%; padding:14px; margin-bottom:12px; border-radius:12px; background:linear-gradient(135deg,#3d7dff,#0040c9); color:#0b0f14; font-weight:700; border:none; cursor:pointer;">Payer avec FedaPay</button>
+    <button id="payMFBtn" style="display:block; width:100%; padding:14px; margin-bottom:12px; border-radius:12px; background:linear-gradient(135deg,#22c55e,#15803d); color:#fff; font-weight:700; border:none; cursor:pointer;">Payer avec MoneyFusion</button>
+    <button id="payCancelBtn" style="display:block; width:100%; padding:10px; background:none; border:none; color:#8c94a3; cursor:pointer;">Annuler</button>
+  </div>
+</div>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -251,6 +261,8 @@ const auth = getAuth(app);
 setPersistence(auth, browserLocalPersistence).catch((e) => console.warn("Persistance:", e));
 
 let currentUser = null;
+let pendingPlan = null;
+let pendingAmount = null;
 
 onAuthStateChanged(auth, (user) => {
   if (!user) {
@@ -260,16 +272,36 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-// ⚠️ Remplacez par votre vraie clé publique FedaPay (déjà utilisée sur boost.html)
 const FEDAPAY_PUBLIC_KEY = "pk_live_KoY04CFZy25auP3ybnuPMU2V";
 const FEDAPAY_ENV = "live";
+
+const payModal = document.getElementById("payModal");
 
 window.payForPlan = function (plan, amount) {
   if (!currentUser) {
     alert("Veuillez patienter, connexion en cours...");
     return;
   }
+  pendingPlan = plan;
+  pendingAmount = amount;
+  payModal.style.display = "flex";
+};
 
+document.getElementById("payCancelBtn").onclick = () => {
+  payModal.style.display = "none";
+};
+
+document.getElementById("payFedaBtn").onclick = () => {
+  payModal.style.display = "none";
+  payWithFedaPay(pendingPlan, pendingAmount);
+};
+
+document.getElementById("payMFBtn").onclick = () => {
+  payModal.style.display = "none";
+  payWithMoneyFusion(pendingPlan, pendingAmount);
+};
+
+function payWithFedaPay(plan, amount) {
   if (typeof FedaPay === "undefined") {
     alert("Le module de paiement n'a pas pu se charger. Réessayez.");
     return;
@@ -282,7 +314,7 @@ window.payForPlan = function (plan, amount) {
       amount: amount,
       description: `VifernelZ Academy — Formation ${plan}`,
       custom_metadata: {
-        uid: currentUser.uid,   // ← c'est cet identifiant que le webhook utilisera
+        uid: currentUser.uid,
         plan: plan
       }
     },
@@ -304,8 +336,36 @@ window.payForPlan = function (plan, amount) {
   });
 
   widget.open();
-};
+}
+
+async function payWithMoneyFusion(plan, amount) {
+  const phone = prompt("Entrez votre numéro de téléphone (Mobile Money) :");
+  if (!phone) return;
+
+  try {
+    const res = await fetch("/.netlify/functions/moneyfusion-init", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        amount: amount,
+        plan: plan,
+        phone: phone,
+        email: currentUser.email,
+        uid: currentUser.uid,
+      }),
+    });
+    const data = await res.json();
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      alert("Erreur : " + (data.error || "paiement impossible"));
+    }
+  } catch (e) {
+    alert("Erreur réseau, réessayez.");
+  }
+}
 </script>
+
 
 </body>
 </html>
